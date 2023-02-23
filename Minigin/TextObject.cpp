@@ -9,6 +9,7 @@ dae::TextObject::TextObject(const std::string& text, std::shared_ptr<Font> font)
 	: m_needsUpdate(true), m_text(text), m_font(std::move(font)), m_textTexture(nullptr)
 { }
 
+// [[maybe_unused]] stops compiler errors when a parameter is unused when compiling
 void dae::TextObject::Update([[maybe_unused]]float deltaTime)
 {
 	if (m_needsUpdate)

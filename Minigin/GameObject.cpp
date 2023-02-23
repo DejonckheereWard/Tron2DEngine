@@ -5,9 +5,9 @@
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(float deltaTime)
+// [[maybe_unused]] stops compiler errors when a parameter is unused when compiling
+void dae::GameObject::Update([[maybe_unused]] float deltaTime)
 {
-	deltaTime;
 }
 
 void dae::GameObject::Render() const

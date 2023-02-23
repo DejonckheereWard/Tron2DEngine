@@ -103,7 +103,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		lastTime = currentTime;
 
 
-		// Sleep time later
+		// Sleep time later (limit fps)
 		const auto sleepTime = currentTime + std::chrono::milliseconds(minMsPerFrame) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
 	}
