@@ -2,12 +2,18 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "BaseComponent.h"
 
 dae::GameObject::~GameObject() = default;
 
 // [[maybe_unused]] stops compiler errors when a parameter is unused when compiling
-void dae::GameObject::Update([[maybe_unused]] float deltaTime)
+void dae::GameObject::Update(float deltaTime)
 {
+	// Go through all the components in the map and run update
+	for(std::pair<const int, dae::BaseComponent*>& component : m_Components)
+	{
+		component.second->Update(*this, deltaTime);
+	}
 }
 
 void dae::GameObject::Render() const
