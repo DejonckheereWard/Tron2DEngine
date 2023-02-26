@@ -2,7 +2,8 @@
 #include <memory>
 #include "Transform.h"
 #include <variant>
-#include <map>
+#include <unordered_map>
+#include <typeindex>
 
 namespace dae
 {
@@ -26,34 +27,40 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
-
 		// Components
 		template <typename TComponent> TComponent* AddComponent();
 		template <typename TComponent> TComponent* GetComponent();
 		template <typename TComponent> void RemoveComponent();
+
+		// Getters
+		const Transform& GetTransform() const { return m_Transform; }
+
 	private:
-		Transform m_transform{};
+		Transform m_Transform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
 		std::shared_ptr<Texture2D> m_texture{};
 
-		std::map<int, BaseComponent*> m_Components;
+		std::unordered_map<std::type_index, BaseComponent*> m_Components;
 
 	};
 	
 	template<typename TComponent>
 	inline TComponent* GameObject::AddComponent()
 	{
-		return m_Components.insert(std::make_pair(typeid(TComponent), new TComponent));
+		TComponent* component{ new TComponent() };
+		//m_Components.insert(std::make_pair(typeid(TComponent), static_cast<BaseComponent*>(component)));
+		m_Components[std::type_index(typeid(TComponent))] = component;
+		return component;
 	}
 	template<typename TComponent>
 	inline TComponent* GameObject::GetComponent()
 	{
-		return m_Components.at(typeid(TComponent));
+		return static_cast<TComponent*>(m_Components.at(std::type_index(typeid(TComponent))));
 	}
 	template<typename TComponent>
 	inline void GameObject::RemoveComponent()
 	{
-		delete m_Components.at(typeid(TComponent));
-		m_Components.erase(typeid(TComponent));
+		delete m_Components.at(std::type_index(typeid(TComponent)));
+		m_Components.erase(std::type_index(typeid(TComponent)));
 	}
 }
