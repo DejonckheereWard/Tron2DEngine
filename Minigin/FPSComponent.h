@@ -17,6 +17,7 @@ namespace dae
 		int m_FPS;
 
 	private:
+		const int m_NrOfSamples{ 100 };
 		std::vector<float> m_DeltaTimeSamples;
 	};
 }

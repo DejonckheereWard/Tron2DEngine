@@ -5,12 +5,12 @@ dae::FPSComponent::FPSComponent():
 	m_FPS{0},
 	m_DeltaTimeSamples{}
 {
-	m_DeltaTimeSamples.reserve(10);
+	m_DeltaTimeSamples.reserve(m_NrOfSamples);
 }
 
 void dae::FPSComponent::Update(GameObject&, float deltaTime)
 {
-	if(m_DeltaTimeSamples.size() >= 10)
+	if(m_DeltaTimeSamples.size() >= m_NrOfSamples)
 	{
 		m_DeltaTimeSamples.erase(m_DeltaTimeSamples.begin()); // Delete oldest time
 	}
