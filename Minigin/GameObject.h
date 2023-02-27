@@ -4,6 +4,7 @@
 #include <variant>
 #include <unordered_map>
 #include <typeindex>
+#include <string>
 
 namespace dae
 {

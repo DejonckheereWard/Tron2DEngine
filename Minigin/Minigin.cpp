@@ -86,8 +86,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 	auto lastTime{ std::chrono::high_resolution_clock::now() };
 
-	const int frameRateCap{ 300 };  // Max framerate we want
-	const int minMsPerFrame{ int(1.0f / frameRateCap * 1000.0f) };  // Min time before we want to update a frame again. (*1000 to convert from Seconds to Millis)
+	const int frameRateCap{ 144 };  // Max framerate we want
+	const int minMsPerFrame{ 1000 / frameRateCap };  // Min time before we want to update a frame again. (*1000 to convert from Seconds to Millis)
 
 	// todo: this update loop could use some work.
 	bool doContinue = true;
