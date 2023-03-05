@@ -33,7 +33,7 @@ namespace Engine
 
 		// Scenegraph
 		GameObject* GetParent();
-		void SetParent(GameObject* parent, bool keepWorldTransform = false);
+		void SetParent(GameObject* parent, bool keepWorldPosition = false);
 		const std::vector<GameObject*>& GetChildren() { return m_Children; };
 
 
@@ -62,7 +62,7 @@ namespace Engine
 	{
 		static_assert(std::is_base_of<BaseComponent, TComponent>::value, "Component must inherit from BaseComponent");
 
-		const std::type_index componentTypeID{ std::type_index(typeid(TComponent)) };
+		const std::type_index componentTypeID{ std::type_index(typeid(TComponent)) };  // Get Typeid (expensive)
 		if(m_Components.contains(componentTypeID))
 		{
 			// Component already exists, giving existing
@@ -71,7 +71,7 @@ namespace Engine
 
 		// Create component if it doesnt exist yet
 		TComponent* component{ new TComponent(this) };  // Create new component and give current gameobject as paramater (pOwner)
-		m_Components[std::type_index(typeid(TComponent))] = component;  // Add component to the map using its typeid (expensive)
+		m_Components[componentTypeID] = component;
 		return component;
 	}
 	template<ComponentType TComponent>

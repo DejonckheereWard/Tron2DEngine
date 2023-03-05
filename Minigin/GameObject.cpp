@@ -24,11 +24,26 @@ Engine::GameObject* Engine::GameObject::GetParent()
 	return m_Parent;
 }
 
-void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
+void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
-	// Remove from previous parent if exist
-	if(m_Parent != nullptr)
+	if(parent)
 	{
+		// Update the worldtransform such that the object stays in the same position/rotation and scale
+		if(keepWorldPosition)
+		{
+			m_pTransform->SetLocalPosition(m_pTransform->GetLocalPosition() - parent->GetTransform()->GetPosition());
+		}
+		m_pTransform->SetDirty();
+	}
+	else 
+	{
+		m_pTransform->SetLocalPosition(m_pTransform->GetPosition());
+	}
+
+
+	// Remove from previous parent if exist
+	if(m_Parent)
+	{		
 		m_Parent->RemoveChild(this);
 	}
 
@@ -36,17 +51,12 @@ void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 	m_Parent = parent;
 
 	// Add to the new parent if it exists
-	if(m_Parent != nullptr)
+	if(m_Parent)
 	{
 		m_Parent->AddChild(this);
 	}
 
 
-	// Update the worldtransform such that the object stays in the same position/rotation and scale
-	if(keepWorldTransform)
-	{
-		GetTransform()->SetLocalScale(1.0f, 1.0f);
-	}
 
 }
 

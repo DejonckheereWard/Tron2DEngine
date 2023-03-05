@@ -13,6 +13,9 @@ namespace Engine
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override {};
 
+
+		void SetRotationSpeed(float anglePerSecond) { m_AnglePerSec = anglePerSecond; };
+
 	private:
 		float m_AnglePerSec{ 45.0f };
 		
