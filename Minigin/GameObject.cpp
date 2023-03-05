@@ -17,7 +17,36 @@ Engine::GameObject::~GameObject()
 		delete component.second;
 	}
 	m_Components.clear();
-};
+}
+
+Engine::GameObject* Engine::GameObject::GetParent()
+{
+	return m_Parent;
+}
+
+void Engine::GameObject::SetParent(GameObject* parent)
+{
+	// Remove from previous parent if exist
+	if(m_Parent != nullptr)
+	{
+		m_Parent->RemoveChild(this);
+	}
+	
+	// Add to the new parent
+	m_Parent->AddChild(this);
+
+	m_Parent = parent;
+}
+
+void Engine::GameObject::AddChild(GameObject* child)
+{
+	m_Children.emplace_back(child);
+}
+
+void Engine::GameObject::RemoveChild(GameObject* child)
+{
+	std::erase(m_Children, child);
+}
 
 void Engine::GameObject::Init()
 {

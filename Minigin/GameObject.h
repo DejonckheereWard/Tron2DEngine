@@ -30,6 +30,14 @@ namespace Engine
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		// Scenegraph
+		GameObject* GetParent();
+		void SetParent(GameObject* parent);
+
+		void AddChild(GameObject* child);
+		void RemoveChild(GameObject* child);
+		
+
 		// Components
 		template <ComponentType TComponent> TComponent* AddComponent();
 		template <ComponentType TComponent> TComponent* GetComponent();
@@ -37,6 +45,9 @@ namespace Engine
 
 	private:
 		std::unordered_map<std::type_index, BaseComponent*> m_Components;
+		
+		GameObject* m_Parent;
+		std::vector<GameObject*> m_Children;
 
 	};
 
