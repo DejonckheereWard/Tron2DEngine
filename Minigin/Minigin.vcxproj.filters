@@ -38,16 +38,10 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
@@ -65,8 +59,11 @@
     <ClInclude Include="TextComponent.h">
       <Filter>Engine Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="UIComponent.h">
-      <Filter>Game Files\Components</Filter>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Engine Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Engine Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +72,6 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Game Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Engine Files</Filter>
@@ -100,9 +94,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Engine Files</Filter>
-    </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
@@ -115,8 +106,11 @@
     <ClCompile Include="TextComponent.cpp">
       <Filter>Engine Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="UIComponent.cpp">
-      <Filter>Game Files\Components</Filter>
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Engine Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Engine Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

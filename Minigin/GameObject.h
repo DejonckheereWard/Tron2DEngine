@@ -1,67 +1,82 @@
 #pragma once
 #include <memory>
-#include "Transform.h"
 #include <variant>
 #include <unordered_map>
 #include <typeindex>
 #include <string>
+#include <stdexcept>
 
 namespace dae
 {
 	class Texture2D;
 	class BaseComponent;
+	class MissingComponent {};
 
-	// todo: this should become final.
-	class GameObject
+
+	template<typename TComponent>
+	concept ComponentType = std::is_base_of<BaseComponent, TComponent>::value;
+
+	class GameObject final
 	{
 	public:
-		virtual void Update(float deltaTime);
-		virtual void Render() const;
+		void Init();
+		void Update(float deltaTime);
+		void Render() const;
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
-		GameObject() = default;
-		virtual ~GameObject();
+		GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 		// Components
-		template <typename TComponent> TComponent* AddComponent();
-		template <typename TComponent> TComponent* GetComponent();
-		template <typename TComponent> void RemoveComponent();
-
-		// Getters
-		const Transform& GetTransform() const { return m_Transform; }
+		template <ComponentType TComponent> TComponent* AddComponent();
+		template <ComponentType TComponent> TComponent* GetComponent();
+		template <ComponentType TComponent> void RemoveComponent();
 
 	private:
-		Transform m_Transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
-
 		std::unordered_map<std::type_index, BaseComponent*> m_Components;
 
 	};
-	
-	template<typename TComponent>
+
+
+	template<ComponentType TComponent>
 	inline TComponent* GameObject::AddComponent()
 	{
-		TComponent* component{ new TComponent() };
-		//m_Components.insert(std::make_pair(typeid(TComponent), static_cast<BaseComponent*>(component)));
-		m_Components[std::type_index(typeid(TComponent))] = component;
+		static_assert(std::is_base_of<BaseComponent, TComponent>::value, "Component must inherit from BaseComponent");
+
+		const std::type_index componentTypeID{ std::type_index(typeid(TComponent)) };
+		if(m_Components.contains(componentTypeID))
+		{
+			// Component already exists, giving existing
+			return GetComponent<TComponent>();
+		}
+
+		// Create component if it doesnt exist yet
+		TComponent* component{ new TComponent(this) };  // Create new component and give current gameobject as paramater (pOwner)
+		m_Components[std::type_index(typeid(TComponent))] = component;  // Add component to the map using its typeid (expensive)
 		return component;
 	}
-	template<typename TComponent>
+	template<ComponentType TComponent>
 	inline TComponent* GameObject::GetComponent()
 	{
-		return static_cast<TComponent*>(m_Components.at(std::type_index(typeid(TComponent))));
+		// Find component in map using its typeid (typeid is expensive, avoid in hot code path)
+
+		try
+		{
+			return static_cast<TComponent*>(m_Components.at(std::type_index(typeid(TComponent))));
+		}
+		catch(std::out_of_range&)
+		{
+			throw MissingComponent();
+		}
 	}
-	template<typename TComponent>
+	template<ComponentType TComponent>
 	inline void GameObject::RemoveComponent()
 	{
-		delete m_Components.at(std::type_index(typeid(TComponent)));
-		m_Components.erase(std::type_index(typeid(TComponent)));
+		const std::type_index componentTypeID{ std::type_index(typeid(TComponent)) };
+		delete m_Components.at(componentTypeID);
+		m_Components.erase(componentTypeID);
 	}
 }

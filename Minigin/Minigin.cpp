@@ -89,19 +89,22 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	const int frameRateCap{ 144 };  // Max framerate we want
 	const int minMsPerFrame{ 1000 / frameRateCap };  // Min time before we want to update a frame again. (*1000 to convert from Seconds to Millis)
 
+	sceneManager.Init();
+	
 	// todo: this update loop could use some work.
 	bool doContinue = true;
 	while (doContinue)
 	{
-		const auto currentTime{ std::chrono::high_resolution_clock::now()};
+		const auto currentTime{ std::chrono::high_resolution_clock::now()};  // Total time elapsed since start of program
 		const auto deltaTime{ std::chrono::duration<float>(currentTime - lastTime).count()};
 
 		doContinue = input.ProcessInput();
 		sceneManager.Update(deltaTime);
 		renderer.Render();
-
+		
 		lastTime = currentTime;
 
+		
 		// Sleep time later (limit fps)
 		const auto sleepTime = currentTime + std::chrono::milliseconds(minMsPerFrame) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);

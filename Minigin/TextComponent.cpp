@@ -5,14 +5,40 @@
 #include "Texture2D.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
+#include "RenderComponent.h"
+#include <glm/glm.hpp>
 
-void dae::TextComponent::Render(const GameObject& gameObject) const
+dae::TextComponent::TextComponent(GameObject* pOwner):
+	BaseComponent(pOwner)
 {
-	if(m_Texture != nullptr)
+}
+
+void dae::TextComponent::Init()
+{
+	m_pRenderComponent = GetOwner()->GetComponent<RenderComponent>();
+}
+
+void dae::TextComponent::Update(float)
+{
+	// Only update texture if the text is changed (dirty)
+	if(m_TextIsDirty)
 	{
-		glm::vec3 position{ gameObject.GetTransform().GetPosition() };
-		Renderer::GetInstance().RenderTexture(*m_Texture, position.x, position.y);
+		UpdateTexture();
 	}
+	m_TextIsDirty = false;
+}
+
+void dae::TextComponent::SetText(const std::string& text)
+{
+	m_Text = text;
+	m_TextIsDirty = true;
+}
+
+void dae::TextComponent::SetFont(std::shared_ptr<Font> font)
+{
+	m_Font = font;
+	m_TextIsDirty = true;
 }
 
 void dae::TextComponent::UpdateTexture()
@@ -28,7 +54,8 @@ void dae::TextComponent::UpdateTexture()
 	{
 		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 	}
-	SDL_FreeSurface(surf);
+	SDL_FreeSurface(surf);	
+	
 	m_Texture = std::make_shared<Texture2D>(texture);
+	m_pRenderComponent->SetTexture(m_Texture);
 }
- 

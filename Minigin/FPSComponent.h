@@ -4,21 +4,22 @@
 
 namespace dae
 {	
+	class TextComponent;
 	class FPSComponent final: public BaseComponent
 	{
-		// Inherited via BaseComponent
 	public:
-		FPSComponent();
-		virtual void Update(GameObject& gameObject, float deltaTime) override;
-		
-
-	public:
-		// Public because i want to be able to access this from outside?
-		int m_FPS;
+		FPSComponent(GameObject* pOwner);
+		virtual void Init() override;
+		virtual void Update(float deltaTime) override;	
+		virtual void Render() const override {};
 
 	private:
 		const int m_NrOfSamples{ 100 };
-		std::vector<float> m_DeltaTimeSamples;
+		std::vector<float> m_DeltaTimeSamples{};
+		int m_Fps{ 0 };
+
+		TextComponent* m_pTextComponent{ nullptr };
+
 	};
 }
 
