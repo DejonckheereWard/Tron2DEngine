@@ -17,7 +17,7 @@ void Engine::FPSComponent::Init()
 
 void Engine::FPSComponent::Update(float deltaTime)
 {
-	if(m_DeltaTimeSamples.size() >= m_NrOfSamples)
+	if(m_DeltaTimeSamples.size() >= (size_t)m_NrOfSamples)
 	{
 		m_DeltaTimeSamples.erase(m_DeltaTimeSamples.begin()); // Delete oldest time
 	}
