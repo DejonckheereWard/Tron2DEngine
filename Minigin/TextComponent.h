@@ -5,7 +5,7 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-namespace dae
+namespace Engine
 {
 	class GameObject;
 	class TextComponent: public BaseComponent

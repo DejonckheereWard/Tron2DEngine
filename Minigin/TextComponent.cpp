@@ -9,17 +9,17 @@
 #include "RenderComponent.h"
 #include <glm/glm.hpp>
 
-dae::TextComponent::TextComponent(GameObject* pOwner):
+Engine::TextComponent::TextComponent(GameObject* pOwner):
 	BaseComponent(pOwner)
 {
 }
 
-void dae::TextComponent::Init()
+void Engine::TextComponent::Init()
 {
 	m_pRenderComponent = GetOwner()->GetComponent<RenderComponent>();
 }
 
-void dae::TextComponent::Update(float)
+void Engine::TextComponent::Update(float)
 {
 	// Only update texture if the text is changed (dirty)
 	if(m_TextIsDirty)
@@ -29,19 +29,19 @@ void dae::TextComponent::Update(float)
 	m_TextIsDirty = false;
 }
 
-void dae::TextComponent::SetText(const std::string& text)
+void Engine::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_TextIsDirty = true;
 }
 
-void dae::TextComponent::SetFont(std::shared_ptr<Font> font)
+void Engine::TextComponent::SetFont(std::shared_ptr<Font> font)
 {
 	m_Font = font;
 	m_TextIsDirty = true;
 }
 
-void dae::TextComponent::UpdateTexture()
+void Engine::TextComponent::UpdateTexture()
 {
 	const SDL_Color color = { 255,255,255 }; // only white text is supported now
 	const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);

@@ -6,7 +6,7 @@
 #include <string>
 #include <stdexcept>
 
-namespace dae
+namespace Engine
 {
 	class Texture2D;
 	class BaseComponent;

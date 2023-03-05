@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-using namespace dae;
+using namespace Engine;
 
 unsigned int Scene::m_idCounter = 0;
 
@@ -24,7 +24,7 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-void dae::Scene::Init()
+void Engine::Scene::Init()
 {
 	for(auto& object : m_objects)
 	{

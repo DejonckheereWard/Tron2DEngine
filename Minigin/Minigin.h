@@ -2,7 +2,7 @@
 #include <string>
 #include <functional>
 
-namespace dae
+namespace Engine
 {
 	class Minigin
 	{

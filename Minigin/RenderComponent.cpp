@@ -2,17 +2,17 @@
 #include "TransformComponent.h"
 #include "Renderer.h"
 
-dae::RenderComponent::RenderComponent(GameObject* pOwner):
+Engine::RenderComponent::RenderComponent(GameObject* pOwner):
 	BaseComponent(pOwner)
 {
 }
 
-void dae::RenderComponent::Init()
+void Engine::RenderComponent::Init()
 {
 	m_pTransform = GetOwner()->GetComponent<TransformComponent>();
 }
 
-void dae::RenderComponent::Render() const
+void Engine::RenderComponent::Render() const
 {
 	if(!m_Texture) return;  // Dont do anything if we dont have a texture!
 

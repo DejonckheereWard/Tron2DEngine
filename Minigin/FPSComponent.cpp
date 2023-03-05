@@ -2,20 +2,20 @@
 #include "TextComponent.h"
 #include <numeric>
 
-dae::FPSComponent::FPSComponent(GameObject* pOwner):
+Engine::FPSComponent::FPSComponent(GameObject* pOwner):
 	BaseComponent(pOwner)
 {
 	m_DeltaTimeSamples.reserve(m_NrOfSamples);
 }
 
-void dae::FPSComponent::Init()
+void Engine::FPSComponent::Init()
 {
 	// Runs after construction, so then all addcomponents should be added already
 	m_pTextComponent = GetOwner()->GetComponent<TextComponent>();
 	m_pTextComponent->SetText("0");
 }
 
-void dae::FPSComponent::Update(float deltaTime)
+void Engine::FPSComponent::Update(float deltaTime)
 {
 	if(m_DeltaTimeSamples.size() >= m_NrOfSamples)
 	{

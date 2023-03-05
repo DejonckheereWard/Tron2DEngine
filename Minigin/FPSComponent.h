@@ -2,7 +2,7 @@
 #include "BaseComponent.h"
 #include <vector>
 
-namespace dae
+namespace Engine
 {	
 	class TextComponent;
 	class FPSComponent final: public BaseComponent

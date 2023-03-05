@@ -2,7 +2,7 @@
 #include "BaseComponent.h"
 #include <glm/glm.hpp>
 
-namespace dae
+namespace Engine
 {
 	class TransformComponent: public BaseComponent
 	{
