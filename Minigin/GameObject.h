@@ -32,10 +32,7 @@ namespace Engine
 
 		// Scenegraph
 		GameObject* GetParent();
-		void SetParent(GameObject* parent);
-
-		void AddChild(GameObject* child);
-		void RemoveChild(GameObject* child);
+		void SetParent(GameObject* parent, bool keepWorldTransform);
 		
 
 		// Components
@@ -44,11 +41,13 @@ namespace Engine
 		template <ComponentType TComponent> void RemoveComponent();
 
 	private:
-		std::unordered_map<std::type_index, BaseComponent*> m_Components;
-		
+		std::unordered_map<std::type_index, BaseComponent*> m_Components;		
+
 		GameObject* m_Parent;
 		std::vector<GameObject*> m_Children;
 
+		void AddChild(GameObject* child);
+		void RemoveChild(GameObject* child);
 	};
 
 
