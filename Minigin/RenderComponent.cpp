@@ -9,7 +9,7 @@ Engine::RenderComponent::RenderComponent(GameObject* pOwner):
 
 void Engine::RenderComponent::Init()
 {
-	m_pTransform = GetOwner()->GetComponent<TransformComponent>();
+	m_pTransform = GetOwner()->GetTransform();
 }
 
 void Engine::RenderComponent::Render() const
@@ -17,7 +17,7 @@ void Engine::RenderComponent::Render() const
 	if(!m_Texture) return;  // Dont do anything if we dont have a texture!
 
 	m_pTransform;
-	const glm::vec3& pos{ m_pTransform->GetPosition() };
+	const glm::vec2& pos{ m_pTransform->GetPosition() };
 
 	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 }

@@ -18,7 +18,7 @@ namespace Engine
 		GameObject* GetOwner() const { return m_pOwner; };  // Only needs to be accessed by inheriting components
 
 	private:
-		GameObject* const m_pOwner;
+		GameObject* const m_pOwner;  // Const pointer so you cant override the pointer (u can still edit the object the pointer is pointing to)
 	
 	};
 }

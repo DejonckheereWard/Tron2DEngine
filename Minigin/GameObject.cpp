@@ -5,9 +5,9 @@
 #include "BaseComponent.h"
 #include "TransformComponent.h"
 
-Engine::GameObject::GameObject()
+Engine::GameObject::GameObject():
+	m_pTransform{ AddComponent<TransformComponent>() }
 {
-	AddComponent<TransformComponent>();  // Add a transformcomponent by default;
 }
 
 Engine::GameObject::~GameObject()
@@ -24,7 +24,7 @@ Engine::GameObject* Engine::GameObject::GetParent()
 	return m_Parent;
 }
 
-void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldTransform = false)
+void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 {
 	// Remove from previous parent if exist
 	if(m_Parent != nullptr)
@@ -45,7 +45,7 @@ void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldTransform =
 	// Update the worldtransform such that the object stays in the same position/rotation and scale
 	if(keepWorldTransform)
 	{
-		
+		GetTransform()->SetLocalScale(1.0f, 1.0f);
 	}
 
 }

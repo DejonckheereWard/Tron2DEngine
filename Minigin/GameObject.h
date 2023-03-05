@@ -10,6 +10,7 @@ namespace Engine
 {
 	class Texture2D;
 	class BaseComponent;
+	class TransformComponent;
 	class MissingComponent {};
 
 
@@ -32,19 +33,24 @@ namespace Engine
 
 		// Scenegraph
 		GameObject* GetParent();
-		void SetParent(GameObject* parent, bool keepWorldTransform);
-		
+		void SetParent(GameObject* parent, bool keepWorldTransform = false);
+		const std::vector<GameObject*>& GetChildren() { return m_Children; };
+
 
 		// Components
 		template <ComponentType TComponent> TComponent* AddComponent();
 		template <ComponentType TComponent> TComponent* GetComponent();
 		template <ComponentType TComponent> void RemoveComponent();
 
-	private:
-		std::unordered_map<std::type_index, BaseComponent*> m_Components;		
+		TransformComponent* GetTransform() { return m_pTransform; };
 
-		GameObject* m_Parent;
-		std::vector<GameObject*> m_Children;
+	private:
+		std::unordered_map<std::type_index, BaseComponent*> m_Components{};
+		
+		TransformComponent* const m_pTransform;
+
+		GameObject* m_Parent{ nullptr };
+		std::vector<GameObject*> m_Children{};
 
 		void AddChild(GameObject* child);
 		void RemoveChild(GameObject* child);

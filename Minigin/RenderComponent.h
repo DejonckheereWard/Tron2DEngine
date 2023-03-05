@@ -23,7 +23,7 @@ namespace Engine
 		//Texture2D* m_Texture{};
 
 	private:
-		TransformComponent* m_pTransform;
+		TransformComponent* m_pTransform{};
 	};
 }
 
