@@ -17,6 +17,8 @@ namespace Engine
 		void SetRotationSpeed(float anglePerSecond) { m_AnglePerSec = anglePerSecond; };
 
 	private:
+		//float m_Radius{};  // Set at start and stays at this radius constantly.
+		
 		float m_AnglePerSec{ 45.0f };
 		
 

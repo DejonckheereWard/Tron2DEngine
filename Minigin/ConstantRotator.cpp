@@ -1,5 +1,6 @@
 #include "ConstantRotator.h"
 #include "TransformComponent.h"
+#include "glm/gtx/rotate_vector.hpp"
 
 
 Engine::ConstantRotator::ConstantRotator(GameObject* parent):
@@ -10,9 +11,11 @@ Engine::ConstantRotator::ConstantRotator(GameObject* parent):
 void Engine::ConstantRotator::Init()
 {
 	m_pTransform = GetOwner()->GetTransform();
+	//m_Radius =  glm::distance(glm::vec2(0,0), m_pTransform->GetLocalPosition());
 }
 
 void Engine::ConstantRotator::Update(float deltaTime)
 {
-	m_pTransform->SetLocalRotation(m_pTransform->GetLocalRotation() + m_AnglePerSec * deltaTime);
+	const glm::vec2 newPosition{ glm::rotate(m_pTransform->GetLocalPosition(), glm::radians(m_AnglePerSec) * deltaTime) };
+	m_pTransform->SetLocalPosition(newPosition);
 }
