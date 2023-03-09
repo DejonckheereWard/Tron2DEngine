@@ -31,6 +31,9 @@ Engine::GameObject::~GameObject()
 
 void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
+	// Parent shouldnt be null, should default to the parent scene gameobject.
+	assert(parent != nullptr);
+
 	if(parent)
 	{
 		// Update the worldtransform such that the object stays in the same position/rotation and scale

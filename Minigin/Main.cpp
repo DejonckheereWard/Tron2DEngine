@@ -11,8 +11,6 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 
-#include "Scene.h"
-
 // Components
 #include "FPSComponent.h"
 #include "TextComponent.h"
@@ -24,7 +22,7 @@
 void load()
 {
 	using namespace Engine;
-	auto& scene = Engine::SceneManager::GetInstance().CreateScene("Demo");
+	GameObject* scene = Engine::SceneManager::GetInstance().CreateScene("Demo");
 
 	// Week 01
 
@@ -32,7 +30,7 @@ void load()
 	auto go = new GameObject();
 	std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
 	go->AddComponent<RenderComponent>()->SetTexture(bgTexture);
-	scene.Add(go);
+	scene->AddChild(go);
 
 	// Add title
 	go = new GameObject();
@@ -41,14 +39,14 @@ void load()
 	auto textComponent = go->AddComponent<TextComponent>();
 	textComponent->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36));
 	textComponent->SetText("Programming 4 Assignment");
-	scene.Add(go);
+	scene->AddChild(go);
 
 	// Add Logo
 	go = new GameObject();
 	std::shared_ptr<Texture2D> logoTexture{ ResourceManager::GetInstance().LoadTexture("logo.tga") };
 	go->AddComponent<RenderComponent>()->SetTexture(logoTexture);
 	go->GetTransform()->SetLocalPosition(216.0f, 180.0f);
-	scene.Add(go);
+	scene->AddChild(go);
 
 	// Add fps counter
 	go = new GameObject();
@@ -59,12 +57,12 @@ void load()
 	fpsFont->GetFont();
 	go->GetComponent<Engine::TextComponent>()->SetFont(fpsFont);
 	go->GetComponent<Engine::TransformComponent>()->SetLocalPosition(10.0f, 10.0f);
-	scene.Add(go);
+	scene->AddChild(go);
 
 	// Week 02
 	auto rotationPoint = new GameObject();
 	rotationPoint->GetTransform()->SetLocalPosition(250, 300);  // Parent
-	scene.Add(rotationPoint);
+	scene->AddChild(rotationPoint);
 
 	auto tank = new GameObject();
 	tank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png"));

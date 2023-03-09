@@ -38,9 +38,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
@@ -68,6 +65,9 @@
     <ClInclude Include="ConstantRotator.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Engine Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Minigin.cpp">
@@ -89,9 +89,6 @@
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -117,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="ConstantRotator.cpp">
       <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Engine Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
