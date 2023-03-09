@@ -1,15 +1,15 @@
 #pragma once
 #include "SceneManager.h"
+#include "GameObject.h"
 
 namespace Engine
 {
-	class GameObject;
 	class Scene final
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
-		void Add(std::shared_ptr<GameObject> object);
-		void Remove(std::shared_ptr<GameObject> object);
+		void Add(GameObject* object);
+		void Remove(GameObject* object);
 		void RemoveAll();
 
 		void Init();
@@ -26,7 +26,7 @@ namespace Engine
 		explicit Scene(const std::string& name);
 
 		std::string m_name;
-		std::vector < std::shared_ptr<GameObject>> m_objects{};
+		std::vector<GameObject*> m_Children{};
 
 		static unsigned int m_idCounter; 
 	};

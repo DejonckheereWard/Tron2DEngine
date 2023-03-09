@@ -32,8 +32,13 @@ namespace Engine
 		GameObject& operator=(GameObject&& other) = delete;
 
 		// Scenegraph
-		GameObject* GetParent();
-		void SetParent(GameObject* parent, bool keepWorldPosition = false);
+		GameObject* GetParent() { return m_Parent; };
+		void SetParent(GameObject* parent, bool keepWorldPosition = false);  // Bit like "move child to new parent"
+		void AddChild(GameObject* child, bool keepWorldPosition = false);  // Adds the child to this gameobject, making this gameobject the owner
+		void RemoveChild(GameObject* child);  // Should delete
+
+
+		//const std::vector<std::unique_ptr<GameObject>>& GetChildren() { return m_Children; };
 		const std::vector<GameObject*>& GetChildren() { return m_Children; };
 
 
@@ -46,14 +51,16 @@ namespace Engine
 
 	private:
 		std::unordered_map<std::type_index, BaseComponent*> m_Components{};
-		
+
 		TransformComponent* const m_pTransform;
 
 		GameObject* m_Parent{ nullptr };
+		//std::vector<std::unique_ptr<GameObject>> m_Children{};
 		std::vector<GameObject*> m_Children{};
 
-		void AddChild(GameObject* child);
-		void RemoveChild(GameObject* child);
+
+		void AddToChildCollection(GameObject* child);
+		void RemoveFromChildCollection(GameObject* child);
 	};
 
 

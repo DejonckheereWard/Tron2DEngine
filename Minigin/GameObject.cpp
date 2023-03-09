@@ -12,6 +12,15 @@ Engine::GameObject::GameObject():
 
 Engine::GameObject::~GameObject()
 {
+	// Delete children
+	for(GameObject* child : m_Children)
+	{
+		delete child;  // Will run destructor and delete subchildren too
+	}
+	m_Children.clear();
+
+
+	// Delete components
 	for(std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
 	{
 		delete component.second;
@@ -19,10 +28,6 @@ Engine::GameObject::~GameObject()
 	m_Components.clear();
 }
 
-Engine::GameObject* Engine::GameObject::GetParent()
-{
-	return m_Parent;
-}
 
 void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
@@ -44,7 +49,7 @@ void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	// Remove from previous parent if exist
 	if(m_Parent)
 	{		
-		m_Parent->RemoveChild(this);
+		m_Parent->RemoveFromChildCollection(this);
 	}
 
 	// Update the parent
@@ -53,25 +58,43 @@ void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	// Add to the new parent if it exists
 	if(m_Parent)
 	{
-		m_Parent->AddChild(this);
+		m_Parent->AddToChildCollection(this);
+		//m_Parent->Add(this);
 	}
-
-
-
 }
 
-void Engine::GameObject::AddChild(GameObject* child)
+void Engine::GameObject::AddChild(GameObject* child, bool keepWorldPosition)
+{
+	// Takes ownership over this child, calls setparent to do the work.
+	child->SetParent(this, keepWorldPosition);
+	//m_Children.emplace_back(child);
+}
+
+void Engine::GameObject::RemoveChild(GameObject* child)
+{
+	std::erase(m_Children, child);  // Remove from children collection
+	delete child;  // Will call its destructor, deleting subchildren too
+}
+
+void Engine::GameObject::AddToChildCollection(GameObject* child)
 {
 	m_Children.emplace_back(child);
 }
 
-void Engine::GameObject::RemoveChild(GameObject* child)
+void Engine::GameObject::RemoveFromChildCollection(GameObject* child)
 {
 	std::erase(m_Children, child);
 }
 
 void Engine::GameObject::Init()
 {
+	// GameObject has ownership over its children, init these
+	for(GameObject* child : m_Children)
+	{
+		child->Init();
+	}
+
+	// Init components
 	for(std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
 	{
 		component.second->Init();
@@ -80,6 +103,12 @@ void Engine::GameObject::Init()
 
 void Engine::GameObject::Update(float deltaTime)
 {
+	// GameObject has ownership over its children, update these
+	for(GameObject* child: m_Children)
+	{ 
+		child->Update(deltaTime);
+	}
+
 	// Go through all the components in the map and run update
 	for(std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
 	{
@@ -89,6 +118,12 @@ void Engine::GameObject::Update(float deltaTime)
 
 void Engine::GameObject::Render() const
 {
+	// GameObject has ownership over its children, render these
+	for(const GameObject* child : m_Children)
+	{
+		child->Render();
+	}
+
 	// Go through all the components in the map and run render
 	for(const std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
 	{
