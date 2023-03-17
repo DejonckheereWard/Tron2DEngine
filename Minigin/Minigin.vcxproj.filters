@@ -142,5 +142,8 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp">
       <Filter>Engine Files\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp">
+      <Filter>Engine Files\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
