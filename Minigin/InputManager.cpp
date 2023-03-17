@@ -1,8 +1,11 @@
 #include <SDL.h>
 #include "InputManager.h"
+#include <backends/imgui_impl_sdl2.h>
 
 bool Engine::InputManager::ProcessInput()
 {
+	//ZeroMemory
+
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
@@ -14,7 +17,9 @@ bool Engine::InputManager::ProcessInput()
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
 		}
-		// etc...
+		
+		// Imgui
+		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 
 	return true;

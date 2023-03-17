@@ -2,6 +2,9 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
+#include <imgui.h>
+#include <backends/imgui_impl_opengl2.h>
+#include <backends/imgui_impl_sdl2.h>
 
 int GetOpenGLDriverIndex()
 {
@@ -25,6 +28,12 @@ void Engine::Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+
+	// Init IMGUI
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL2_Init();
 }
 
 void Engine::Renderer::Render() const
@@ -35,16 +44,31 @@ void Engine::Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 	
+	ImGui_ImplOpenGL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+	ImGui::ShowDemoWindow();
+	ImGui::Render();
+	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
 	SDL_RenderPresent(m_renderer);
 }
 
 void Engine::Renderer::Destroy()
 {
+	// ImGui
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+	
+	// Renderer
 	if (m_renderer != nullptr)
 	{
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
 	}
+
+	
 }
 
 void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
