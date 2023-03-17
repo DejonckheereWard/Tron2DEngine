@@ -1,13 +1,11 @@
 #include "SceneManager.h"
-#include "SceneComponent.h"
-#include "GameObject.h"
-
-
+#include "Scene.h"
 
 void Engine::SceneManager::Init()
 {
 	for(auto& scene : m_Scenes)
 	{
+		scene->OnCreate();
 		scene->Init();
 	}
 }
@@ -20,7 +18,7 @@ void Engine::SceneManager::Update(float deltaTime)
 	}
 }
 
-void Engine::SceneManager::Render()
+void Engine::SceneManager::Render() const
 {
 	for(auto& scene : m_Scenes)
 	{
@@ -28,34 +26,34 @@ void Engine::SceneManager::Render()
 	}
 }
 
-Engine::GameObject* Engine::SceneManager::CreateScene(const std::string& name)
+void Engine::SceneManager::OnImGui()
 {
-	auto& scene = m_Scenes.emplace_back(std::make_unique<GameObject>());
-	scene->AddComponent<SceneComponent>()->SetName(name);
-
-	// Return the scene
-	return scene.get();
+	for(Scene* scene : m_Scenes)
+	{
+		scene->OnImGui();
+	}
 }
 
-Engine::GameObject* Engine::SceneManager::GetScene(const std::string& name) const
+Engine::SceneManager::~SceneManager()
 {
-	for(const auto& scene : m_Scenes)
+	for(Scene* scene : m_Scenes)
 	{
-		if(scene->GetComponent<SceneComponent>()->GetName() == name)
-		{
-			return scene.get();
-		}
+		delete scene;
 	}
-	return nullptr;  // Not found
+	m_Scenes.clear();
+}
+
+void Engine::SceneManager::AddScene(Scene* scene)
+{
+	m_Scenes.push_back(scene);
+}
+
+Engine::Scene* Engine::SceneManager::GetScene(const std::string& name) const
+{
+	return *std::find_if(begin(m_Scenes), end(m_Scenes), [name](Scene* scene) { return scene->GetName() == name; });
 }
 
 void Engine::SceneManager::RemoveScene(const std::string& name)
 {
-	for(auto& scene : m_Scenes)
-	{
-		if(scene->GetComponent<SceneComponent>()->GetName() == name)
-		{
-			std::erase(m_Scenes, scene);  // Unique pointer, so will auto clean up
-		}
-	}
+	std::erase_if(m_Scenes, [name](Scene* scene) { return scene->GetName() == name; });
 }

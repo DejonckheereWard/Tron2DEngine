@@ -65,19 +65,10 @@ void Engine::Renderer::RenderImGui() const
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);
 	ImGui::NewFrame();
-	ImGui::ShowDemoWindow();
 
 	ImGuiIO& io = ImGui::GetIO();
-	if(io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-	{
-		//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-	}
-
-	//sceneManager.OnImGui();
-
-	ImGui::Begin("Viewport");
-	//ImGui::Image(*, ImVec2{ 640.f, 480.f });
-	ImGui::End();
+	
+	SceneManager::GetInstance().OnImGui();  // Render scene's onimgui
 
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
