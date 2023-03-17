@@ -14,6 +14,9 @@ Engine::TransformComponent::TransformComponent(GameObject* pOwner):
 {
 }
 
+
+// 10 GetPostion()
+
 void Engine::TransformComponent::SetLocalPosition(const glm::vec2& pos)
 {
 	m_LocalPosition = pos;
