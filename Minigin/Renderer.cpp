@@ -32,6 +32,21 @@ void Engine::Renderer::Init(SDL_Window* window)
 	// Init IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+	ImGui::StyleColorsDark();
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	if(io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+	}
+
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
 }
@@ -43,13 +58,38 @@ void Engine::Renderer::Render() const
 	SDL_RenderClear(m_renderer);
 
 	SceneManager::GetInstance().Render();
-	
+}
+
+void Engine::Renderer::RenderImGui() const
+{
 	ImGui_ImplOpenGL2_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_window);
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();
+
+	ImGuiIO& io = ImGui::GetIO();
+	if(io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		//ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+	}
+
+	//sceneManager.OnImGui();
+
+	ImGui::Begin("Viewport");
+	//ImGui::Image(*, ImVec2{ 640.f, 480.f });
+	ImGui::End();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
+	if(io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		//SDL_GLContext ctx = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+
+		//SDL_GL_MakeCurrent(m_window, ctx);
+	}
 
 	SDL_RenderPresent(m_renderer);
 }

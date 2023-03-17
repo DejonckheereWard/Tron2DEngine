@@ -76,8 +76,6 @@ void load()
 	bullet->AddComponent<ConstantRotator>()->SetRotationSpeed(180.0f);
 	tank->AddChild(bullet);
 
-
-
 }
 
 int main(int, char* []) {
