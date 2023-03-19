@@ -47,7 +47,7 @@ private:
 	};
 
 
-	int m_BufferSize; // Size of the array to be measured, set in oncreate for runtime 32/64 bit check
+	int m_BufferSize{}; // Size of the array to be measured, set in oncreate for runtime 32/64 bit check
 	const int m_MaxStepSize{ 1024 };
 	
 	int m_NrOfSamplesExercise01{ 10 };  // Changeable in gui
