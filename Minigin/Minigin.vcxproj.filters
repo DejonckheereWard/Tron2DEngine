@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -77,6 +77,9 @@
     <ClInclude Include="MainScene.h">
       <Filter>Game Files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="TrashTheCacheScene.h">
+      <Filter>Game Files\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Minigin.cpp">
@@ -152,6 +155,9 @@
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp">
+      <Filter>Game Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="TrashTheCacheScene.cpp">
       <Filter>Game Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,13 +12,14 @@
 
 
 #include "MainScene.h"
+#include "TrashTheCacheScene.h"
 
 void load()
 {
 	using namespace Engine;
 	
 	//SceneManager::GetInstance().AddScene(new MainScene());
-
+	SceneManager::GetInstance().AddScene(new TrashTheCacheScene());
 
 }
 
