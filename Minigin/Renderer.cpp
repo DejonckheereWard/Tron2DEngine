@@ -57,17 +57,14 @@ void Engine::Renderer::Render() const
 	SDL_SetRenderDrawColor(m_renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_renderer);
 
-	SceneManager::GetInstance().Render();
-}
 
-void Engine::Renderer::RenderImGui() const
-{
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);
 	ImGui::NewFrame();
 
 	ImGuiIO& io = ImGui::GetIO();
-	
+
+	SceneManager::GetInstance().Render();
 	SceneManager::GetInstance().OnImGui();  // Render scene's onimgui
 
 	ImGui::Render();

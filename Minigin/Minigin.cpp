@@ -101,7 +101,6 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		doContinue = input.ProcessInput();
 		sceneManager.Update(deltaTime);
 		renderer.Render();
-		renderer.RenderImGui();
 		
 		lastTime = currentTime;
 
