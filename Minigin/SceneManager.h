@@ -23,8 +23,13 @@ namespace Engine
 
 	private:
 		friend class Singleton<SceneManager>;
-		SceneManager() = default;
+
+		// Destructor AND Constructor need to be defined in the CPP file for smart pointers to accept forward declarations
 		~SceneManager();
+		SceneManager();
 		std::vector<Scene*> m_Scenes{};
+		//std::vector<std::unique_ptr<Scene>> m_Testing{};
+		std::unique_ptr<Scene> m_Test;
+
 	};
 }

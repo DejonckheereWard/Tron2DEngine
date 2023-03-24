@@ -43,6 +43,9 @@ Engine::SceneManager::~SceneManager()
 	m_Scenes.clear();
 }
 
+Engine::SceneManager::SceneManager()
+{}
+
 void Engine::SceneManager::AddScene(Scene* scene)
 {
 	m_Scenes.push_back(scene);
