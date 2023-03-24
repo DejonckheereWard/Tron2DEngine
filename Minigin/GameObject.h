@@ -23,6 +23,7 @@ namespace Engine
 		void Init();
 		void Update(float deltaTime);
 		void Render() const;
+		void OnImGui();
 
 		GameObject();
 		~GameObject();

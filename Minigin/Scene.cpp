@@ -47,3 +47,11 @@ void Engine::Scene::Render() const
 		child->Render();
 	}
 }
+
+void Engine::Scene::OnImGui()
+{
+	for(Engine::GameObject* child : m_Children)
+	{
+		child->OnImGui();
+	}
+}

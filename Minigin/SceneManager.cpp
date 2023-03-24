@@ -27,7 +27,10 @@ void Engine::SceneManager::Render() const
 
 void Engine::SceneManager::OnImGui()
 {
-
+	for(auto& scene : m_Scenes)
+	{
+		scene->OnImGui();
+	}
 }
 
 Engine::SceneManager::~SceneManager()

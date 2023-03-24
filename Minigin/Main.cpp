@@ -8,8 +8,8 @@
 #endif
 
 #include "Minigin.h"
-#include "SceneManager.h"
 #include "ResourceManager.h"
+#include "SceneManager.h"
 #include "Scene.h"
 
 // Components
@@ -17,13 +17,15 @@
 #include "TextComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+
+// Custom Components
 #include "ConstantRotator.h"
 
 void MainScene()
 {
 	using namespace Engine;
 	// Add background
-	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("Demo");
+	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
 	auto go = new GameObject();
 	std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
 	go->AddComponent<RenderComponent>()->SetTexture(bgTexture);
@@ -74,10 +76,6 @@ void MainScene()
 	tank->AddChild(bullet);
 }
 
-void TrashTheCacheScene()
-{
-
-}
 
 void load()
 {

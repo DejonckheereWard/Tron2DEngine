@@ -20,7 +20,6 @@ namespace Engine
 
 	protected:
 		std::shared_ptr<Texture2D> m_Texture{};
-		//Texture2D* m_Texture{};
 
 	private:
 		TransformComponent* m_pTransform{};

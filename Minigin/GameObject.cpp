@@ -134,3 +134,17 @@ void Engine::GameObject::Render() const
 	}
 }
 
+void Engine::GameObject::OnImGui()
+{
+	for(GameObject* child : m_Children)
+	{
+		child->OnImGui();
+	}
+
+	// Go through all the components in the map and run update
+	for(std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
+	{
+		component.second->OnImGui();
+	}
+}
+

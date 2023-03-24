@@ -17,6 +17,7 @@ namespace Engine
 		void Init();
 		void Update(float deltaTime);
 		void Render() const;
+		void OnImGui();
 
 		// Scenegraph
 		void AddChild(GameObject* child);  // Adds the child to the scene

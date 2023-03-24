@@ -7,7 +7,6 @@
     </Filter>
     <Filter Include="Engine Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Game Files">
       <UniqueIdentifier>{d1017221-b409-41f1-a716-8effd2713374}</UniqueIdentifier>
@@ -47,9 +46,6 @@
     <ClInclude Include="Font.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="Minigin.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseComponent.h">
       <Filter>Engine Files\Components</Filter>
     </ClInclude>
@@ -71,11 +67,11 @@
     <ClInclude Include="Scene.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
+    <ClInclude Include="Minigin.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Minigin.cpp">
-      <Filter>Game Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
@@ -143,6 +139,9 @@
       <Filter>Engine Files\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Minigin.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
   </ItemGroup>
