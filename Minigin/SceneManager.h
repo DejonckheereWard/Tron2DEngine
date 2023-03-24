@@ -11,7 +11,7 @@ namespace Engine
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		void AddScene(Scene* scene);
+		Scene* CreateScene(const std::string& name);
 		Scene* GetScene(const std::string& name) const;
 		void RemoveScene(const std::string& name);
 
@@ -27,9 +27,8 @@ namespace Engine
 		// Destructor AND Constructor need to be defined in the CPP file for smart pointers to accept forward declarations
 		~SceneManager();
 		SceneManager();
-		std::vector<Scene*> m_Scenes{};
-		//std::vector<std::unique_ptr<Scene>> m_Testing{};
-		std::unique_ptr<Scene> m_Test;
+
+		std::vector<std::unique_ptr<Scene>> m_Scenes;  // Dont initalize 
 
 	};
 }

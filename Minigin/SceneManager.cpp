@@ -5,7 +5,6 @@ void Engine::SceneManager::Init()
 {
 	for(auto& scene : m_Scenes)
 	{
-		scene->OnCreate();
 		scene->Init();
 	}
 }
@@ -28,35 +27,42 @@ void Engine::SceneManager::Render() const
 
 void Engine::SceneManager::OnImGui()
 {
-	for(Scene* scene : m_Scenes)
-	{
-		scene->OnImGui();
-	}
+
 }
 
 Engine::SceneManager::~SceneManager()
 {
-	for(Scene* scene : m_Scenes)
-	{
-		delete scene;
-	}
-	m_Scenes.clear();
+	//m_Scenes.clear();
 }
 
-Engine::SceneManager::SceneManager()
+Engine::SceneManager::SceneManager():
+	m_Scenes{}
 {}
 
-void Engine::SceneManager::AddScene(Scene* scene)
+Engine::Scene* Engine::SceneManager::CreateScene(const std::string& name)
 {
-	m_Scenes.push_back(scene);
+	auto& scene = m_Scenes.emplace_back(std::make_unique<Scene>(name));
+
+	// Return the scene
+	return scene.get();
 }
 
 Engine::Scene* Engine::SceneManager::GetScene(const std::string& name) const
 {
-	return *std::find_if(begin(m_Scenes), end(m_Scenes), [name](Scene* scene) { return scene->GetName() == name; });
+	auto sceneIt = std::find_if(begin(m_Scenes), end(m_Scenes), [name](const std::unique_ptr<Engine::Scene>& scene) { 
+		return scene->GetName() == name; 
+	});
+
+	if(sceneIt != end(m_Scenes))
+	{
+		return (*sceneIt).get();
+	}
+	return nullptr;
 }
 
 void Engine::SceneManager::RemoveScene(const std::string& name)
 {
-	std::erase_if(m_Scenes, [name](Scene* scene) { return scene->GetName() == name; });
+	std::erase_if(m_Scenes, [name](std::unique_ptr<Engine::Scene>& scene) {
+		return scene->GetName() == name;
+	});
 }

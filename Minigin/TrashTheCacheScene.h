@@ -4,14 +4,14 @@
 #include <cmath>
 #include <thread>
 
-class TrashTheCacheScene: public Engine::Scene
+class TrashTheCacheScene
 {
 public:
-	TrashTheCacheScene(): Scene("TrashTheCacheScene") {};
+	TrashTheCacheScene() {};
 
 	// Inherited via Scene
-	virtual void OnCreate() override;
-	virtual void OnImGui() override;
+	virtual void OnCreate() ;
+	virtual void OnImGui() ;
 
 
 

@@ -4,7 +4,7 @@
 namespace Engine
 {
 	class GameObject;
-	class Scene
+	class Scene final
 	{
 	public:
 		explicit Scene(const std::string& name);
@@ -13,9 +13,6 @@ namespace Engine
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
-
-		virtual void OnCreate() = 0; // Before init
-		virtual void OnImGui() = 0;
 
 		void Init();
 		void Update(float deltaTime);
@@ -29,8 +26,7 @@ namespace Engine
 
 		const std::string& GetName() { return m_SceneName; };
 
-	private:
-		
+	private:		
 
 		const std::string m_SceneName;
 
