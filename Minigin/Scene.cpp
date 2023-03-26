@@ -59,7 +59,7 @@ void Engine::Scene::RemoveChild(GameObject* child)
 	std::erase(m_Children, child);
 }
 
-void Engine::Scene::RemoveChildIndex(int index)
+void Engine::Scene::RemoveChildIndex(size_t index)
 {
 	assert(index >= 0 && index < m_Children.size() && "Index out of bounds");
 	m_Children.erase(m_Children.begin() + index);

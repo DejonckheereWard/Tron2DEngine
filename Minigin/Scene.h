@@ -22,7 +22,7 @@ namespace Engine
 		// Scenegraph
 		void AddChild(GameObject* child);  // Adds the child to the scene
 		void RemoveChild(GameObject* child);  // Should delete
-		void RemoveChildIndex(int index);  // Should delete
+		void RemoveChildIndex(size_t index);  // Should delete
 
 		const std::vector<GameObject*>& GetChildren() { return m_Children; };
 

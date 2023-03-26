@@ -20,27 +20,18 @@
     <Filter Include="Engine Files\ImGui">
       <UniqueIdentifier>{30a287d7-5083-4c96-9db4-e6b1125bfbc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Files\Managers">
+      <UniqueIdentifier>{1c08345c-510a-4a1d-beba-7a41acc04dc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Singleton.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Engine Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
@@ -70,6 +61,30 @@
     <ClInclude Include="Minigin.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XController.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -81,16 +96,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Engine Files</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Engine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
@@ -142,6 +148,21 @@
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="XController.cpp">
+      <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
   </ItemGroup>
