@@ -144,6 +144,7 @@ void ControllerInputTest()
 
 
 	unsigned int controllerIdx = InputManager::GetInstance().AddController();
+
 	InputManager::GetInstance().AddAxisMapping<MoveRight>(SDL_SCANCODE_D, false, bullet);
 	InputManager::GetInstance().AddAxisMapping<MoveRight>(SDL_SCANCODE_A, true, bullet);
 	InputManager::GetInstance().AddAxisMapping<MoveForward>(SDL_SCANCODE_W, false, bullet);

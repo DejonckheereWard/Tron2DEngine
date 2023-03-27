@@ -5,7 +5,7 @@
 using Engine::Command;
 using Engine::AxisCommand;
 
-class OnReleaseCommand: public Command
+class OnReleaseCommand final: public Command
 {
 public:
 	OnReleaseCommand(Engine::GameObject* actor): Command(actor) {};
@@ -16,7 +16,7 @@ public:
 	};
 };
 
-class OnPressCommand: public Command
+class OnPressCommand final: public Command
 {
 public:
 	OnPressCommand(Engine::GameObject* actor): Command(actor) {};
@@ -27,7 +27,7 @@ public:
 	};
 };
 
-class PressedCommand: public Command
+class PressedCommand final: public Command
 {
 public:
 	PressedCommand(Engine::GameObject* actor): Command(actor) {};
@@ -39,7 +39,7 @@ public:
 };
 
 
-class MoveRight: public AxisCommand
+class MoveRight final: public AxisCommand
 {
 
 public:
@@ -57,7 +57,7 @@ public:
 	};
 };
 
-class MoveForward: public AxisCommand
+class MoveForward final: public AxisCommand
 {
 
 public:
