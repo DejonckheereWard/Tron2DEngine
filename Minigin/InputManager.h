@@ -44,7 +44,7 @@ namespace Engine
 	private:
 		friend class Singleton<InputManager>;
 		InputManager();
-		~InputManager();
+		virtual ~InputManager();
 		void HandleControllerInput();
 		void HandleKeyboardInput();
 		
