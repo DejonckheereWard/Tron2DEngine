@@ -14,13 +14,10 @@ Engine::TransformComponent::TransformComponent(GameObject* pOwner):
 {
 }
 
-
-// 10 GetPostion()
-
 void Engine::TransformComponent::SetLocalPosition(const glm::vec2& pos)
 {
 	m_LocalPosition = pos;
-	
+	UpdateLocalTransform();
 	SetDirty();
 }
 
@@ -33,13 +30,14 @@ void Engine::TransformComponent::SetLocalRotation(float angle)
 {
 	// Sets rotation in degrees
 	m_LocalRotation = angle;
-	
+	UpdateLocalTransform();
 	SetDirty();
 }
 
 void Engine::TransformComponent::SetLocalScale(const glm::vec2& scale)
 {
 	m_LocalScale = scale;
+	UpdateLocalTransform();
 	SetDirty();
 }
 
@@ -50,14 +48,14 @@ void Engine::TransformComponent::SetLocalScale(float x, float y)
 
 void Engine::TransformComponent::SetDirty()
 {
-
+	// Propagate dirty flag to children
 	auto children{ GetOwner()->GetChildren() };
 	for(GameObject* child : children)
 	{
 		child->GetTransform()->SetDirty();
 	}
 
-	m_LocalTransformIsDirty = true;
+	// Set dirty flag
 	m_WorldTransformIsDirty = true;
 }
 
@@ -106,12 +104,7 @@ const glm::mat4& Engine::TransformComponent::GetWorldTransform()
 }
 
 const glm::mat4& Engine::TransformComponent::GetLocalTransform()
-{
-	if(m_LocalTransformIsDirty)
-	{
-		UpdateLocalTransform();
-		m_LocalTransformIsDirty = false;
-	}
+{	
 	return m_LocalTransform;
 }
 
@@ -130,8 +123,7 @@ void Engine::TransformComponent::UpdateWorldTransform()
 	if(owner)
 	{
 		m_WorldTransform = owner->GetTransform()->GetWorldTransform();
-		auto localTransform = GetLocalTransform();
-		m_WorldTransform *= localTransform;
+		m_WorldTransform *= m_LocalTransform;
 	}
 	else
 	{

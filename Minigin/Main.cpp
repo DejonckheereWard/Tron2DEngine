@@ -161,7 +161,8 @@ void ControllerInputTest()
 void load()
 {
 	using namespace Engine;
-	ControllerInputTest();
+	//ControllerInputTest();
+	MainScene();
 }
 
 int main(int, char* []) 

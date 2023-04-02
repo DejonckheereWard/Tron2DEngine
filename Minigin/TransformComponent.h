@@ -40,8 +40,6 @@ namespace Engine
 		float m_LocalRotation{};
 		glm::vec2 m_LocalScale{ 1.0f, 1.0f};
 		
-		
-		bool m_LocalTransformIsDirty{ true };
 		glm::mat4 m_LocalTransform{};
 		void UpdateLocalTransform();
 		
