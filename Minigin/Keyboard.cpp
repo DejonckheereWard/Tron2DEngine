@@ -3,6 +3,7 @@
 
 #include "Keyboard.h"
 #include <vector>
+#include <SDL.h>
 
 class Engine::Keyboard::KeyboardImpl
 {
@@ -83,17 +84,17 @@ void Engine::Keyboard::Update()
 	m_KeyboardImpl->Update();
 }
 
-bool Engine::Keyboard::IsPressedThisFrame(SDL_Scancode key) const
+bool Engine::Keyboard::IsPressedThisFrame(unsigned int key) const
 {
-	return m_KeyboardImpl->IsPressedThisFrame(key);
+	return m_KeyboardImpl->IsPressedThisFrame(static_cast<SDL_Scancode>(key));
 }
 
-bool Engine::Keyboard::IsReleasedThisFrame(SDL_Scancode key) const
+bool Engine::Keyboard::IsReleasedThisFrame(unsigned int  key) const
 {
-	return m_KeyboardImpl->IsReleasedThisFrame(key);
+	return m_KeyboardImpl->IsReleasedThisFrame(static_cast<SDL_Scancode>(key));
 }
 
-bool Engine::Keyboard::IsPressed(SDL_Scancode key) const
+bool Engine::Keyboard::IsPressed(unsigned int  key) const
 {
-	return m_KeyboardImpl->IsPressed(key);
+	return m_KeyboardImpl->IsPressed(static_cast<SDL_Scancode>(key));
 }

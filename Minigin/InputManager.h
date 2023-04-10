@@ -18,25 +18,18 @@ namespace Engine
 	template <typename T>
 	concept IsCommand = std::is_base_of<Command, T>::value;
 
-	template <typename T>
-	concept IsAxisCommand = std::is_base_of<AxisCommand, T>::value;
-
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
 		bool ProcessInput();
 
-		template<IsCommand T>
-		void AddAction(unsigned int controllerIndex, XController::ControllerButton button, InputState btnState, GameObject* actor = nullptr);
+		void AddAction(unsigned int controllerIndex, XController::ControllerButton button, InputState btnState, std::unique_ptr<Command> command);
 		
-		template<IsCommand T>
-		void AddAction(SDL_Scancode key, InputState keySate, GameObject* actor = nullptr);
+		void AddAction(SDL_Scancode key, InputState keySate, std::unique_ptr<Command> command);
 
-		template<IsAxisCommand T>
-		void AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, GameObject* actor = nullptr);
+		void AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, std::unique_ptr<Command> command);
 
-		template<IsAxisCommand T>
-		void AddAxisMapping(SDL_Scancode key, bool invertAxis=false, GameObject* actor = nullptr);
+		void AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command);
 
 		unsigned int AddController();  // Returns index of the added controller
 		//void AddCommand(SDL_KeyCode keyCode, SDL_Key)
@@ -51,11 +44,11 @@ namespace Engine
 		using ControllerInput = std::pair<XController::ControllerButton, InputState>;
 		using ControllerKey = std::pair<unsigned int, ControllerInput>;
 		using ControllerCommandsMap = std::map<ControllerKey, std::vector<std::unique_ptr<Command>>>;
-		using ControllerAxisCommandsMap = std::map<ControllerKey, std::vector<std::unique_ptr<AxisCommand>>>;
+		using ControllerAxisCommandsMap = std::map<ControllerKey, std::vector<std::unique_ptr<Command>>>;
 
 		using KeyboardInput = std::pair<SDL_Scancode, InputState>;
 		using KeyboardCommandsMap = std::map<KeyboardInput, std::vector<std::unique_ptr<Command>>>;
-		using KeyboardAxisCommandsMap = std::map<KeyboardInput, std::vector<std::unique_ptr<AxisCommand>>>;
+		using KeyboardAxisCommandsMap = std::map<KeyboardInput, std::vector<std::unique_ptr<Command>>>;
 
 		ControllerCommandsMap m_ControllerCommands{};
 		ControllerAxisCommandsMap m_ControllerAxisCommands{};
@@ -67,61 +60,69 @@ namespace Engine
 	
 	};
 
-	template<IsCommand T>
-	inline void InputManager::AddAction(unsigned int controllerIndex, XController::ControllerButton button, InputState btnState, GameObject* actor)
-	{
-		auto input = ControllerInput(button, btnState);
-		auto key = ControllerKey(controllerIndex, input);
+	//template<IsCommand T>
+	//inline void InputManager::AddAction(unsigned int controllerIndex, XController::ControllerButton button, InputState btnState, GameObject* actor)
+	//{
+	//	auto input = ControllerInput(button, btnState);
+	//	auto key = ControllerKey(controllerIndex, input);
 
-		// Initialize vector of commands if no commands exist for this mapping yet.
-		if(m_ControllerCommands.count(key) == 0)
-		{
-			m_ControllerCommands[key] = std::vector<std::unique_ptr<Command>>{};
-		}
+	//	// Initialize vector of commands if no commands exist for this mapping yet.
+	//	if(m_ControllerCommands.count(key) == 0)
+	//	{
+	//		m_ControllerCommands[key] = std::vector<std::unique_ptr<Command>>{};
+	//	}
 
-		m_ControllerCommands[key].push_back(std::make_unique<T>(actor));
-	}
+	//	m_ControllerCommands[key].push_back(std::make_unique<T>(actor));
+	//}
 
-	template<IsCommand T>
-	inline void InputManager::AddAction(SDL_Scancode key, InputState keySate, GameObject* actor)
-	{
-		auto input = KeyboardInput(key, keySate);
+	//template<IsCommand T>
+	//inline void InputManager::AddAction(SDL_Scancode key, InputState keySate, GameObject* actor)
+	//{
+	//	auto input = KeyboardInput(key, keySate);
 
-		// Initialize vector of commands if no commands exist for this mapping yet.
-		if(m_KeyboardCommands.count(input) == 0)
-		{
-			m_KeyboardCommands[input] = std::vector<std::unique_ptr<Command>>{};
-		}
+	//	// Initialize vector of commands if no commands exist for this mapping yet.
+	//	if(m_KeyboardCommands.count(input) == 0)
+	//	{
+	//		m_KeyboardCommands[input] = std::vector<std::unique_ptr<Command>>{};
+	//	}
 
-		m_KeyboardCommands[input].push_back(std::make_unique<T>(actor));
-	}
+	//	m_KeyboardCommands[input].push_back(std::make_unique<T>(actor));
+	//}
 
-	template<IsAxisCommand T>
-	inline void InputManager::AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, GameObject* actor)
-	{
-		auto input = ControllerInput(static_cast<XController::ControllerButton>(axis), InputState::Pressed);
-		auto key = ControllerKey(controllerIndex, input);
+	//template<IsAxisCommand T>
+	//inline void InputManager::AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, GameObject* actor)
+	//{
+	//	auto input = ControllerInput(static_cast<XController::ControllerButton>(axis), InputState::Pressed);
+	//	auto key = ControllerKey(controllerIndex, input);
 
-		// Initialize vector of commands if no commands exist for this mapping yet.
-		if(m_ControllerCommands.count(key) == 0)
-		{
-			m_ControllerAxisCommands[key] = std::vector<std::unique_ptr<AxisCommand>>{};
-		}
+	//	// Initialize vector of commands if no commands exist for this mapping yet.
+	//	if(m_ControllerCommands.count(key) == 0)
+	//	{
+	//		m_ControllerAxisCommands[key] = std::vector<std::unique_ptr<AxisCommand>>{};
+	//	}
 
-		m_ControllerAxisCommands[key].push_back(std::make_unique<T>(actor));
-	}
+	//	m_ControllerAxisCommands[key].push_back(std::make_unique<T>(actor));
+	//}
 
-	template<IsAxisCommand T>
-	inline void InputManager::AddAxisMapping(SDL_Scancode key, bool invertAxis, GameObject* actor)
-	{
-		InputState state = InputState::Pressed;
-		auto input = KeyboardInput(key, state);
+	//inline void InputManager::AddAction(SDL_Scancode key, InputState keySate, std::unique_ptr<Command> command)
+	//{
+	//}
 
-		if(m_KeyboardAxisCommands.count(input) == 0)
-		{
-			m_KeyboardAxisCommands[input] = std::vector<std::unique_ptr<AxisCommand>>{};
-		}
+	//inline void InputManager::AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, std::unique_ptr<Command> command)
+	//{
+	//}
 
-		m_KeyboardAxisCommands[input].push_back(std::make_unique<T>(actor, invertAxis));
-	}
+	//template<IsAxisCommand T>
+	//inline void InputManager::AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command)
+	//{
+	//	InputState state = InputState::Pressed;
+	//	auto input = KeyboardInput(key, state);
+
+	//	if(m_KeyboardAxisCommands.count(input) == 0)
+	//	{
+	//		m_KeyboardAxisCommands[input] = std::vector<std::unique_ptr<AxisCommand>>{};
+	//	}
+
+	//	m_KeyboardAxisCommands[input].push_back(std::make_unique<T>(actor, invertAxis));
+	//}
 }

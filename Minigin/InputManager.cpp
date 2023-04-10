@@ -27,6 +27,60 @@ bool Engine::InputManager::ProcessInput()
 	return true;
 }
 
+void Engine::InputManager::AddAction(unsigned int controllerIndex, XController::ControllerButton button, InputState btnState, std::unique_ptr<Command> command)
+{
+	auto input = ControllerInput(button, btnState);
+	auto key = ControllerKey(controllerIndex, input);
+
+	// Initialize vector of commands if no commands exist for this mapping yet.
+	if(m_ControllerCommands.count(key) == 0)
+	{
+		m_ControllerCommands[key] = std::vector<std::unique_ptr<Command>>{};
+	}
+
+	m_ControllerCommands[key].push_back(std::move(command));
+}
+
+void Engine::InputManager::AddAction(SDL_Scancode key, InputState keySate, std::unique_ptr<Command> command)
+{
+	auto input = KeyboardInput(key, keySate);
+
+	// Initialize vector of commands if no commands exist for this mapping yet.
+	if(m_KeyboardCommands.count(input) == 0)
+	{
+		m_KeyboardCommands[input] = std::vector<std::unique_ptr<Command>>{};
+	}
+
+	m_KeyboardCommands[input].push_back(std::move(command));
+}
+
+void Engine::InputManager::AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, std::unique_ptr<Command> command)
+{
+	auto input = ControllerInput(static_cast<XController::ControllerButton>(axis), InputState::Pressed);
+	auto key = ControllerKey(controllerIndex, input);
+
+	// Initialize vector of commands if no commands exist for this mapping yet.
+	if(m_ControllerCommands.count(key) == 0)
+	{
+		m_ControllerAxisCommands[key] = std::vector<std::unique_ptr<Command>>{};
+	}
+
+	m_ControllerAxisCommands[key].push_back(std::move(command));
+}
+
+void Engine::InputManager::AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command)
+{
+	InputState state = InputState::Pressed;
+	auto input = KeyboardInput(key, state);
+
+	if(m_KeyboardAxisCommands.count(input) == 0)
+	{
+		m_KeyboardAxisCommands[input] = std::vector<std::unique_ptr<Command>>{};
+	}
+
+	m_KeyboardAxisCommands[input].push_back(std::move(command));
+}
+
 unsigned int Engine::InputManager::AddController()
 {
 	// Add a default controller
@@ -100,7 +154,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.x) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -111,7 +165,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -121,7 +175,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.x) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -131,7 +185,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -141,7 +195,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -151,7 +205,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value); }
+					for(auto& command : controllerMapping.second) { command->Execute(); }
 				}
 				break;
 			}
@@ -203,9 +257,9 @@ void Engine::InputManager::HandleKeyboardInput()
 		if(m_Keyboard->IsPressed(mapping.first.first))
 		{
 			// Execute every command in the mapping (vector of commands)
-			for(auto& command : mapping.second) 
-			{ 
-				command->Execute(1.0f); 
+			for(auto& command : mapping.second)
+			{
+				command->Execute();
 			}
 		}
 	}

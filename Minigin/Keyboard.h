@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <SDL.h>
 
 namespace Engine
 {
@@ -11,9 +10,9 @@ namespace Engine
 		~Keyboard();
 
 		void Update();
-		bool IsPressedThisFrame(SDL_Scancode key) const;  // flank detection
-		bool IsReleasedThisFrame(SDL_Scancode key) const;  // flank detection
-		bool IsPressed(SDL_Scancode key) const;
+		bool IsPressedThisFrame(unsigned int key) const;  // flank detection
+		bool IsReleasedThisFrame(unsigned key) const;  // flank detection
+		bool IsPressed(unsigned key) const;
 
 	private:
 		class KeyboardImpl;

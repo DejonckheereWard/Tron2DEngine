@@ -145,18 +145,24 @@ void ControllerInputTest()
 
 	unsigned int controllerIdx = InputManager::GetInstance().AddController();
 
-	InputManager::GetInstance().AddAxisMapping<MoveRight>(SDL_SCANCODE_D, false, bullet);
-	InputManager::GetInstance().AddAxisMapping<MoveRight>(SDL_SCANCODE_A, true, bullet);
-	InputManager::GetInstance().AddAxisMapping<MoveForward>(SDL_SCANCODE_W, false, bullet);
-	InputManager::GetInstance().AddAxisMapping<MoveForward>(SDL_SCANCODE_S, true, bullet);
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_D, std::make_unique<MoveCommand>(bullet, 2.0f, glm::vec2(1.0f, 0.0f)));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_A, std::make_unique<MoveCommand>(bullet, 2.0f, glm::vec2(-1.0f, 0.0f)));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_W, std::make_unique<MoveCommand>(bullet, 2.0f, glm::vec2(0.0f, -1.0f)));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_S, std::make_unique<MoveCommand>(bullet, 2.0f, glm::vec2(0.0f, 1.0f)));
 
-	InputManager::GetInstance().AddAction<OnPressCommand>(SDL_SCANCODE_SPACE, InputState::OnPress);
-	InputManager::GetInstance().AddAction<OnReleaseCommand>(SDL_SCANCODE_SPACE, InputState::OnRelease);
+	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::DPadRight,Engine::InputState::Pressed, std::make_unique<MoveCommand>(tank, 1.0f, glm::vec2(1.0f, 0.0f)));
+	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::DPadLeft, Engine::InputState::Pressed, std::make_unique<MoveCommand>(tank, 1.0f, glm::vec2(-1.0f, 0.0f)));
+	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::DPadUp, Engine::InputState::Pressed, std::make_unique<MoveCommand>(tank, 1.0f, glm::vec2(0.0f, -1.0f)));
+	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::DPadDown, Engine::InputState::Pressed, std::make_unique<MoveCommand>(tank, 1.0f, glm::vec2(0.0f, 1.0f)));
+
+
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, InputState::OnPress, std::make_unique<OnPressCommand>());
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, InputState::OnRelease, std::make_unique<OnReleaseCommand>());
 
 
 	// Second player with joystick rather than dpad
-	InputManager::GetInstance().AddAxisMapping<MoveForward>(controllerIdx, Engine::XController::ControllerAxis::LeftThumbY, tank);
-	InputManager::GetInstance().AddAxisMapping<MoveRight>(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, tank);
+	//InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbY, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(0.0f, 1.0f)));
+	//InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(1.0f, 0.0f)));
 }
 
 

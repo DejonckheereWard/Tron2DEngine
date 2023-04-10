@@ -3,12 +3,10 @@
 
 
 using Engine::Command;
-using Engine::AxisCommand;
 
 class OnReleaseCommand final: public Command
 {
 public:
-	OnReleaseCommand(Engine::GameObject* actor): Command(actor) {};
 	// Inherited via Command
 	virtual void Execute() override
 	{
@@ -19,7 +17,6 @@ public:
 class OnPressCommand final: public Command
 {
 public:
-	OnPressCommand(Engine::GameObject* actor): Command(actor) {};
 	// Inherited via Command
 	virtual void Execute() override
 	{
@@ -30,7 +27,6 @@ public:
 class PressedCommand final: public Command
 {
 public:
-	PressedCommand(Engine::GameObject* actor): Command(actor) {};
 	// Inherited via Command
 	virtual void Execute() override
 	{
@@ -39,39 +35,25 @@ public:
 };
 
 
-class MoveRight final: public AxisCommand
+class MoveCommand final: public Command
 {
 
 public:
-	MoveRight(Engine::GameObject* actor, bool invertAxis = false): 
-		AxisCommand(actor, invertAxis) {};
+	MoveCommand(Engine::GameObject* actor, float movementspeed, const glm::vec2& movedirection): 
+		Command(actor),
+		m_MoveDirection{ movedirection },
+		m_MovementSpeed{ movementspeed }
+	{};
 
 	// Inherited via Command
-	virtual void Execute(float value) override
+	virtual void Execute() override
 	{
-		if(m_InvertAxis)
-			value = -value;
 		auto localPos = GetActor()->GetTransform()->GetLocalPosition();
-		localPos.x = localPos.x + value;
+		localPos += m_MoveDirection * m_MovementSpeed;
 		GetActor()->GetTransform()->SetLocalPosition(localPos);
 	};
-};
 
-class MoveForward final: public AxisCommand
-{
-
-public:
-	MoveForward(Engine::GameObject* actor, bool invertAxis = false):
-		AxisCommand(actor, invertAxis) {};
-
-	// Inherited via Command
-	virtual void Execute(float value) override
-	{
-		if(m_InvertAxis)
-			value = -value;
-
-		auto localPos = GetActor()->GetTransform()->GetLocalPosition();
-		localPos.y = localPos.y - value;
-		GetActor()->GetTransform()->SetLocalPosition(localPos);
-	};
+private:
+	glm::vec2 m_MoveDirection;
+	float m_MovementSpeed;
 };
