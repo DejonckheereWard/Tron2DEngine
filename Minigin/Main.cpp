@@ -150,6 +150,9 @@ void ControllerInputTest()
 	InputManager::GetInstance().AddAxisMapping<MoveForward>(SDL_SCANCODE_W, false, bullet);
 	InputManager::GetInstance().AddAxisMapping<MoveForward>(SDL_SCANCODE_S, true, bullet);
 
+	InputManager::GetInstance().AddAction<OnPressCommand>(SDL_SCANCODE_SPACE, InputState::OnPress);
+	InputManager::GetInstance().AddAction<OnReleaseCommand>(SDL_SCANCODE_SPACE, InputState::OnRelease);
+
 
 	// Second player with joystick rather than dpad
 	InputManager::GetInstance().AddAxisMapping<MoveForward>(controllerIdx, Engine::XController::ControllerAxis::LeftThumbY, tank);
@@ -161,8 +164,8 @@ void ControllerInputTest()
 void load()
 {
 	using namespace Engine;
-	//ControllerInputTest();
-	MainScene();
+	ControllerInputTest();
+	//MainScene();
 }
 
 int main(int, char* []) 
