@@ -10,6 +10,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <chrono>
+#include <steam_api.h>
 
 SDL_Window* g_window{};
 
@@ -101,7 +102,10 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		doContinue = input.ProcessInput();
 		sceneManager.Update(deltaTime);
 		renderer.Render();
-		
+
+		SteamAPI_RunCallbacks();
+
+
 		lastTime = currentTime;
 
 		
