@@ -190,7 +190,10 @@
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="XController.h" />
     <ClInclude Include="Font.h" />
@@ -222,7 +225,10 @@
     <ClCompile Include="ConstantRotator.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
+    <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="ScoreDisplay.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="XController.cpp" />
     <ClCompile Include="Font.cpp" />

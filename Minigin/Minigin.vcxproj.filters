@@ -97,6 +97,15 @@
     <ClInclude Include="HealthDisplay.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreDisplay.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -187,6 +196,15 @@
       <Filter>Game Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="HealthDisplay.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplay.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
   </ItemGroup>

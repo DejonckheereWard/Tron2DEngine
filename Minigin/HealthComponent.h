@@ -26,11 +26,14 @@ public:
 	void TakeDamage(int damage);
 	void Heal(int heal);
 
+	int GetLives();
+
 	Engine::Subject* GetSubject() { return m_pSubject.get(); };
 private:
 
 	int m_Health{ 100 };
 	int m_MaxHealth{ 100 };
+	int m_Lives{ 3 };
 
 	std::unique_ptr<Engine::Subject> m_pSubject{};
 

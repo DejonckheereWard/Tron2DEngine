@@ -119,3 +119,10 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, co
 }
 
 inline SDL_Renderer* Engine::Renderer::GetSDLRenderer() const { return m_renderer; }
+
+glm::vec2 Engine::Renderer::GetWindowSize() const
+{
+	int w, h;
+	SDL_GetWindowSize(m_window, &w, &h);
+	return glm::vec2{ float(w), float(h) };
+}

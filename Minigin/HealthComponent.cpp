@@ -8,11 +8,6 @@ void HealthComponent::Init()
 
 void HealthComponent::Update(float /*deltaTime*/)
 {
-	if(m_Health <= 0)
-	{
-		m_pSubject->Notify(GetOwner(), "Death");
-	}
-
 }
 
 void HealthComponent::Render() const
@@ -48,12 +43,42 @@ float HealthComponent::GetHealthPercentage() const
 
 void HealthComponent::TakeDamage(int damage)
 {
-	m_Health -= damage;
-	m_pSubject->Notify(GetOwner(), "HealthChanged");
+	if(m_Health > 0)
+	{ 	
+		m_Health -= damage;
+		m_pSubject->Notify(GetOwner(), "HealthChanged");
+	}
+	if(m_Health <= 0)
+	{
+		--m_Lives;
+		m_Health = 0;
+
+		if(m_Lives > 0)
+		{
+			m_Health = m_MaxHealth;
+			m_pSubject->Notify(GetOwner(), "HealthChanged");
+		}
+
+		m_pSubject->Notify(GetOwner(), "PlayerDeath");
+
+	}
 }
 
 void HealthComponent::Heal(int heal)
 {
-	m_Health += heal;
+	if(m_Health < m_MaxHealth)
+	{
+		m_Health += heal;
+
+		if(m_Health > m_MaxHealth)
+		{
+			m_Health = m_MaxHealth;
+		}
+	}
 	m_pSubject->Notify(GetOwner(), "HealthChanged");
+}
+
+int HealthComponent::GetLives()
+{
+	return m_Lives;
 }

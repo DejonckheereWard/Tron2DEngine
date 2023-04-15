@@ -3,16 +3,16 @@
 #include "Observer.h"
 
 namespace Engine { class TextComponent; };
-class HealthDisplay final: public Engine::BaseComponent, public Engine::Observer
+class LivesDisplay final: public Engine::BaseComponent, public Engine::Observer
 {
 public:
-	HealthDisplay(Engine::GameObject* parent);
-	~HealthDisplay() = default;
+	LivesDisplay(Engine::GameObject* parent);
+	~LivesDisplay() = default;
 
-	HealthDisplay(const HealthDisplay& other) = delete;
-	HealthDisplay(HealthDisplay&& other) = delete;
-	HealthDisplay& operator=(const HealthDisplay& other) = delete;
-	HealthDisplay& operator=(HealthDisplay&& other) = delete;
+	LivesDisplay(const LivesDisplay& other) = delete;
+	LivesDisplay(LivesDisplay&& other) = delete;
+	LivesDisplay& operator=(const LivesDisplay& other) = delete;
+	LivesDisplay& operator=(LivesDisplay&& other) = delete;
 
 	// Inherited via BaseComponent
 	virtual void Init() override;

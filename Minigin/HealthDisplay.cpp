@@ -3,7 +3,11 @@
 #include "HealthComponent.h"
 
 HealthDisplay::HealthDisplay(Engine::GameObject* parent):
-	Engine::BaseComponent(parent)
+	Engine::BaseComponent(parent),
+	m_pTextComponent{}
+{}
+
+void HealthDisplay::Init()
 {
 	m_pTextComponent = GetOwner()->GetComponent<Engine::TextComponent>();
 }
@@ -15,16 +19,4 @@ void HealthDisplay::OnNotify(Engine::GameObject* pGameObject, const std::string&
 		m_pTextComponent->SetText(m_Prefix + "Health: " + std::to_string(pGameObject->GetComponent<HealthComponent>()->GetHealth()));
 	}
 
-}
-
-void HealthDisplay::Init()
-{
-}
-
-void HealthDisplay::Update(float /*deltaTime*/)
-{
-}
-
-void HealthDisplay::Render() const
-{
 }

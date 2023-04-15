@@ -82,3 +82,25 @@ private:
 	HealthComponent* m_pHealthComponent;
 	int m_DamageAmount;
 };
+
+class AddScore final: public Command
+{
+public:
+	AddScore(Engine::GameObject* actor, int scoreAmount):
+		Command(actor),
+		m_ScoreAmount{ scoreAmount }
+	{
+		m_pScoreComponent = GetActor()->GetComponent<ScoreComponent>();
+	};
+
+	// Inherited via Command
+	virtual void Execute(float) override
+	{
+		m_pScoreComponent->AddScore(m_ScoreAmount);
+	};
+
+private:
+	ScoreComponent* m_pScoreComponent;
+	int m_ScoreAmount;
+
+};

@@ -22,14 +22,20 @@
 
 // Custom Components
 #include "ConstantRotator.h"
-#include "HealthComponent.h"
 #include "HealthDisplay.h"
+#include "LivesDisplay.h"
+#include "HealthComponent.h"
+#include "ScoreDisplay.h"
+#include "ScoreComponent.h"
 
 #include "GameCommands.h"
 
 void MainScene()
 {
 	using namespace Engine;
+
+
+	glm::vec2 windowSize{ Renderer::GetInstance().GetWindowSize() };
 
 	// Add background
 	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
@@ -65,13 +71,13 @@ void MainScene()
 	go->GetComponent<Engine::TransformComponent>()->SetLocalPosition(10.0f, 10.0f);
 	scene->AddChild(go);
 
+	// Health displays
 	auto healthDisplayA = new GameObject();
-	healthDisplayA->AddComponent<RenderComponent>();
 	healthDisplayA->AddComponent<RenderComponent>();
 	healthDisplayA->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
 	auto healthDisplayComponentA = healthDisplayA->AddComponent<HealthDisplay>();
 	healthDisplayComponentA->SetPrefix("PlayerA ");
-	healthDisplayA->GetTransform()->SetLocalPosition(20, 420);
+	healthDisplayA->GetTransform()->SetLocalPosition(20, windowSize.y - 50);
 	scene->AddChild(healthDisplayA);
 
 	auto healthDisplayB = new GameObject();
@@ -80,24 +86,66 @@ void MainScene()
 	healthDisplayB->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
 	auto healthDisplayComponentB = healthDisplayB->AddComponent<HealthDisplay>();
 	healthDisplayComponentB->SetPrefix("PlayerB ");
-	healthDisplayB->GetTransform()->SetLocalPosition(20, 450);
+	healthDisplayB->GetTransform()->SetLocalPosition(200, windowSize.y - 50);
 	scene->AddChild(healthDisplayB);
 
+	// Lives displays
+	auto livesDisplayA = new GameObject();
+	livesDisplayA->AddComponent<RenderComponent>();
+	livesDisplayA->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
+	auto livesDisplayComponentA = livesDisplayA->AddComponent<LivesDisplay>();
+	livesDisplayComponentA->SetPrefix("PlayerA ");
+	livesDisplayA->GetTransform()->SetLocalPosition(20, windowSize.y - 70);
+	scene->AddChild(livesDisplayA);
+
+	auto livesDisplayB = new GameObject();
+	livesDisplayB->AddComponent<RenderComponent>();
+	livesDisplayB->AddComponent<RenderComponent>();
+	livesDisplayB->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
+	auto livesDisplayComponentB = livesDisplayB->AddComponent<LivesDisplay>();
+	livesDisplayComponentB->SetPrefix("PlayerB ");
+	livesDisplayB->GetTransform()->SetLocalPosition(200, windowSize.y - 70);
+	scene->AddChild(livesDisplayB);
+
+	// Score displays
+	auto scoreDisplayA = new GameObject();
+	scoreDisplayA->AddComponent<RenderComponent>();
+	scoreDisplayA->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
+	auto scoreDisplayAComp = scoreDisplayA->AddComponent<ScoreDisplay>();
+	scoreDisplayAComp->SetPrefix("PlayerA ");
+	scoreDisplayA->GetTransform()->SetLocalPosition(20, windowSize.y - 30);
+	scene->AddChild(scoreDisplayA);
+
+	auto scoreDisplayB = new GameObject();
+	scoreDisplayB->AddComponent<RenderComponent>();
+	scoreDisplayB->AddComponent<TextComponent>()->SetFont(Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 18));
+	auto scoreDisplayBComp = scoreDisplayB->AddComponent<ScoreDisplay>();
+	scoreDisplayBComp->SetPrefix("PlayerB ");
+	scoreDisplayB->GetTransform()->SetLocalPosition(200, windowSize.y - 30);
+	scene->AddChild(scoreDisplayB);
+
+
+
+	// Players
 	auto tankA = new GameObject();
 	tankA->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png"));
 	tankA->GetTransform()->SetLocalPosition(20, 20);
 	auto healthCompA = tankA->AddComponent<HealthComponent>()->GetSubject();
+	auto scoreCompA = tankA->AddComponent<ScoreComponent>()->GetSubject();
 	healthCompA->AddObserver(healthDisplayComponentA);
+	healthCompA->AddObserver(livesDisplayComponentA);
+	scoreCompA->AddObserver(scoreDisplayAComp);
 	scene->AddChild(tankA);
 
 	auto tankB = new GameObject();
 	tankB->GetTransform()->SetLocalPosition(20, 20);
 	tankB->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
 	auto healthCompB = tankB->AddComponent<HealthComponent>()->GetSubject();
+	auto scoreCompB = tankB->AddComponent<ScoreComponent>()->GetSubject();
 	healthCompB->AddObserver(healthDisplayComponentB);
+	healthCompB->AddObserver(livesDisplayComponentB);
+	scoreCompB->AddObserver(scoreDisplayBComp);
 	scene->AddChild(tankB);
-
-
 
 	// INPUT
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_D, std::make_unique<MoveCommand>(tankA, 2.0f, glm::vec2(1.0f, 0.0f)));
@@ -112,6 +160,9 @@ void MainScene()
 
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_DOWN, Engine::InputState::OnPress, std::make_unique<DamagePlayer>(tankA, 10));
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_LEFT, Engine::InputState::OnPress, std::make_unique<DamagePlayer>(tankB, 10));
+
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<AddScore>(tankA, 10));
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AddScore>(tankB, 10));
 }
 
 
