@@ -187,6 +187,8 @@
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="ConstantRotator.h" />
+    <ClInclude Include="HealthComponent.h" />
+    <ClInclude Include="HealthDisplay.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Subject.h" />
@@ -218,6 +220,8 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ConstantRotator.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
+    <ClCompile Include="HealthDisplay.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="XController.cpp" />

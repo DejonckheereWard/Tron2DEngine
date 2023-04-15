@@ -44,6 +44,14 @@ void Engine::TextComponent::SetFont(std::shared_ptr<Font> font)
 void Engine::TextComponent::UpdateTexture()
 {
 	const SDL_Color color = { 255,255,255 }; // only white text is supported now
+
+	if(m_Text == "")
+	{
+		m_Texture = nullptr;
+		m_pRenderComponent->SetTexture(m_Texture);
+		return;
+	}
+
 	const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
 	if(surf == nullptr)
 	{

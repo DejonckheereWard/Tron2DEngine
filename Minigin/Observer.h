@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace Engine
 {
@@ -8,6 +9,6 @@ namespace Engine
 	public:
 		Observer() = default;
 		virtual ~Observer() = default;
-		virtual void OnNotify(GameObject* entity, unsigned int eventID) = 0;
+		virtual void OnNotify(GameObject* entity, const std::string& eventName) = 0;
 	};
 }

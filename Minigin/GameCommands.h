@@ -4,6 +4,8 @@
 
 using Engine::Command;
 
+
+// Testing
 class OnReleaseCommand final: public Command
 {
 public:
@@ -35,6 +37,7 @@ public:
 };
 
 
+// Game commands
 class MoveCommand final: public Command
 {
 
@@ -56,4 +59,26 @@ public:
 private:
 	glm::vec2 m_MoveDirection;
 	float m_MovementSpeed;
+};
+
+
+class DamagePlayer final: public Command
+{
+public:
+	DamagePlayer(Engine::GameObject* actor, int dmgAmount):
+		Command(actor),
+		m_DamageAmount{ dmgAmount }
+	{
+		m_pHealthComponent = GetActor()->GetComponent<HealthComponent>();
+	};
+
+	// Inherited via Command
+	virtual void Execute(float) override
+	{
+		m_pHealthComponent->TakeDamage(m_DamageAmount);
+	};
+
+private:
+	HealthComponent* m_pHealthComponent;
+	int m_DamageAmount;
 };

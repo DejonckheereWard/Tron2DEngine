@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace Engine
 {
@@ -20,8 +21,8 @@ namespace Engine
 		void AddObserver(Observer* observer);;
 		void RemoveObserver(Observer* observer);;
 
-	protected:
-		void Notify(GameObject* actor, unsigned int eventID) const;
+		void Notify(GameObject* actor, const std::string& eventName) const;
+
 	private:
 		std::vector<Observer*> m_Observers{};
 	};

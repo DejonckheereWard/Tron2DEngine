@@ -14,7 +14,8 @@ void Engine::RenderComponent::Init()
 
 void Engine::RenderComponent::Render() const
 {
-	if(!m_Texture) return;  // Dont do anything if we dont have a texture!
+	if(!m_Texture) 
+		return;  // Dont do anything if we dont have a texture!
 
 	m_pTransform;
 	const glm::vec2& pos{ m_pTransform->GetPosition() };
