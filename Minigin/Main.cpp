@@ -161,8 +161,8 @@ void ControllerInputTest()
 
 
 	// Second player with joystick rather than dpad
-	//InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbY, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(0.0f, 1.0f)));
-	//InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(1.0f, 0.0f)));
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbY, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(0.0f, -1.0f)));
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, std::make_unique<MoveCommand>(tank, 2.0f, glm::vec2(1.0f, 0.0f)));
 }
 
 

@@ -154,7 +154,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.x) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
 				}
 				break;
 			}
@@ -165,7 +165,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
 				}
 				break;
 			}
@@ -175,7 +175,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.x) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
 				}
 				break;
 			}
@@ -185,7 +185,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
 				}
 				break;
 			}
@@ -195,7 +195,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value); }
 				}
 				break;
 			}
@@ -205,7 +205,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(); }
+					for(auto& command : controllerMapping.second) { command->Execute(value); }
 				}
 				break;
 			}

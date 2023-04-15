@@ -12,7 +12,7 @@ namespace Engine
 		{};
 
 		virtual ~Command() {};
-		virtual void Execute() = 0;
+		virtual void Execute(float inputValue=1.0f) = 0;  // Value for analog input
 
 		GameObject* GetActor() { return m_Actor; };
 

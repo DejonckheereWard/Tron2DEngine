@@ -8,7 +8,7 @@ class OnReleaseCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute() override
+	virtual void Execute(float) override
 	{
 		std::cout << "OnReleaseCommand\n";
 	};
@@ -18,7 +18,7 @@ class OnPressCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute() override
+	virtual void Execute(float) override
 	{
 		std::cout << "OnPressCommand\n";
 	};
@@ -28,7 +28,7 @@ class PressedCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute() override
+	virtual void Execute(float) override
 	{
 		std::cout << "PressedCommand\n";
 	};
@@ -46,10 +46,10 @@ public:
 	{};
 
 	// Inherited via Command
-	virtual void Execute() override
+	virtual void Execute(float value) override
 	{
 		auto localPos = GetActor()->GetTransform()->GetLocalPosition();
-		localPos += m_MoveDirection * m_MovementSpeed;
+		localPos += m_MoveDirection * m_MovementSpeed * value;
 		GetActor()->GetTransform()->SetLocalPosition(localPos);
 	};
 
