@@ -8,12 +8,13 @@
 #endif
 
 #include "Minigin.h"
+#include "CSteamAchievements.h"
+#include "EAchievements.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "InputManager.h"
 #include "Scene.h"
 #include "Renderer.h"
-
 #include <steam_api.h>
 
 // Components
@@ -44,6 +45,7 @@ void MainScene()
 	auto go = new GameObject();
 	std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
 	go->AddComponent<RenderComponent>()->SetTexture(bgTexture);
+	go->GetComponent<TransformComponent>()->SetLocalScale(2.0f, 2.0f);
 	scene->AddChild(go);
 
 	// Add title
@@ -131,16 +133,17 @@ void MainScene()
 	// Players
 	auto tankA = new GameObject();
 	tankA->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png"));
-	tankA->GetTransform()->SetLocalPosition(20, 20);
+	tankA->GetTransform()->SetLocalPosition(200, 200);
 	auto healthCompA = tankA->AddComponent<HealthComponent>()->GetSubject();
 	auto scoreCompA = tankA->AddComponent<ScoreComponent>()->GetSubject();
 	healthCompA->AddObserver(healthDisplayComponentA);
 	healthCompA->AddObserver(livesDisplayComponentA);
 	scoreCompA->AddObserver(scoreDisplayAComp);
+	scoreCompA->AddObserver(&AchievementHandler::GetInstance());
 	scene->AddChild(tankA);
 
 	auto tankB = new GameObject();
-	tankB->GetTransform()->SetLocalPosition(20, 20);
+	tankB->GetTransform()->SetLocalPosition(200, 200);
 	tankB->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
 	auto healthCompB = tankB->AddComponent<HealthComponent>()->GetSubject();
 	auto scoreCompB = tankB->AddComponent<ScoreComponent>()->GetSubject();
@@ -186,6 +189,7 @@ int main(int, char* [])
 	}
 	else
 	{
+		g_SteamAchievements = new Engine::CSteamAchievements(g_Achievements, 4);
 		std::cout << "Successfully initialized steam." << std::endl;
 	}
 

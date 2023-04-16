@@ -106,6 +106,16 @@
     <ClInclude Include="LivesDisplay.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="CSteamAchievements.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Achievement_t.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="EAchievements.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -207,5 +217,13 @@
     <ClCompile Include="LivesDisplay.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="CSteamAchievements.cpp">
+      <Filter>Engine Files\Managers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Minigin.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

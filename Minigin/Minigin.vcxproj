@@ -212,14 +212,18 @@ xcopy "$(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\*.dll" "$(Out
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Achievement_t.h" />
+    <ClInclude Include="CSteamAchievements.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="ConstantRotator.h" />
+    <ClInclude Include="EAchievements.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="Subject.h" />
@@ -249,6 +253,7 @@ xcopy "$(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\*.dll" "$(Out
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="CSteamAchievements.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="ConstantRotator.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
@@ -274,6 +279,9 @@ xcopy "$(SolutionDir)3rdParty\steamworks\redistributable_bin\win64\*.dll" "$(Out
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Minigin.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

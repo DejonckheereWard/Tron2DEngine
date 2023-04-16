@@ -43,6 +43,7 @@ float HealthComponent::GetHealthPercentage() const
 
 void HealthComponent::TakeDamage(int damage)
 {
+
 	if(m_Health > 0)
 	{ 	
 		m_Health -= damage;
@@ -50,17 +51,18 @@ void HealthComponent::TakeDamage(int damage)
 	}
 	if(m_Health <= 0)
 	{
-		--m_Lives;
-		m_Health = 0;
-
 		if(m_Lives > 0)
 		{
+			--m_Lives;
 			m_Health = m_MaxHealth;
 			m_pSubject->Notify(GetOwner(), "HealthChanged");
+			m_pSubject->Notify(GetOwner(), "PlayerDeath");
 		}
-
-		m_pSubject->Notify(GetOwner(), "PlayerDeath");
-
+		else
+		{
+			m_Health = 0;
+			m_Lives = 0;
+		}
 	}
 }
 
