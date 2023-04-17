@@ -33,10 +33,29 @@
 
 #include "GameCommands.h"
 
+void PrintManual()
+{
+	std::cout << std::endl;
+	std::cout << "Controls:" << std::endl;
+	std::cout << "Player 1:" << std::endl;
+	std::cout << "WASD - Movement" << std::endl;
+	std::cout << "Player 2:" << std::endl;
+	std::cout << "Controller Joystick Left - Movement" << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "TESTING CONTROLS" << std::endl;
+	std::cout << "DOWN - LEFT ARROW: Decrease Health Player A/B" << std::endl; 
+	std::cout << "UP - RIGHT ARROW: Increase Points Player A/B" << std::endl;
+	std::cout << std::endl;
+
+}
+
 void MainScene()
 {
 	using namespace Engine;
 
+	PrintManual();
+	
 
 	glm::vec2 windowSize{ Renderer::GetInstance().GetWindowSize() };
 
@@ -166,8 +185,8 @@ void MainScene()
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_DOWN, Engine::InputState::OnPress, std::make_unique<DamagePlayer>(tankA, 10));
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_LEFT, Engine::InputState::OnPress, std::make_unique<DamagePlayer>(tankB, 10));
 
-	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<AddScore>(tankA, 10));
-	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AddScore>(tankB, 10));
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<AddScore>(tankA, 100));
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AddScore>(tankB, 100));
 }
 
 
@@ -195,6 +214,8 @@ int main(int, char* [])
 
 	Engine::Minigin engine("../Data/");
 	engine.Run(load);
+
+	delete g_SteamAchievements;
 
 	SteamAPI_Shutdown();
 
