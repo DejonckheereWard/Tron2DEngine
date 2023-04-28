@@ -5,6 +5,7 @@
 #include "XController.h"
 #include "Keyboard.h"
 #include "Command.h"
+#include <SDL.h>
 
 namespace Engine
 {

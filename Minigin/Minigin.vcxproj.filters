@@ -8,12 +8,6 @@
     <Filter Include="Engine Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Files">
-      <UniqueIdentifier>{d1017221-b409-41f1-a716-8effd2713374}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game Files\Components">
-      <UniqueIdentifier>{169cc374-3f29-46a6-a8fb-d6354e696ebd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine Files\Components">
       <UniqueIdentifier>{04f0cba5-4661-4369-b121-e46645ea9ffa}</UniqueIdentifier>
     </Filter>
@@ -52,9 +46,6 @@
     <ClInclude Include="TransformComponent.h">
       <Filter>Engine Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="ConstantRotator.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
@@ -76,9 +67,6 @@
     <ClInclude Include="Command.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameCommands.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
     <ClInclude Include="XController.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
@@ -91,26 +79,8 @@
     <ClInclude Include="Subject.h">
       <Filter>Engine Files</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthDisplay.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplay.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Game Files</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
@@ -137,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Engine Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstantRotator.cpp">
-      <Filter>Game Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\imgui.cpp">
       <Filter>Engine Files\ImGui</Filter>
@@ -191,21 +158,6 @@
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Engine Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthDisplay.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplay.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>Game Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
