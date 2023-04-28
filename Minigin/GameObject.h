@@ -46,6 +46,7 @@ namespace Engine
 		// Components
 		template <ComponentType TComponent> TComponent* AddComponent();
 		template <ComponentType TComponent> TComponent* GetComponent();
+		template <ComponentType TComponent> bool HasComponent() const;
 		template <ComponentType TComponent> void RemoveComponent();
 
 		TransformComponent* GetTransform() { return m_pTransform; };
@@ -64,7 +65,6 @@ namespace Engine
 		void RemoveFromChildCollection(GameObject* child);
 	};
 
-
 	template<ComponentType TComponent>
 	inline TComponent* GameObject::AddComponent()
 	{
@@ -82,6 +82,7 @@ namespace Engine
 		m_Components[componentTypeID] = component;
 		return component;
 	}
+
 	template<ComponentType TComponent>
 	inline TComponent* GameObject::GetComponent()
 	{
@@ -96,6 +97,13 @@ namespace Engine
 			throw MissingComponent();
 		}
 	}
+
+	template<ComponentType TComponent>
+	inline bool GameObject::HasComponent() const
+	{
+		return m_Components.count(std::type_index(typeid(TComponent))) > 0;
+	}
+
 	template<ComponentType TComponent>
 	inline void GameObject::RemoveComponent()
 	{

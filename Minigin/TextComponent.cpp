@@ -16,6 +16,7 @@ Engine::TextComponent::TextComponent(GameObject* pOwner):
 
 void Engine::TextComponent::Init()
 {
+	RequireComponent<RenderComponent>();
 	m_pRenderComponent = GetOwner()->GetComponent<RenderComponent>();
 }
 
