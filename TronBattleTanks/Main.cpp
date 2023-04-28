@@ -43,10 +43,8 @@ void PrintManual()
 	std::cout << "TESTING CONTROLS" << std::endl;
 	std::cout << "DOWN - LEFT ARROW: Decrease Health Player A/B" << std::endl;
 	std::cout << "UP - RIGHT ARROW: Increase Points Player A/B" << std::endl;
-	std::cout << std::endl;
-
+	std::cout << std::endl;	
 }
-
 
 void MainScene()
 {
@@ -142,8 +140,6 @@ void MainScene()
 	scoreDisplayB->GetTransform()->SetLocalPosition(200, windowSize.y - 30);
 	scene->AddChild(scoreDisplayB);
 
-
-
 	// Players
 	auto tankA = new GameObject();
 	tankA->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png"));
@@ -182,9 +178,6 @@ void MainScene()
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<AddScore>(tankA, 10));
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AddScore>(tankB, 10));
 }
-
-
-
 
 void load()
 {
