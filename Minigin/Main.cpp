@@ -30,10 +30,28 @@
 
 #include "GameCommands.h"
 
+void PrintManual()
+{
+	std::cout << std::endl;
+	std::cout << "Controls:" << std::endl;
+	std::cout << "Player 1:" << std::endl;
+	std::cout << "WASD - Movement" << std::endl;
+	std::cout << "Player 2:" << std::endl;
+	std::cout << "Controller Joystick Left - Movement" << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "TESTING CONTROLS" << std::endl;
+	std::cout << "DOWN - LEFT ARROW: Decrease Health Player A/B" << std::endl;
+	std::cout << "UP - RIGHT ARROW: Increase Points Player A/B" << std::endl;
+	std::cout << std::endl;
+
+}
+
+
 void MainScene()
 {
 	using namespace Engine;
-
+	PrintManual();
 
 	glm::vec2 windowSize{ Renderer::GetInstance().GetWindowSize() };
 
