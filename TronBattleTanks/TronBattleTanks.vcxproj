@@ -178,6 +178,25 @@
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Data\background.tga" />
+    <Image Include="..\Data\logo.tga" />
+    <Image Include="..\Data\Sprites\BlueTank.png" />
+    <Image Include="..\Data\Sprites\BlueTankGun.png" />
+    <Image Include="..\Data\Sprites\BulletExplosion.png" />
+    <Image Include="..\Data\Sprites\BulletNPC.png" />
+    <Image Include="..\Data\Sprites\BulletPlayer.png" />
+    <Image Include="..\Data\Sprites\GreenTank.png" />
+    <Image Include="..\Data\Sprites\GreenTankGun.png" />
+    <Image Include="..\Data\Sprites\PinkTank.png" />
+    <Image Include="..\Data\Sprites\Recognizer.png" />
+    <Image Include="..\Data\Sprites\RedTank.png" />
+    <Image Include="..\Data\Sprites\RedTankGun.png" />
+    <Image Include="..\Data\Sprites\TankExplosion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Data\Lingua.otf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

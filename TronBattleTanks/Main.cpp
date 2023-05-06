@@ -46,7 +46,7 @@ void PrintManual()
 	std::cout << std::endl;	
 }
 
-void MainScene()
+void TestScene()
 {
 	using namespace Engine;
 	PrintManual();
@@ -179,11 +179,53 @@ void MainScene()
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AddScore>(tankB, 10));
 }
 
+// Tron main scene
+void MainScene()
+{
+	// TODO:
+	// Load the menu for selection
+	// Load the level from file (3 levels required)
+	//	Load the HUD
+	//  Load the players
+	//  Load the enemies
+	//  Load the pickups
+	//  Load the level boundaries
+	//  Load the level obstacles
+	//  Reload the level when a player dies (if lives > 0)
+	// Load the next level if the player reaches the end of the level, repeat some of the above steps
+	
+
+	// Requirements
+	// 1 or 2 players
+	// 1 -> Keyboard or controller
+	// 2 -> Keyboard and controller (OR both on controllers) (can be 2PVE or PVP (1v1))
+	// On game over, display game over score and high score list
+	// High score list should be saved to file (and loaded from file)
+	// High score list should be able to be displayed in the menu
+	// Make levels be read from json, or from a binary file (make it easy to convert)
+	// (OPTIONAL) Level creator option could be nice to make the levels easier to create
+	// Player has 3 game lives, not health.
+	// On completion of all levels, it should loop back to the first level (endless play)
+	//   Make sure the number of levels is automatic based on the number of levels in the folder (adding a file adds it automatically to the game)
+
+	
+	// Enemies 
+	// Blue tanks: 3 shots to kill, insta kills player
+	// Red Recognizer: 2x speed blue tank, doesnt shoot but tries to ram player
+
+
+
+
+
+
+}
+
+
 void load()
 {
 	using namespace Engine;
 	//ControllerInputTest();
-	MainScene();
+	TestScene();
 }
 
 int main(int, char* [])

@@ -59,4 +59,53 @@
       <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Data\background.tga">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\logo.tga">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\BlueTank.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\BlueTankGun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\BulletExplosion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\BulletNPC.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\BulletPlayer.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\GreenTank.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\GreenTankGun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\PinkTank.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\Recognizer.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\RedTank.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\RedTankGun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\TankExplosion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Data\Lingua.otf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
 </Project>
