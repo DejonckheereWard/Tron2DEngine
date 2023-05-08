@@ -209,11 +209,30 @@ void MainScene()
 	//   Make sure the number of levels is automatic based on the number of levels in the folder (adding a file adds it automatically to the game)
 
 	
+	// Player movement feel / controls
+	// WASD goes in the direction you want, if you cant go in that direction (wall) you continue in the direction you were last going
+	// This way, you turn the corner from the moment you can
+	// Controller is the same, but with the left stick (make sure deadzone input is ingnored)
+	// Right stick is used to shoot in the direction you want to shoot, for keyboard this is the arrow keys (up, down, left, right)
+	// but also combined for diagonal shots (up + left = upleft shot)
+
+
+
 	// Enemies 
 	// Blue tanks: 3 shots to kill, insta kills player
 	// Red Recognizer: 2x speed blue tank, doesnt shoot but tries to ram player
 
+	using namespace Engine;
 
+	// Create main scene
+	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
+
+	// Spawn in player
+	GameObject* playerTank = new GameObject();
+	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
+	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
+	playerTank->AddComponent<ScoreComponent>();
+	scene->AddChild(playerTank);
 
 
 
@@ -225,7 +244,8 @@ void load()
 {
 	using namespace Engine;
 	//ControllerInputTest();
-	TestScene();
+	//TestScene();
+	MainScene();
 }
 
 int main(int, char* [])
