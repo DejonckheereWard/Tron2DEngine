@@ -14,6 +14,11 @@
 #include "Scene.h"
 #include "Renderer.h"
 
+// Services
+#include "ServiceLocator.h"
+#include "AudioServiceLogger.h"
+#include "SDLAudioService.h"
+
 // Components
 #include "FPSComponent.h" 
 #include "TextComponent.h"
@@ -52,6 +57,8 @@ void TestScene()
 	PrintManual();
 
 	glm::vec2 windowSize{ Renderer::GetInstance().GetWindowSize() };
+
+
 
 	// Add background
 	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
@@ -226,6 +233,12 @@ void MainScene()
 
 	// Create main scene
 	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
+
+	// Set up services
+	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<SDLAudioService>()));
+
+	AudioService& audioService = ServiceLocator::GetAudioService();
+	audioService.Play(0);
 
 	// Spawn in player
 	GameObject* playerTank = new GameObject();

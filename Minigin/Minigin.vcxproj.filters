@@ -17,6 +17,12 @@
     <Filter Include="Engine Files\Managers">
       <UniqueIdentifier>{1c08345c-510a-4a1d-beba-7a41acc04dc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine Files\Services">
+      <UniqueIdentifier>{b4106ce0-01a2-4424-8940-9178c4462bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\Services\Audio">
+      <UniqueIdentifier>{b4fe4772-0640-4d45-a18c-47f27d6e7de3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -78,6 +84,21 @@
     </ClInclude>
     <ClInclude Include="Subject.h">
       <Filter>Engine Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Engine Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioService.h">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="NullAudioService.h">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioServiceLogger.h">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLAudioService.h">
+      <Filter>Engine Files\Services\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +179,21 @@
     </ClCompile>
     <ClCompile Include="Subject.cpp">
       <Filter>Engine Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioService.cpp">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="NullAudioService.cpp">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Engine Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioServiceLogger.cpp">
+      <Filter>Engine Files\Services\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLAudioService.cpp">
+      <Filter>Engine Files\Services\Audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

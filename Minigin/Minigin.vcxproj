@@ -196,10 +196,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioService.h" />
+    <ClInclude Include="AudioServiceLogger.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="NullAudioService.h" />
     <ClInclude Include="Observer.h" />
+    <ClInclude Include="SDLAudioService.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="XController.h" />
     <ClInclude Include="Font.h" />
@@ -226,8 +231,13 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_plot.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="AudioService.cpp" />
+    <ClCompile Include="AudioServiceLogger.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="NullAudioService.cpp" />
     <ClCompile Include="Observer.cpp" />
+    <ClCompile Include="SDLAudioService.cpp" />
+    <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="XController.cpp" />
     <ClCompile Include="Font.cpp" />
