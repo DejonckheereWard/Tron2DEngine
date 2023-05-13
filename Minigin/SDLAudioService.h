@@ -10,6 +10,7 @@ namespace Engine
 		~SDLAudioService();
 
 		virtual void SetMasterVolume(float volume) override;
+
 		virtual void SetMusicVolume(float volume) override;
 
 		virtual void PlayEffect(const std::string& filePath, float volume) override;

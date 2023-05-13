@@ -213,12 +213,10 @@ private:
 
 Engine::SDLAudioService::SDLAudioService():
 	m_pImpl{ std::make_unique<SDLAudioServiceImpl>() }
-{
-}
+{}
 
-Engine::SDLAudioService::~SDLAudioService()
-{
-}
+// Destructor in CPP file to prevent incomplete type error with the unique_ptr
+Engine::SDLAudioService::~SDLAudioService() = default;
 
 void Engine::SDLAudioService::SetMasterVolume(float volume)
 {
