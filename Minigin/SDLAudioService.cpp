@@ -117,7 +117,9 @@ public:
 
 		while(m_AudioThreadRunning)
 		{
+			// The condition variable requires a unique lock
 			std::unique_lock<std::mutex> lock(m_EventQueueMutex);
+
 			// Wait for events to be added
 			m_QueueCondition.wait(lock, [this] { return !m_AudioEventQueue.empty() || !m_AudioThreadRunning; });
 
@@ -130,21 +132,30 @@ public:
 
 			// Handle the event
 			// Check if the audio is already loaded
-
 			if(audioEvent.isMusic)
 			{
-				// Handle music seperately
+				// Handle music seperately (it has its own channel)
 				const std::string& filePath{ Engine::ResourceManager::GetInstance().GetSoundPath(audioEvent.filePath) };
 
 				if(m_pMusic)
 				{
+					// Free the previous music if it exists
 					Mix_FreeMusic(m_pMusic);
 				}
 
 				m_pMusic = Mix_LoadMUS(filePath.c_str());
-				Mix_PlayMusic(m_pMusic, audioEvent.loops);
 
-
+				// Check if the audio is loaded
+				assert(m_pMusic);
+				if(m_pMusic == nullptr) {
+					// Handle error
+					std::cout << "Incorrect music file path: " << audioEvent.filePath << "\n";
+				}
+				else
+				{
+					// Play the audio
+					Mix_PlayMusic(m_pMusic, audioEvent.loops);
+				}
 			}
 			else
 			{
@@ -168,9 +179,11 @@ public:
 					// Handle error
 					std::cout << "Incorrect sound file path: " << audioEvent.filePath << "\n";
 				}
-
-				// Play the audio
-				Mix_PlayChannel(-1, pChunk, audioEvent.loops);
+				else
+				{				
+					// Play the audio
+					Mix_PlayChannel(-1, pChunk, audioEvent.loops);
+				}
 			}
 		}
 
