@@ -31,3 +31,8 @@ std::shared_ptr<Engine::Font> Engine::ResourceManager::LoadFont(const std::strin
 {
 	return std::make_shared<Font>(m_dataPath + file, size);
 }
+
+std::string Engine::ResourceManager::GetSoundPath(const std::string& file) const
+{
+	return m_dataPath + file;
+}

@@ -6,11 +6,25 @@ namespace Engine
 	class SDLAudioService: public AudioService
 	{
 	public:
-		virtual void Play(int audioId, float volume) const override;
-		virtual void Stop(int audioId) const override;
-		virtual void Pause(int audioId) const override;
-		virtual void Resume(int audioId) const override;
-		virtual void SetVolume(int audioId, float volume) const override;
+		SDLAudioService();
+		~SDLAudioService();
+
+		virtual void SetMasterVolume(float volume) override;
+		virtual void SetMusicVolume(float volume) override;
+
+		virtual void PlayEffect(const std::string& filePath, float volume) override;
+
+		virtual void PlayMusic(const std::string& filePath, float volume) override;
+
+		virtual void StopMusic() override;
+
+		virtual void PauseMusic() override;
+
+		virtual void ResumeMusic() override;
+
+	private:
+		std::unique_ptr<class SDLAudioServiceImpl> m_pImpl;
+
 	};
 }
 

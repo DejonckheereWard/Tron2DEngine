@@ -12,6 +12,12 @@
     <Filter Include="Game Files\Components">
       <UniqueIdentifier>{aef1a754-e710-4470-b883-8d96b53f3b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Sounds">
+      <UniqueIdentifier>{4106a3bc-be0b-48d0-9234-ff3fd761b2ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Sprites">
+      <UniqueIdentifier>{a05e2c59-9c4d-4812-a001-63405578a022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantRotator.cpp">
@@ -67,45 +73,62 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\Data\Sprites\BlueTank.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\BlueTankGun.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\BulletExplosion.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\BulletNPC.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\BulletPlayer.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\GreenTank.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\GreenTankGun.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\PinkTank.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\Recognizer.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\RedTank.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\RedTankGun.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\TankExplosion.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Sprites</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="..\Data\Lingua.otf">
       <Filter>Resource Files</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Data\Sounds\Background.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="..\Data\Sounds\FailMusic.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="..\Data\Sounds\MainMenuMusic.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="..\Data\Sounds\Shoot.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="..\Data\Sounds\Teleport.mp3">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>

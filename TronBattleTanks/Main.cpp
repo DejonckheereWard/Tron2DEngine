@@ -237,8 +237,10 @@ void MainScene()
 	// Set up services
 	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<SDLAudioService>()));
 
-	AudioService& audioService = ServiceLocator::GetAudioService();
-	audioService.Play(0);
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<OnPressCommand>());
+
+	//AudioService& audioService = ServiceLocator::GetAudioService();
+	//audioService.Play(0);
 
 	// Spawn in player
 	GameObject* playerTank = new GameObject();

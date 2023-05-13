@@ -1,6 +1,6 @@
 #pragma once
 #include "Command.h"
-
+#include "ServiceLocator.h"
 
 using Engine::Command;
 
@@ -23,6 +23,7 @@ public:
 	virtual void Execute(float) override
 	{
 		std::cout << "OnPressCommand\n";
+		Engine::ServiceLocator::GetAudioService().PlayEffect("Sounds/Background.mp3", 1.0f);
 	};
 };
 

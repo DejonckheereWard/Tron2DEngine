@@ -180,12 +180,6 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Engine Files</Filter>
     </ClCompile>
-    <ClCompile Include="AudioService.cpp">
-      <Filter>Engine Files\Services\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="NullAudioService.cpp">
-      <Filter>Engine Files\Services\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
       <Filter>Engine Files\Services</Filter>
     </ClCompile>

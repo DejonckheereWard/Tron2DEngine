@@ -5,13 +5,16 @@ namespace Engine
 {
 	class NullAudioService final: public AudioService
 	{
-	//public:
-		// Inherited via AudioService
-		virtual void Play(int audioId, float volume) const override;
-		virtual void Stop(int audioId) const override;
-		virtual void Pause(int audioId) const override;
-		virtual void Resume(int audioId) const override;
-		virtual void SetVolume(int audioId, float volume) const override;
+	public:
+		virtual void SetMasterVolume(float) override {};
+		virtual void SetMusicVolume(float) override {};
+
+		virtual void PlayEffect(const std::string&, float) override {};
+
+		virtual void PlayMusic(const std::string&, float) override {};
+		virtual void StopMusic() override {};
+		virtual void PauseMusic() override {};
+		virtual void ResumeMusic() override {};
 	};
 }
 

@@ -1,33 +1,43 @@
 #include "AudioServiceLogger.h"
 #include <iostream>
 
-void Engine::AudioServiceLogger::Play(int audioId, float volume) const
+void Engine::AudioServiceLogger::SetMasterVolume(float volume)
 {
-	std::cout << "AudioService::Play: " << audioId << " " << volume << std::endl;
-	m_pAudioService->Play(audioId, volume);
-
+	std::cout << "AudioService::SetMasterVolume: " << volume << std::endl;
+	m_pAudioService->SetMasterVolume(volume);
 }
 
-void Engine::AudioServiceLogger::Stop(int audioId) const
+void Engine::AudioServiceLogger::SetMusicVolume(float volume)
 {
-	std::cout << "AudioService::Stop: " << audioId << std::endl;
-	m_pAudioService->Stop(audioId);
+	std::cout << "AudioService::SetMasterVolume: " << volume << std::endl;
+	m_pAudioService->SetMasterVolume(volume);
 }
 
-void Engine::AudioServiceLogger::Pause(int audioId) const
+void Engine::AudioServiceLogger::PlayEffect(const std::string& filePath, float volume)
 {
-	std::cout << "AudioService::Pause: " << audioId << std::endl;
-	m_pAudioService->Pause(audioId);
-}
+	std::cout << "AudioService::PlayEffect: " << filePath << " Volume:" << volume << std::endl;
+	m_pAudioService->PlayEffect(filePath, volume);
 
-void Engine::AudioServiceLogger::Resume(int audioId) const
-{
-	std::cout << "AudioService::Resume: " << audioId << std::endl;
-	m_pAudioService->Resume(audioId);
 }
-
-void Engine::AudioServiceLogger::SetVolume(int audioId, float volume) const
+void Engine::AudioServiceLogger::PlayMusic(const std::string& filePath, float volume)
 {
-	std::cout << "AudioService::SetVolume: " << audioId << " " << volume << std::endl;
-	m_pAudioService->SetVolume(audioId, volume);
+	std::cout << "AudioService::PlayMusic: " << filePath << " Volume:" << volume << std::endl;
+	m_pAudioService->PlayMusic(filePath, volume);
+
+}
+void Engine::AudioServiceLogger::StopMusic()
+{
+	std::cout << "AudioService::StopMusic" << std::endl;
+	m_pAudioService->StopMusic();
+
+}
+void Engine::AudioServiceLogger::PauseMusic()
+{
+	std::cout << "AudioService::PauseMusic" << std::endl;
+	m_pAudioService->PauseMusic();
+}
+void Engine::AudioServiceLogger::ResumeMusic()
+{
+	std::cout << "AudioService::ResumeMusic" << std::endl;
+	m_pAudioService->ResumeMusic();
 }

@@ -197,6 +197,13 @@
   <ItemGroup>
     <Font Include="..\Data\Lingua.otf" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Data\Sounds\Background.mp3" />
+    <Media Include="..\Data\Sounds\FailMusic.mp3" />
+    <Media Include="..\Data\Sounds\MainMenuMusic.mp3" />
+    <Media Include="..\Data\Sounds\Shoot.mp3" />
+    <Media Include="..\Data\Sounds\Teleport.mp3" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
