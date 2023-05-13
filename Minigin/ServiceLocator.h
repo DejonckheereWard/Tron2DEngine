@@ -2,6 +2,8 @@
 
 #include <memory>
 #include "Singleton.h"
+
+// Services included here to stop having to include them in every file
 #include "AudioService.h"
 
 namespace Engine
@@ -10,16 +12,15 @@ namespace Engine
 	{
 
 	public:
+		// Is a full static class, so no need for a constructor or destructor
+		ServiceLocator() = delete;
+		~ServiceLocator() = delete;
+
 		static void RegisterAudioService(std::unique_ptr<Engine::AudioService> pAudioService);
 		static AudioService& GetAudioService() { return *m_pAudioService; };
 
-
 	private:
+
 		static std::unique_ptr<AudioService> m_pAudioService;
-
-		// Destructor AND Constructor need to be defined in the CPP file for smart pointers to accept forward declarations
-		ServiceLocator();
-		~ServiceLocator();
-
 	};
 }
