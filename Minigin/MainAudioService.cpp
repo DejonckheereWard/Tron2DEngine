@@ -10,10 +10,11 @@
 #include <map>
 #include <iostream>
 
-
+// Exceptions
 class SDLAudioInitError {};
 class SDLAudioLoadError {};
 
+// Structs
 struct AudioEvent
 {
 	std::string filePath;
@@ -33,7 +34,9 @@ public:
 		m_AudioThreadRunning{ true },
 		m_AudioThread{ &MainAudioServiceImpl::AudioEventHandler, this },
 		m_EventQueueMutex{},
-		m_AudioMap{}
+		m_AudioMap{},
+		m_AudioMapMutex{},
+		m_MusicMutex{}
 	{
 	}
 
@@ -41,6 +44,7 @@ public:
 	{
 		m_AudioThreadRunning = false;
 		m_QueueCondition.notify_one();  // Wake up the thread so it can exit
+		m_AudioThread.join();  // Wait for the thread to exit before cleaning up
 
 		for(auto& audioMapItem : m_AudioMap)
 		{
@@ -61,7 +65,7 @@ public:
 	virtual void SetMusicVolume(float volume) override
 	{
 		Mix_VolumeMusic(static_cast<int>(std::clamp(volume, 0.0f, 1.0f) * MIX_MAX_VOLUME));
-	}	
+	}
 
 	void PlayEffect(const std::string& filePath, float volume) override
 	{
@@ -83,7 +87,7 @@ public:
 		audioEvent.isMusic = true;
 		audioEvent.loops = -1;
 
-		std::lock_guard<std::mutex> lock(m_EventQueueMutex);
+		std::lock_guard lock{ m_EventQueueMutex };
 		m_AudioEventQueue.push(audioEvent);
 		m_QueueCondition.notify_one();
 	}
@@ -118,7 +122,7 @@ public:
 		while(m_AudioThreadRunning)
 		{
 			// The condition variable requires a unique lock
-			std::unique_lock<std::mutex> lock(m_EventQueueMutex);
+			std::unique_lock lock{ m_EventQueueMutex };
 
 			// Wait for events to be added
 			m_QueueCondition.wait(lock, [this] { return !m_AudioEventQueue.empty() || !m_AudioThreadRunning; });
@@ -129,11 +133,14 @@ public:
 			// Get the next event
 			AudioEvent audioEvent{ m_AudioEventQueue.front() };
 			m_AudioEventQueue.pop();
+			lock.unlock();  // Unlock the mutex since we don't need it anymore for the event queue, and we dont want to block the other thread
 
 			// Handle the event
 			// Check if the audio is already loaded
 			if(audioEvent.isMusic)
 			{
+				std::lock_guard musicLock{ m_MusicMutex };
+
 				// Handle music seperately (it has its own channel)
 				const std::string& filePath{ Engine::ResourceManager::GetInstance().GetSoundPath(audioEvent.filePath) };
 
@@ -159,6 +166,8 @@ public:
 			}
 			else
 			{
+				m_AudioMapMutex.lock();
+
 				auto audioMapping{ m_AudioMap.find(audioEvent.filePath) };
 				Mix_Chunk* pChunk{};
 				if(audioMapping != m_AudioMap.end())
@@ -173,6 +182,8 @@ public:
 					m_AudioMap[audioEvent.filePath] = pChunk;
 				}
 
+				m_AudioMapMutex.unlock();
+
 				// Check if the audio is loaded
 				assert(pChunk);
 				if(pChunk == nullptr) {
@@ -180,7 +191,7 @@ public:
 					std::cout << "Incorrect sound file path: " << audioEvent.filePath << "\n";
 				}
 				else
-				{				
+				{
 					// Play the audio
 					Mix_PlayChannel(-1, pChunk, audioEvent.loops);
 				}
@@ -192,9 +203,6 @@ public:
 		Mix_Quit();
 	}
 
-
-
-
 private:
 	std::queue<AudioEvent> m_AudioEventQueue;
 
@@ -203,7 +211,11 @@ private:
 	std::mutex m_EventQueueMutex;
 	std::jthread m_AudioThread;
 
+	std::mutex m_AudioMapMutex;
 	std::map<std::string, Mix_Chunk*> m_AudioMap;
+
+
+	std::mutex m_MusicMutex;
 	Mix_Music* m_pMusic{};  // Current music that is playing
 
 };
