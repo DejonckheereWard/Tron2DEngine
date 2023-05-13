@@ -11,8 +11,8 @@
 #include <iostream>
 
 // Exceptions
-class SDLAudioInitError {};
-class SDLAudioLoadError {};
+class AudioInitError {};
+class AudioLoadError {};
 
 // Structs
 struct AudioEvent
@@ -112,11 +112,11 @@ public:
 		// Initialize SDL_mixer
 		if(Mix_Init(MIX_INIT_OGG) != MIX_INIT_OGG) {
 			// Handle initialization error
-			throw new SDLAudioInitError();
+			throw new AudioInitError();
 		}
 		if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
 			// Handle audio initialization error
-			throw new SDLAudioInitError();
+			throw new AudioInitError();
 		}
 
 		while(m_AudioThreadRunning)
