@@ -203,7 +203,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="NullAudioService.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="SDLAudioService.h" />
+    <ClInclude Include="MainAudioService.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="XController.h" />
@@ -234,7 +234,7 @@
     <ClCompile Include="AudioServiceLogger.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Observer.cpp" />
-    <ClCompile Include="SDLAudioService.cpp" />
+    <ClCompile Include="MainAudioService.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="XController.cpp" />

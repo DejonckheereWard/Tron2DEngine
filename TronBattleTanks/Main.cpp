@@ -17,7 +17,7 @@
 // Services
 #include "ServiceLocator.h"
 #include "AudioServiceLogger.h"
-#include "SDLAudioService.h"
+#include "MainAudioService.h"
 
 // Components
 #include "FPSComponent.h" 
@@ -235,7 +235,7 @@ void MainScene()
 	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
 
 	// Set up services
-	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<SDLAudioService>()));
+	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
 
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<OnPressCommand>());
 

@@ -1,4 +1,4 @@
-#include "SDLAudioService.h"
+#include "MainAudioService.h"
 #include "ResourceManager.h"
 #include <SDL_mixer.h>
 #include <cassert>
@@ -26,18 +26,18 @@ struct AudioEvent
 
 // IMPLEMENTATION
 
-class Engine::SDLAudioServiceImpl final: AudioService
+class Engine::MainAudioServiceImpl final: AudioService
 {
 public:
-	SDLAudioServiceImpl():
+	MainAudioServiceImpl():
 		m_AudioThreadRunning{ true },
-		m_AudioThread{ &SDLAudioServiceImpl::AudioEventHandler, this },
+		m_AudioThread{ &MainAudioServiceImpl::AudioEventHandler, this },
 		m_EventQueueMutex{},
 		m_AudioMap{}
 	{
 	}
 
-	~SDLAudioServiceImpl()
+	~MainAudioServiceImpl()
 	{
 		m_AudioThreadRunning = false;
 		m_QueueCondition.notify_one();  // Wake up the thread so it can exit
@@ -211,45 +211,45 @@ private:
 
 // SDLAudioService
 
-Engine::SDLAudioService::SDLAudioService():
-	m_pImpl{ std::make_unique<SDLAudioServiceImpl>() }
+Engine::MainAudioService::MainAudioService():
+	m_pAudioImpl{ std::make_unique<MainAudioServiceImpl>() }
 {}
 
 // Destructor in CPP file to prevent incomplete type error with the unique_ptr
-Engine::SDLAudioService::~SDLAudioService() = default;
+Engine::MainAudioService::~MainAudioService() = default;
 
-void Engine::SDLAudioService::SetMasterVolume(float volume)
+void Engine::MainAudioService::SetMasterVolume(float volume)
 {
-	m_pImpl->SetMasterVolume(volume);
+	m_pAudioImpl->SetMasterVolume(volume);
 }
 
-void Engine::SDLAudioService::SetMusicVolume(float volume)
+void Engine::MainAudioService::SetMusicVolume(float volume)
 {
-	m_pImpl->SetMusicVolume(volume);
+	m_pAudioImpl->SetMusicVolume(volume);
 }
 
-void Engine::SDLAudioService::PlayMusic(const std::string& filePath, float volume)
+void Engine::MainAudioService::PlayMusic(const std::string& filePath, float volume)
 {
-	m_pImpl->PlayMusic(filePath, volume);
+	m_pAudioImpl->PlayMusic(filePath, volume);
 }
 
-void Engine::SDLAudioService::StopMusic()
+void Engine::MainAudioService::StopMusic()
 {
-	m_pImpl->StopMusic();
+	m_pAudioImpl->StopMusic();
 }
 
-void Engine::SDLAudioService::PauseMusic()
+void Engine::MainAudioService::PauseMusic()
 {
-	m_pImpl->PauseMusic();
+	m_pAudioImpl->PauseMusic();
 
 }
 
-void Engine::SDLAudioService::ResumeMusic()
+void Engine::MainAudioService::ResumeMusic()
 {
-	m_pImpl->ResumeMusic();
+	m_pAudioImpl->ResumeMusic();
 }
 
-void Engine::SDLAudioService::PlayEffect(const std::string& filePath, float volume)
+void Engine::MainAudioService::PlayEffect(const std::string& filePath, float volume)
 {
-	m_pImpl->PlayEffect(filePath, volume);
+	m_pAudioImpl->PlayEffect(filePath, volume);
 }

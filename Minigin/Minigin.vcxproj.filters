@@ -97,7 +97,7 @@
     <ClInclude Include="AudioServiceLogger.h">
       <Filter>Engine Files\Services\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="SDLAudioService.h">
+    <ClInclude Include="MainAudioService.h">
       <Filter>Engine Files\Services\Audio</Filter>
     </ClInclude>
   </ItemGroup>
@@ -186,7 +186,7 @@
     <ClCompile Include="AudioServiceLogger.cpp">
       <Filter>Engine Files\Services\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="SDLAudioService.cpp">
+    <ClCompile Include="MainAudioService.cpp">
       <Filter>Engine Files\Services\Audio</Filter>
     </ClCompile>
   </ItemGroup>

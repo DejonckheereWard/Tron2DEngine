@@ -3,11 +3,11 @@
 
 namespace Engine
 {
-	class SDLAudioService: public AudioService
+	class MainAudioService: public AudioService
 	{
 	public:
-		SDLAudioService();
-		~SDLAudioService();
+		MainAudioService();
+		~MainAudioService();
 
 		virtual void SetMasterVolume(float volume) override;
 
@@ -24,7 +24,7 @@ namespace Engine
 		virtual void ResumeMusic() override;
 
 	private:
-		std::unique_ptr<class SDLAudioServiceImpl> m_pImpl;
+		std::unique_ptr<class MainAudioServiceImpl> m_pAudioImpl;
 
 	};
 }
