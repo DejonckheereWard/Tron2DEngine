@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "glm/vec2.hpp"
 
 namespace Engine
 {
@@ -23,6 +24,7 @@ namespace Engine
 
 	private:
 		TransformComponent* m_pTransform{};
+		glm::vec2 m_TextureOffset{};
 	};
 }
 
