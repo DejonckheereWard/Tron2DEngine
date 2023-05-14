@@ -229,7 +229,7 @@ void MainScene()
 	// Set up services
 	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
 
-	InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<OnPressCommand>());
+	//InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<OnPressCommand>());
 
 	PrintManual();
 
@@ -238,6 +238,7 @@ void MainScene()
 	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
 	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	playerTank->AddComponent<ScoreComponent>();
+	playerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
 	scene->AddChild(playerTank);
 
 
@@ -245,9 +246,10 @@ void MainScene()
 	playerTankGun->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
 	playerTankGun->AddComponent<TankGunComponent>();
 	playerTank->AddChild(playerTankGun);
+	playerTankGun->GetTransform()->SetLocalPosition(0, 0);
 
-	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AimGunCommand>(playerTankGun));
-
+	unsigned int controllerIdx = InputManager::GetInstance().AddController();
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, std::make_unique<AimGunCommand>(playerTankGun));
 
 }
 

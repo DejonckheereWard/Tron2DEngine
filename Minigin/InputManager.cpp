@@ -148,44 +148,25 @@ void Engine::InputManager::HandleControllerInput()
 		switch(static_cast<XController::ControllerAxis>(controllerMapping.first.second.first))
 		{
 			case XController::ControllerAxis::LeftThumbX:
-			{
-
-				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetLeftThumb() };
-				if(std::abs(value.x) > deadZone)
-				{
-					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
-				}
-				break;
-			}
 			case XController::ControllerAxis::LeftThumbY:
 			{
 
 				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetLeftThumb() };
-				if(std::abs(value.y) > deadZone)
+				if(std::abs(value.x) > deadZone || std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
+					for(auto& command : controllerMapping.second) { command->Execute(value); }
 				}
 				break;
 			}
 			case XController::ControllerAxis::RightThumbX:
-			{
-				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetRightThumb() };
-				if(std::abs(value.x) > deadZone)
-				{
-					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.x); }
-				}
-				break;
-			}
 			case XController::ControllerAxis::RightThumbY:
 			{
 				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetRightThumb() };
-				if(std::abs(value.y) > deadZone)
+				if(std::abs(value.x) > deadZone || std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value.y); }
+					for(auto& command : controllerMapping.second) { command->Execute(value); }
 				}
 				break;
 			}
@@ -195,7 +176,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value); }
+					for(auto& command : controllerMapping.second) { command->Execute({ value, 0.0f }); }
 				}
 				break;
 			}
@@ -205,7 +186,7 @@ void Engine::InputManager::HandleControllerInput()
 				if(value > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
-					for(auto& command : controllerMapping.second) { command->Execute(value); }
+					for(auto& command : controllerMapping.second) { command->Execute({ value, 0.0f }); }
 				}
 				break;
 			}

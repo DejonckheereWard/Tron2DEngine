@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <optional>
+#include <glm/vec2.hpp>
 
 namespace Engine
 {
@@ -7,17 +9,25 @@ namespace Engine
 	class Command
 	{
 	public:
-		Command(GameObject* actor = nullptr):
-			m_Actor{ actor }
-		{};
+		Command() = default;
+		Command(GameObject* pOwner) : m_pOwner{ pOwner } {};
+		virtual ~Command() = default;
 
-		virtual ~Command() {};
-		virtual void Execute(float inputValue=1.0f) = 0;  // Value for analog input
 
-		GameObject* GetActor() { return m_Actor; };
+		Command(const Command& other) = delete;
+		Command(Command&& other) = delete;
+		Command& operator=(const Command& other) = delete;
+		Command& operator=(Command&& other) = delete;
+
+		void Execute() { Execute(glm::vec2{ 1.0f, 0 }); }
+		virtual void Execute(const glm::vec2& inputValue) = 0; 
+
+		GameObject* GetOwner() { return m_pOwner; };
 
 	private:
-		GameObject* m_Actor;
+		GameObject* m_pOwner{ nullptr };
+
+		
 	};
 	
 }

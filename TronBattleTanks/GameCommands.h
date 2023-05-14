@@ -11,7 +11,7 @@ class OnReleaseCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2&) override
 	{
 		std::cout << "OnReleaseCommand\n";
 	};
@@ -21,7 +21,7 @@ class OnPressCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2&) override
 	{
 		std::cout << "OnPressCommand\n";
 		Engine::ServiceLocator::GetAudioService().PlayEffect("Sounds/Background.mp3", 1.0f);
@@ -32,7 +32,7 @@ class PressedCommand final: public Command
 {
 public:
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2&) override
 	{
 		std::cout << "PressedCommand\n";
 	};
@@ -44,18 +44,18 @@ class MoveCommand final: public Command
 {
 
 public:
-	MoveCommand(Engine::GameObject* actor, float movementspeed, const glm::vec2& movedirection): 
+	MoveCommand(Engine::GameObject* actor, float movementspeed, const glm::vec2& movedirection):
 		Command(actor),
 		m_MoveDirection{ movedirection },
 		m_MovementSpeed{ movementspeed }
 	{};
 
 	// Inherited via Command
-	virtual void Execute(float value) override
+	virtual void Execute(const glm::vec2& value) override
 	{
-		auto localPos = GetActor()->GetTransform()->GetLocalPosition();
+		auto localPos = GetOwner()->GetTransform()->GetLocalPosition();
 		localPos += m_MoveDirection * m_MovementSpeed * value;
-		GetActor()->GetTransform()->SetLocalPosition(localPos);
+		GetOwner()->GetTransform()->SetLocalPosition(localPos);
 	};
 
 private:
@@ -71,11 +71,11 @@ public:
 		Command(actor),
 		m_DamageAmount{ dmgAmount }
 	{
-		m_pHealthComponent = GetActor()->GetComponent<HealthComponent>();
+		m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
 	};
 
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2&) override
 	{
 		m_pHealthComponent->TakeDamage(m_DamageAmount);
 	};
@@ -92,11 +92,11 @@ public:
 		Command(actor),
 		m_ScoreAmount{ scoreAmount }
 	{
-		m_pScoreComponent = GetActor()->GetComponent<ScoreComponent>();
+		m_pScoreComponent = GetOwner()->GetComponent<ScoreComponent>();
 	};
 
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2&) override
 	{
 		m_pScoreComponent->AddScore(m_ScoreAmount);
 	};
@@ -110,15 +110,16 @@ private:
 class AimGunCommand final: public Command
 {
 public:
-	AimGunCommand(Engine::GameObject* actor): 
-		Command(actor)
+	AimGunCommand(Engine::GameObject* pOwner):
+		Command(pOwner)
 	{};
 
 	// Inherited via Command
-	virtual void Execute(float) override
+	virtual void Execute(const glm::vec2& value) override
 	{
-		std::cout << "AimGunCommand\n";
+		GetOwner()->GetComponent<TankGunComponent>()->Shoot();
 
-		GetActor()->GetComponent<TankGunComponent>()->SetGunAngle(90);
+		const glm::vec2 normalizedValue{ glm::normalize(value) };
+		GetOwner()->GetComponent<TankGunComponent>()->SetGunDirection(normalizedValue);
 	}
 };
