@@ -11,7 +11,9 @@ namespace Engine
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
+		Scene* CreateMainScene();
 		Scene* CreateScene(const std::string& name);
+		Scene* GetMainScene() const;
 		Scene* GetScene(const std::string& name) const;
 		void RemoveScene(const std::string& name);
 
@@ -28,6 +30,7 @@ namespace Engine
 		~SceneManager();
 		SceneManager();
 
+		std::unique_ptr<Scene> m_MainScene;
 		std::vector<std::unique_ptr<Scene>> m_Scenes;  // Dont initalize 
 
 	};

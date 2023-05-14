@@ -34,6 +34,7 @@
 #include "ScoreComponent.h"
 
 #include "GameCommands.h"
+#include "TankGunComponent.h"
 
 void PrintManual()
 {
@@ -223,7 +224,7 @@ void MainScene()
 	using namespace Engine;
 
 	// Create main scene
-	Scene* scene = Engine::SceneManager::GetInstance().CreateScene("MainScene");
+	Scene* scene = Engine::SceneManager::GetInstance().CreateMainScene();
 
 	// Set up services
 	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
@@ -233,13 +234,19 @@ void MainScene()
 	PrintManual();
 
 	// Spawn in player
-	GameObject* playerTank = new GameObject();
+	GameObject* playerTank{ new GameObject() };
 	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
 	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	playerTank->AddComponent<ScoreComponent>();
 	scene->AddChild(playerTank);
 
 
+	GameObject* playerTankGun{ new GameObject() };
+	playerTankGun->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
+	playerTankGun->AddComponent<TankGunComponent>();
+	playerTank->AddChild(playerTankGun);
+
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_RIGHT, Engine::InputState::OnPress, std::make_unique<AimGunCommand>(playerTankGun));
 
 
 }

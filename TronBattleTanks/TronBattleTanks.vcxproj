@@ -168,6 +168,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
+    <ClCompile Include="TankGunComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantRotator.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
+    <ClInclude Include="TankGunComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Data\background.tga" />

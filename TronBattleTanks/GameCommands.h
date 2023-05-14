@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "ServiceLocator.h"
+#include "TankGunComponent.h"
 
 using Engine::Command;
 
@@ -104,4 +105,20 @@ private:
 	ScoreComponent* m_pScoreComponent;
 	int m_ScoreAmount;
 
+};
+
+class AimGunCommand final: public Command
+{
+public:
+	AimGunCommand(Engine::GameObject* actor): 
+		Command(actor)
+	{};
+
+	// Inherited via Command
+	virtual void Execute(float) override
+	{
+		std::cout << "AimGunCommand\n";
+
+		GetActor()->GetComponent<TankGunComponent>()->SetGunAngle(90);
+	}
 };
