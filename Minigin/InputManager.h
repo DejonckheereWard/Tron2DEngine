@@ -30,7 +30,7 @@ namespace Engine
 
 		void AddAxisMapping(unsigned int controllerIndex, XController::ControllerAxis axis, std::unique_ptr<Command> command);
 
-		void AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command);
+		void AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command, const glm::vec2& value = { 1.0f, 0.0f });
 
 		unsigned int AddController();  // Returns index of the added controller
 		//void AddCommand(SDL_KeyCode keyCode, SDL_Key)

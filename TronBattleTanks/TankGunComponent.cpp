@@ -30,7 +30,6 @@ void TankGunComponent::Shoot()
 	Scene* pScene = SceneManager::GetInstance().GetMainScene();
 
 	const float currentGunAngle{ glm::radians(m_pTransform->GetRotation()) };
-	std::cout << "Gun angle: " << m_pTransform->GetRotation() << std::endl;
 	const glm::vec2 bulletDirection{ glm::cos(currentGunAngle), glm::sin(currentGunAngle) };
 	const glm::vec2 bulletOrigin{ bulletDirection * 20.0f };
 

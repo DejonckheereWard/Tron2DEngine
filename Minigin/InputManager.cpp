@@ -68,7 +68,7 @@ void Engine::InputManager::AddAxisMapping(unsigned int controllerIndex, XControl
 	m_ControllerAxisCommands[key].push_back(std::move(command));
 }
 
-void Engine::InputManager::AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command)
+void Engine::InputManager::AddAxisMapping(SDL_Scancode key, std::unique_ptr<Command> command, const glm::vec2& value)
 {
 	InputState state = InputState::Pressed;
 	auto input = KeyboardInput(key, state);
@@ -77,7 +77,7 @@ void Engine::InputManager::AddAxisMapping(SDL_Scancode key, std::unique_ptr<Comm
 	{
 		m_KeyboardAxisCommands[input] = std::vector<std::unique_ptr<Command>>{};
 	}
-
+	command->SetDefaultValue(value);
 	m_KeyboardAxisCommands[input].push_back(std::move(command));
 }
 
