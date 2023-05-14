@@ -20,7 +20,9 @@ namespace Engine
 		void Destroy();
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
+		void RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+		
 
 		SDL_Renderer* GetSDLRenderer() const;
 
@@ -28,6 +30,9 @@ namespace Engine
 
 		const SDL_Color& GetBackgroundColor() const { return m_clearColor; }
 		void SetBackgroundColor(const SDL_Color& color) { m_clearColor = color; }
+
+	private:
+		glm::vec2 m_WindowSize{};
 	};
 }
 

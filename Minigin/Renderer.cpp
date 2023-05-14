@@ -49,6 +49,11 @@ void Engine::Renderer::Init(SDL_Window* window)
 
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
+
+
+	int w, h;
+	SDL_GetWindowSize(m_window, &w, &h);
+	m_WindowSize = { float(w), float(h) };
 }
 
 void Engine::Renderer::Render() const
@@ -103,16 +108,30 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, co
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(y);
+	dst.y = static_cast<int>(-y + m_WindowSize.y);
 	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+}
+
+void Engine::Renderer::RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip) const
+{
+	SDL_Rect dst{};
+	dst.x = static_cast<int>(x);
+	dst.y = static_cast<int>(-y + m_WindowSize.y);
+
+	SDL_Point sdlCenter{};
+	sdlCenter.x = static_cast<int>(center.x);
+	sdlCenter.y = static_cast<int>(center.y);
+
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &sdlCenter, flip);
 }
 
 void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(y);
+	dst.y = static_cast<int>(-y + m_WindowSize.y);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
@@ -122,7 +141,5 @@ inline SDL_Renderer* Engine::Renderer::GetSDLRenderer() const { return m_rendere
 
 glm::vec2 Engine::Renderer::GetWindowSize() const
 {
-	int w, h;
-	SDL_GetWindowSize(m_window, &w, &h);
-	return glm::vec2{ float(w), float(h) };
+	return m_WindowSize;
 }
