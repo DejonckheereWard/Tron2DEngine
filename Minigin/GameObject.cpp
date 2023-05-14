@@ -121,17 +121,19 @@ void Engine::GameObject::Update(float deltaTime)
 
 void Engine::GameObject::Render() const
 {
+	// Go through all the components in the map and run render
+	// Do components first so that the children are rendered on top
+	for(const std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
+	{
+		component.second->Render();
+	}
+
 	// GameObject has ownership over its children, render these
 	for(const GameObject* child : m_Children)
 	{
 		child->Render();
 	}
 
-	// Go through all the components in the map and run render
-	for(const std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
-	{
-		component.second->Render();
-	}
 }
 
 void Engine::GameObject::OnImGui()
