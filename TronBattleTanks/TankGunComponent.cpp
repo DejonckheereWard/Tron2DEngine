@@ -1,9 +1,12 @@
 #include "TankGunComponent.h"
-#include "TransformComponent.h"
+
+#include "ServiceLocator.h"
 #include "SceneManager.h"
+
+#include "TransformComponent.h"
 #include "Scene.h"
-#include <RenderComponent.h>
-#include <ResourceManager.h>
+#include "ResourceManager.h"
+#include "RenderComponent.h"
 #include "BulletComponent.h"
 
 void TankGunComponent::Init()
@@ -40,5 +43,8 @@ void TankGunComponent::Shoot()
 	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition() + bulletOrigin);
 	pBullet->AddComponent<BulletComponent>()->SetDirection(bulletDirection);
 	pScene->AddChild(pBullet);
+
+	// Play sound
+	Engine::ServiceLocator::GetAudioService().PlayEffect("Sounds/Shoot.mp3", 0.05f);
 	
 }
