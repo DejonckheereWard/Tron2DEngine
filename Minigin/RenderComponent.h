@@ -18,6 +18,7 @@ namespace Engine
 		virtual void Render() const override;
 
 		virtual void SetTexture(std::shared_ptr<Texture2D> pTexture) { m_Texture = pTexture; };
+		virtual void SetTextureOffset(const glm::vec2& offset) { m_TextureOffset = offset; };
 
 	protected:
 		std::shared_ptr<Texture2D> m_Texture{};

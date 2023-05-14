@@ -106,22 +106,31 @@ void Engine::Renderer::Destroy()
 
 void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
 {
+	const glm::ivec2 textureSize{ texture.GetSize() };
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(-y + m_WindowSize.y);
+	dst.w = textureSize.x;
+	dst.h = textureSize.y;
+
 	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
 void Engine::Renderer::RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip) const
 {
-	SDL_Rect dst{};
-	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(-y + m_WindowSize.y);
+	const glm::ivec2 textureSize{ texture.GetSize() };
 
 	SDL_Point sdlCenter{};
-	sdlCenter.x = static_cast<int>(center.x);
-	sdlCenter.y = static_cast<int>(center.y);
+	sdlCenter.x = static_cast<int>(center.x * textureSize.x);
+	sdlCenter.y = static_cast<int>(textureSize.y - center.y * textureSize.y);
+
+	SDL_Rect dst{};
+	dst.x = static_cast<int>(x - sdlCenter.x);
+	dst.y = static_cast<int>(-y + m_WindowSize.y - sdlCenter.y);
+	dst.w = textureSize.x;
+	dst.h = textureSize.y;
+
 
 	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &sdlCenter, flip);
@@ -131,7 +140,7 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, co
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
-	dst.y = static_cast<int>(-y + m_WindowSize.y);
+	dst.y = static_cast<int>(-y + m_WindowSize.y - height);
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);

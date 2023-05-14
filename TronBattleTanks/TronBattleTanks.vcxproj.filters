@@ -18,6 +18,9 @@
     <Filter Include="Resource Files\Sprites">
       <UniqueIdentifier>{a05e2c59-9c4d-4812-a001-63405578a022}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Components\Tank">
+      <UniqueIdentifier>{38793f3e-bf0c-4094-a6a5-76fd9b519d9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantRotator.cpp">
@@ -42,6 +45,12 @@
       <Filter>Game Files</Filter>
     </ClCompile>
     <ClCompile Include="TankGunComponent.cpp">
+      <Filter>Game Files\Components\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="TankTurretComponent.cpp">
+      <Filter>Game Files\Components\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletComponent.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,6 +77,12 @@
       <Filter>Game Files</Filter>
     </ClInclude>
     <ClInclude Include="TankGunComponent.h">
+      <Filter>Game Files\Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="TankTurretComponent.h">
+      <Filter>Game Files\Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletComponent.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

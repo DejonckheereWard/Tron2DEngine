@@ -34,7 +34,10 @@ namespace Engine
 			LeftTrigger = 2,
 			RightTrigger = 3,
 			RightThumbX = 4,
-			RightThumbY = 5
+			RightThumbY = 5,
+			LeftThumbXY = 6,
+			RightThumbXY = 7
+
 		};
 
 		explicit XController(unsigned int controllerIndex);

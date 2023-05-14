@@ -2,6 +2,9 @@
 #include "TransformComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include <RenderComponent.h>
+#include <ResourceManager.h>
+#include "BulletComponent.h"
 
 void TankGunComponent::Init()
 {
@@ -10,30 +13,15 @@ void TankGunComponent::Init()
 	m_pTransform->SetLocalRotation(0);
 }
 
-void TankGunComponent::Update(float deltaTime)
+void TankGunComponent::Update(float /*deltaTime*/)
 {
-	const float maxAngleOffset{ 1.0f };
-	const float currentGunAngle{ m_pTransform->GetLocalRotation() };
-	const float angleDifference{  fmod(m_DesiredGunAngle - currentGunAngle, 180.0f) };
 
-	if(angleDifference > maxAngleOffset)
-	{
-		m_pTransform->SetLocalRotation(currentGunAngle + m_GunRotationSpeed * deltaTime);
-	}
-	else if(angleDifference < (-maxAngleOffset))
-	{
-		m_pTransform->SetLocalRotation(currentGunAngle - m_GunRotationSpeed * deltaTime);
-	}
 }
 
 void TankGunComponent::Render() const
 {
 }
 
-void TankGunComponent::SetGunAngle(float angle)
-{
-	m_DesiredGunAngle = angle;
-}
 
 void TankGunComponent::Shoot()
 {
@@ -41,7 +29,17 @@ void TankGunComponent::Shoot()
 
 	Scene* pScene = SceneManager::GetInstance().GetMainScene();
 
+	const float currentGunAngle{ glm::radians(m_pTransform->GetRotation()) };
+	std::cout << "Gun angle: " << m_pTransform->GetRotation() << std::endl;
+	const glm::vec2 bulletDirection{ glm::cos(currentGunAngle), glm::sin(currentGunAngle) };
+	const glm::vec2 bulletOrigin{ bulletDirection * 20.0f };
+
 	GameObject* pBullet = new GameObject();
+	auto* renderComponent = pBullet->AddComponent<Engine::RenderComponent>();
+	renderComponent->SetTexture(Engine::ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
+	renderComponent->SetTextureOffset({0.5f, 0.5f});
+	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition() + bulletOrigin);
+	pBullet->AddComponent<BulletComponent>()->SetDirection(bulletDirection);
 	pScene->AddChild(pBullet);
 	
 }

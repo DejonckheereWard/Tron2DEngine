@@ -20,5 +20,5 @@ void Engine::RenderComponent::Render() const
 	const glm::vec2& pos{ m_pTransform->GetPosition() };
 
 	// -rotation because SDL rotates clockwise while in the engine, positive rotations are counter clockwise
-	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, -m_pTransform->GetLocalRotation(), m_pTransform->GetLocalPosition() + m_TextureOffset);
+	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, -m_pTransform->GetRotation(), m_TextureOffset );
 }

@@ -2,6 +2,7 @@
 #include "Command.h"
 #include "ServiceLocator.h"
 #include "TankGunComponent.h"
+#include "TankTurretComponent.h"
 
 using Engine::Command;
 
@@ -107,19 +108,31 @@ private:
 
 };
 
-class AimGunCommand final: public Command
+class AimTurretCommand final: public Command
 {
 public:
-	AimGunCommand(Engine::GameObject* pOwner):
+	AimTurretCommand(Engine::GameObject* pOwner):
 		Command(pOwner)
 	{};
 
 	// Inherited via Command
 	virtual void Execute(const glm::vec2& value) override
 	{
-		GetOwner()->GetComponent<TankGunComponent>()->Shoot();
-
 		const glm::vec2 normalizedValue{ glm::normalize(value) };
-		GetOwner()->GetComponent<TankGunComponent>()->SetGunDirection(normalizedValue);
+		GetOwner()->GetComponent<TankTurretComponent>()->SetTurretDirection(normalizedValue);
+	}
+};
+
+class ShootCommand final: public Command
+{
+public:
+	ShootCommand(Engine::GameObject* pOwner):
+		Command(pOwner)
+	{};
+
+	// Inherited via Command
+	virtual void Execute(const glm::vec2& /*value*/) override
+	{
+		GetOwner()->GetComponent<TankGunComponent>()->Shoot();
 	}
 };

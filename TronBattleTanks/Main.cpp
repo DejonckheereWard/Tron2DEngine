@@ -2,9 +2,9 @@
 //
 
 #if _DEBUG
-	#if __has_include(<vld.h>)
-		#include <vld.h>
-	#endif
+#if __has_include(<vld.h>)
+#include <vld.h>
+#endif
 #endif
 
 #include "Minigin.h"
@@ -35,6 +35,7 @@
 
 #include "GameCommands.h"
 #include "TankGunComponent.h"
+#include "TankTurretComponent.h"
 
 void PrintManual()
 {
@@ -192,7 +193,7 @@ void MainScene()
 	//  Load the level obstacles
 	//  Reload the level when a player dies (if lives > 0)
 	// Load the next level if the player reaches the end of the level, repeat some of the above steps
-	
+
 
 	// Requirements
 	// 1 or 2 players
@@ -207,7 +208,7 @@ void MainScene()
 	// On completion of all levels, it should loop back to the first level (endless play)
 	//   Make sure the number of levels is automatic based on the number of levels in the folder (adding a file adds it automatically to the game)
 
-	
+
 	// Player movement feel / controls
 	// WASD goes in the direction you want, if you cant go in that direction (wall) you continue in the direction you were last going
 	// This way, you turn the corner from the moment you can
@@ -233,23 +234,53 @@ void MainScene()
 
 	PrintManual();
 
+	// Spawn in background
+	auto backGround = new GameObject();
+	std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
+	backGround->AddComponent<RenderComponent>()->SetTexture(bgTexture);
+	scene->AddChild(backGround);
+
 	// Spawn in player
 	GameObject* playerTank{ new GameObject() };
-	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
+	//playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
 	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	playerTank->AddComponent<ScoreComponent>();
 	playerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
 	scene->AddChild(playerTank);
 
 
-	GameObject* playerTankGun{ new GameObject() };
-	playerTankGun->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
-	playerTankGun->AddComponent<TankGunComponent>();
-	playerTank->AddChild(playerTankGun);
-	playerTankGun->GetTransform()->SetLocalPosition(0, 0);
+	GameObject* pPlayerTankTurret{ new GameObject };
+	{
+		playerTank->AddChild(pPlayerTankTurret);
+		pPlayerTankTurret->AddComponent<TankTurretComponent>();
+		pPlayerTankTurret->GetTransform()->SetLocalPosition(16.0f, 16.0f); // Set to center of tank
+		auto* renderComponent = pPlayerTankTurret->AddComponent<RenderComponent>();
+		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
+		renderComponent->SetTextureOffset({0.5f, 0.5f});
+
+	}
+	GameObject* pPlayerTankGun{ new GameObject() };
+	{
+		pPlayerTankTurret->AddChild(pPlayerTankGun);
+		auto* renderComponent = pPlayerTankGun->AddComponent<RenderComponent>();
+		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
+		renderComponent->SetTextureOffset({0.5f, 0.5f});
+
+		pPlayerTankGun->AddComponent<TankGunComponent>();
+		pPlayerTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
+	}
+
+
 
 	unsigned int controllerIdx = InputManager::GetInstance().AddController();
-	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbX, std::make_unique<AimGunCommand>(playerTankGun));
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::RightThumbXY, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_RIGHT, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_LEFT, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_UP, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_DOWN, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
+	
+	//InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder,InputState::OnPress , std::make_unique<ShootCommand>(pPlayerTankGun));
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::RightThumbXY, std::make_unique<ShootCommand>(pPlayerTankGun));
 
 }
 
