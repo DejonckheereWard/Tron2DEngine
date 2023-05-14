@@ -29,7 +29,7 @@ namespace Engine
 		const std::string& GetName() { return m_SceneName; };
 
 	private:		
-
+		bool m_IsInitialized{ false };
 		const std::string m_SceneName;
 
 		std::vector<GameObject*> m_Children{};

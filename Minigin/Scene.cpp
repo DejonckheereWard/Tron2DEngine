@@ -23,6 +23,7 @@ void Engine::Scene::Init()
 	{
 		child->Init();
 	}
+	m_IsInitialized = true;
 }
 
 void Engine::Scene::Update(float deltaTime)
@@ -51,6 +52,8 @@ void Engine::Scene::OnImGui()
 
 void Engine::Scene::AddChild(GameObject* child)
 {
+	if(m_IsInitialized)
+		child->Init();
 	m_Children.push_back(child);
 }
 
