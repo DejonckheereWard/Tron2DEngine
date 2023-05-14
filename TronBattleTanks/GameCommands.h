@@ -11,9 +11,8 @@ class MoveCommand final: public Command
 {
 
 public:
-	MoveCommand(Engine::GameObject* actor, float movementspeed, const glm::vec2& movedirection):
+	MoveCommand(Engine::GameObject* actor, float movementspeed):
 		Command(actor),
-		m_MoveDirection{ movedirection },
 		m_MovementSpeed{ movementspeed }
 	{};
 
@@ -21,12 +20,11 @@ public:
 	virtual void Execute(const glm::vec2& value) override
 	{
 		auto localPos = GetOwner()->GetTransform()->GetLocalPosition();
-		localPos += m_MoveDirection * m_MovementSpeed * value;
+		localPos += value * m_MovementSpeed;
 		GetOwner()->GetTransform()->SetLocalPosition(localPos);
 	};
 
 private:
-	glm::vec2 m_MoveDirection;
 	float m_MovementSpeed;
 };
 

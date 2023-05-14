@@ -139,14 +139,27 @@ void MainScene()
 	}
 
 
-
+	// Create controller
 	unsigned int controllerIdx = InputManager::GetInstance().AddController();
+
+	// MOVEMENT
+	const float tankMoveSpeed{ 1.0f };
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbXY, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_D, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 1.0f, 0.0f });
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_A, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ -1.0f, 0.0f });
+
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_W, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 0.0f, 1.0f });
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_S, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 0.0f, -1.0f });
+
+	
+	// AIMING
 	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::RightThumbXY, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_RIGHT, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 1.0f, 0.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_LEFT, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ -1.0f, 0.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_UP, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 0.0f, 1.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_DOWN, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 0.0f, -1.0f });
 	
+
 	//InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder,InputState::OnPress , std::make_unique<ShootCommand>(pPlayerTankGun));
 	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder, InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, Engine::InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
