@@ -60,7 +60,7 @@ void Engine::InputManager::AddAxisMapping(unsigned int controllerIndex, XControl
 	auto key = ControllerKey(controllerIndex, input);
 
 	// Initialize vector of commands if no commands exist for this mapping yet.
-	if(m_ControllerCommands.count(key) == 0)
+	if(m_ControllerAxisCommands.count(key) == 0)
 	{
 		m_ControllerAxisCommands[key] = std::vector<std::unique_ptr<Command>>{};
 	}
@@ -147,8 +147,7 @@ void Engine::InputManager::HandleControllerInput()
 		const float deadZone{ 0.2f };
 		switch(static_cast<XController::ControllerAxis>(controllerMapping.first.second.first))
 		{
-			case XController::ControllerAxis::LeftThumbX:
-			case XController::ControllerAxis::LeftThumbY:
+			case XController::ControllerAxis::LeftThumbXY:
 			{
 
 				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetLeftThumb() };
@@ -159,14 +158,53 @@ void Engine::InputManager::HandleControllerInput()
 				}
 				break;
 			}
-			case XController::ControllerAxis::RightThumbX:
-			case XController::ControllerAxis::RightThumbY:
+			case XController::ControllerAxis::RightThumbXY:
 			{
 				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetRightThumb() };
 				if(std::abs(value.x) > deadZone || std::abs(value.y) > deadZone)
 				{
 					// Execute every command in the mapping (vector of commands)
 					for(auto& command : controllerMapping.second) { command->Execute(value); }
+				}
+				break;
+			}
+			case XController::ControllerAxis::LeftThumbX:
+			{
+				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetLeftThumb() };
+				if(std::abs(value.x) > deadZone )
+				{
+					// Execute every command in the mapping (vector of commands)
+					for(auto& command : controllerMapping.second) { command->Execute({value.x, 0.0f}); }
+				}
+				break;
+			}
+			case XController::ControllerAxis::LeftThumbY:
+			{
+				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetLeftThumb() };
+				if(std::abs(value.y) > deadZone)
+				{
+					// Execute every command in the mapping (vector of commands)
+					for(auto& command : controllerMapping.second) { command->Execute({ 0.0f, value.y }); }
+				}
+				break;
+			}
+			case XController::ControllerAxis::RightThumbX:
+			{
+				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetRightThumb() };
+				if(std::abs(value.x) > deadZone )
+				{
+					// Execute every command in the mapping (vector of commands)
+					for(auto& command : controllerMapping.second) { command->Execute({value.x, 0}); }
+				}
+				break;
+			}
+			case XController::ControllerAxis::RightThumbY:
+			{
+				glm::vec2 value{ m_Controllers[controllerMapping.first.first]->GetRightThumb() };
+				if(std::abs(value.x) > deadZone)
+				{
+					// Execute every command in the mapping (vector of commands)
+					for(auto& command : controllerMapping.second) { command->Execute({ 0, value.y }); }
 				}
 				break;
 			}
