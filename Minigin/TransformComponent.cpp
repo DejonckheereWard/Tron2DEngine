@@ -132,6 +132,7 @@ void Engine::TransformComponent::UpdateWorldTransform()
 
 	m_WorldPosition = glm::vec2{ m_WorldTransform[3][0], m_WorldTransform[3][1] };
 	m_WorldScale = { glm::length(m_WorldTransform[0]), glm::length(m_WorldTransform[1]) };
-	m_WorldRotation =  glm::degrees(std::atan2(m_WorldTransform[0][1], m_WorldTransform[0][0]));
 
+	m_WorldRotation =  glm::degrees(std::atan2(m_WorldTransform[0][1], m_WorldTransform[0][0]));
+	//m_WorldRotation = glm::degrees(glm::eulerAngles(glm::quat_cast(m_WorldTransform)).z);  // HAS BUG
 }

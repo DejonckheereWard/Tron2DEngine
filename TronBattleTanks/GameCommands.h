@@ -19,12 +19,17 @@ public:
 	// Inherited via Command
 	virtual void Execute(const glm::vec2& value) override
 	{
-		auto localPos = GetOwner()->GetTransform()->GetLocalPosition();
-		localPos += value * m_MovementSpeed;
-		GetOwner()->GetTransform()->SetLocalPosition(localPos);
+		// Get movement component and move the actor
+		if (!m_pMoveComponent)
+		{
+			m_pMoveComponent = GetOwner()->GetComponent<MoveComponent>();
+		}
+
+		m_pMoveComponent->Move(value);
 	};
 
 private:
+	MoveComponent* m_pMoveComponent;
 	float m_MovementSpeed;
 };
 

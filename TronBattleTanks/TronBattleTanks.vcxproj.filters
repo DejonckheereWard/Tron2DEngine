@@ -53,6 +53,9 @@
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="MoveComponent.cpp">
+      <Filter>Game Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantRotator.h">
@@ -83,6 +86,9 @@
       <Filter>Game Files\Components\Tank</Filter>
     </ClInclude>
     <ClInclude Include="BulletComponent.h">
+      <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveComponent.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

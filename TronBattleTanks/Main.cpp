@@ -24,6 +24,7 @@
 #include "TextComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "MoveComponent.h"
 
 // Custom Components
 #include "ConstantRotator.h"
@@ -110,9 +111,10 @@ void MainScene()
 
 	// Spawn in player
 	GameObject* playerTank{ new GameObject() };
-	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTank.png"));
+	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
 	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	playerTank->AddComponent<ScoreComponent>();
+	playerTank->AddComponent<MoveComponent>();
 	playerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
 	scene->AddChild(playerTank);
 
@@ -133,7 +135,6 @@ void MainScene()
 		auto* renderComponent = pPlayerTankGun->AddComponent<RenderComponent>();
 		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
 		renderComponent->SetTextureOffset({0.5f, 0.5f});
-
 		pPlayerTankGun->AddComponent<TankGunComponent>();
 		pPlayerTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 	}
