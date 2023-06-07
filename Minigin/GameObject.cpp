@@ -6,7 +6,8 @@
 #include "TransformComponent.h"
 
 Engine::GameObject::GameObject():
-	m_pTransform{ AddComponent<TransformComponent>() }
+	m_pTransform{ AddComponent<TransformComponent>() },
+	m_Children{}
 {
 }
 

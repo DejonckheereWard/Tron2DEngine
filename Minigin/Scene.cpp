@@ -32,6 +32,17 @@ void Engine::Scene::Update(float deltaTime)
 	{
 		child->Update(deltaTime);
 	}
+
+
+	if (m_ChildrenToAdd.size() > 0)
+	{
+		m_Children.reserve(m_ChildrenToAdd.size());
+		for (auto& child : m_ChildrenToAdd)
+		{
+			m_Children.emplace_back(child);
+		}
+		m_ChildrenToAdd.clear();
+	}
 }
 
 void Engine::Scene::Render() const
@@ -52,9 +63,13 @@ void Engine::Scene::OnImGui()
 
 void Engine::Scene::AddChild(GameObject* child)
 {
-	if(m_IsInitialized)
+	if (m_IsInitialized)
+	{
 		child->Init();
-	m_Children.push_back(child);
+		m_ChildrenToAdd.emplace_back(child);
+		return;
+	}
+	m_Children.emplace_back(child);
 }
 
 void Engine::Scene::RemoveChild(GameObject* child)

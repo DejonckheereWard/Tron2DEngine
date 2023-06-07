@@ -33,6 +33,7 @@ namespace Engine
 		const std::string m_SceneName;
 
 		std::vector<GameObject*> m_Children{};
+		std::vector<GameObject*> m_ChildrenToAdd{}; 
 		
 	};
 }

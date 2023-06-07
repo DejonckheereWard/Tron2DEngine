@@ -57,7 +57,6 @@ namespace Engine
 		TransformComponent* const m_pTransform;
 
 		GameObject* m_Parent{ nullptr };
-		//std::vector<std::unique_ptr<GameObject>> m_Children{};
 		std::vector<GameObject*> m_Children{};
 
 
