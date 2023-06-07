@@ -1,5 +1,7 @@
 #include "MoveComponent.h"
 #include "TransformComponent.h"
+#include <algorithm>
+
 #pragma warning(push, 0)
 #include "glm/gtx/norm.hpp"
 #pragma warning(pop)
@@ -15,10 +17,12 @@ void MoveComponent::Update(float deltaTime)
 	// Get the biggest value of the direction vector and set the other values to 0
 	if (abs(m_MoveDirection.x) > abs(m_MoveDirection.y))
 	{
+		m_MoveDirection.x = std::clamp(m_MoveDirection.y, -1.0f, 1.0f);
 		m_MoveDirection.y = 0;
 	}
 	else
 	{
+		m_MoveDirection.y = std::clamp(m_MoveDirection.y, -1.0f, 1.0f);
 		m_MoveDirection.x = 0;
 	}
 
