@@ -24,7 +24,6 @@
 #include "TextComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
-#include "MoveComponent.h"
 
 // Custom Components
 #include "ConstantRotator.h"
@@ -33,10 +32,13 @@
 #include "HealthComponent.h"
 #include "ScoreDisplay.h"
 #include "ScoreComponent.h"
+#include "NPCControlComponent.h"
+#include "MoveComponent.h"
 
 #include "GameCommands.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
+#include "Main.h"
 
 void PrintManual()
 {
@@ -110,31 +112,39 @@ void MainScene()
 	scene->AddChild(backGround);
 
 	// Spawn in player
-	GameObject* playerTank{ new GameObject() };
-	playerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
-	playerTank->AddComponent<HealthComponent>()->SetHealth(1);
-	playerTank->AddComponent<ScoreComponent>();
-	playerTank->AddComponent<MoveComponent>();
-	playerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
-	scene->AddChild(playerTank);
+	GameObject* pPlayer{ SpawnPlayer(scene) };
+	SpawnEnemy(scene, pPlayer);
+
+}
+
+Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
+{
+	using namespace Engine;
+	GameObject* pPlayerTank{ new GameObject() };
+	pPlayerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
+	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
+	pPlayerTank->AddComponent<ScoreComponent>();
+	pPlayerTank->AddComponent<MoveComponent>();
+	pPlayerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
+	scene->AddChild(pPlayerTank);
 
 
 	GameObject* pPlayerTankTurret{ new GameObject };
 	{
-		playerTank->AddChild(pPlayerTankTurret);
+		pPlayerTank->AddChild(pPlayerTankTurret);
 		pPlayerTankTurret->AddComponent<TankTurretComponent>();
 		pPlayerTankTurret->GetTransform()->SetLocalPosition(16.0f, 16.0f); // Set to center of tank
 		auto* renderComponent = pPlayerTankTurret->AddComponent<RenderComponent>();
 		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
-		renderComponent->SetTextureOffset({0.5f, 0.5f});
+		renderComponent->SetTextureOffset({ 0.5f, 0.5f });
 
 	}
 	GameObject* pPlayerTankGun{ new GameObject() };
 	{
 		pPlayerTankTurret->AddChild(pPlayerTankGun);
 		auto* renderComponent = pPlayerTankGun->AddComponent<RenderComponent>();
-		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/GreenTankGun.png"));
-		renderComponent->SetTextureOffset({0.5f, 0.5f});
+		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTankGun.png"));
+		renderComponent->SetTextureOffset({ 0.5f, 0.5f });
 		pPlayerTankGun->AddComponent<TankGunComponent>();
 		pPlayerTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 	}
@@ -144,27 +154,67 @@ void MainScene()
 	unsigned int controllerIdx = InputManager::GetInstance().AddController();
 
 	// MOVEMENT
-	const float tankMoveSpeed{ 1.0f };
-	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbXY, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed));
-	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_D, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 1.0f, 0.0f });
-	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_A, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ -1.0f, 0.0f });
+	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::LeftThumbXY, std::make_unique<MoveCommand>(pPlayerTank));
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_D, std::make_unique<MoveCommand>(pPlayerTank), glm::vec2{ 1.0f, 0.0f });
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_A, std::make_unique<MoveCommand>(pPlayerTank), glm::vec2{ -1.0f, 0.0f });
 
-	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_W, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 0.0f, 1.0f });
-	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_S, std::make_unique<MoveCommand>(playerTank, tankMoveSpeed), glm::vec2{ 0.0f, -1.0f });
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_W, std::make_unique<MoveCommand>(pPlayerTank), glm::vec2{ 0.0f, 1.0f });
+	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_S, std::make_unique<MoveCommand>(pPlayerTank), glm::vec2{ 0.0f, -1.0f });
 
-	
 	// AIMING
 	InputManager::GetInstance().AddAxisMapping(controllerIdx, Engine::XController::ControllerAxis::RightThumbXY, std::make_unique<AimTurretCommand>(pPlayerTankTurret));
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_RIGHT, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 1.0f, 0.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_LEFT, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ -1.0f, 0.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_UP, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 0.0f, 1.0f });
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_DOWN, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 0.0f, -1.0f });
-	
 
-	//InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder,InputState::OnPress , std::make_unique<ShootCommand>(pPlayerTankGun));
+	// Shooting
 	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder, InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
 	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, Engine::InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
-	
+
+	return pPlayerTank;
+}
+
+Engine::GameObject* SpawnEnemy(Engine::Scene* scene, Engine::GameObject* pTarget)
+{
+	using namespace Engine;
+	GameObject* pTank{ new GameObject() };
+	pTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTank.png"));
+	pTank->AddComponent<HealthComponent>()->SetHealth(1);
+	pTank->AddComponent<ScoreComponent>();
+	pTank->AddComponent<MoveComponent>();
+	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
+	pNPC->SetTarget(pTarget);
+	pTank->GetTransform()->SetLocalPosition(500.0f, 500.0f);
+	scene->AddChild(pTank);
+
+
+	GameObject* pTankTurret{ new GameObject };
+	{
+		pTank->AddChild(pTankTurret);
+		TankTurretComponent* pTurretComp{ pTankTurret->AddComponent<TankTurretComponent>() };
+		pTankTurret->GetTransform()->SetLocalPosition(16.0f, 16.0f); // Set to center of tank
+		RenderComponent* pRenderComponent{ pTankTurret->AddComponent<RenderComponent>() };
+		pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletNPC.png"));
+		pRenderComponent->SetTextureOffset({ 0.5f, 0.5f });
+
+		pNPC->SetTurretComponent(pTurretComp);
+
+	}
+	GameObject* pTankGun{ new GameObject() };
+	{
+		pTankTurret->AddChild(pTankGun);
+		RenderComponent* pRenderComponent{ pTankGun->AddComponent<RenderComponent>() };
+		pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTankGun.png"));
+		pRenderComponent->SetTextureOffset({ 0.5f, 0.5f });
+		TankGunComponent* pGunComp{ pTankGun->AddComponent<TankGunComponent>() } ;
+		pTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
+
+		pNPC->SetGunComponent(pGunComp);
+	}
+
+
+	return pTank;
 }
 
 

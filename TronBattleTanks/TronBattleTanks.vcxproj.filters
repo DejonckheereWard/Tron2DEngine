@@ -21,6 +21,9 @@
     <Filter Include="Game Files\Components\Tank">
       <UniqueIdentifier>{38793f3e-bf0c-4094-a6a5-76fd9b519d9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Components\Enemy">
+      <UniqueIdentifier>{bf5bbb04-0511-48e2-9be2-1b850b5c61db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantRotator.cpp">
@@ -55,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Game Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCControlComponent.cpp">
+      <Filter>Game Files\Components\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +97,10 @@
     <ClInclude Include="MoveComponent.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="NPCControlComponent.h">
+      <Filter>Game Files\Components\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Data\background.tga">

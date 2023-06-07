@@ -7,13 +7,13 @@
 using Engine::Command;
 
 // Game commands
-class MoveCommand final: public Command
+class MoveCommand final : public Command
 {
 
 public:
-	MoveCommand(Engine::GameObject* actor, float movementspeed):
+	MoveCommand(Engine::GameObject* actor) :
 		Command(actor),
-		m_MovementSpeed{ movementspeed }
+		m_pMoveComponent{ nullptr }
 	{};
 
 	// Inherited via Command
@@ -30,13 +30,12 @@ public:
 
 private:
 	MoveComponent* m_pMoveComponent;
-	float m_MovementSpeed;
 };
 
-class AimTurretCommand final: public Command
+class AimTurretCommand final : public Command
 {
 public:
-	AimTurretCommand(Engine::GameObject* pOwner):
+	AimTurretCommand(Engine::GameObject* pOwner) :
 		Command(pOwner)
 	{};
 
@@ -48,10 +47,10 @@ public:
 	}
 };
 
-class ShootCommand final: public Command
+class ShootCommand final : public Command
 {
 public:
-	ShootCommand(Engine::GameObject* pOwner):
+	ShootCommand(Engine::GameObject* pOwner) :
 		Command(pOwner)
 	{};
 
