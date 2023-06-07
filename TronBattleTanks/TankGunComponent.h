@@ -18,8 +18,8 @@ public:
 private:
 	Engine::TransformComponent* m_pTransform{ nullptr };
 
-	float m_CooldownTime{ 1.f };  // Time before can shoot again
-	float m_CooldownElapsed{ };  // Time since last shot
+	float m_CooldownTime{ 0.5f };  // Time before can shoot again
+	float m_CooldownElapsed{ FLT_MAX };  // Time since last shot
 
 
 

@@ -35,6 +35,8 @@ void TankGunComponent::Shoot()
 {
 	if (m_CooldownElapsed < m_CooldownTime)
 		return;
+	
+	m_CooldownElapsed = 0;
 
 	using Engine::Scene, Engine::SceneManager, Engine::GameObject;
 
