@@ -23,9 +23,6 @@ namespace Engine
 
 		virtual void ResumeMusic() = 0;
 
-	protected:
-		std::jthread m_AudioThread;
-
 	};
 }
 

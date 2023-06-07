@@ -204,12 +204,13 @@ public:
 	}
 
 private:
+	std::jthread m_AudioThread;
+
 	std::queue<AudioEvent> m_AudioEventQueue;
 
 	bool m_AudioThreadRunning;
 	std::condition_variable m_QueueCondition;
 	std::mutex m_EventQueueMutex;
-	std::jthread m_AudioThread;
 
 	std::mutex m_AudioMapMutex;
 	std::map<std::string, Mix_Chunk*> m_AudioMap;
