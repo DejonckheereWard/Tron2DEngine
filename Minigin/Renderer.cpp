@@ -104,7 +104,7 @@ void Engine::Renderer::Destroy()
 	
 }
 
-void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void Engine::Renderer::RenderTexture(const Texture2D& texture, float x, float y) const
 {
 	const glm::ivec2 textureSize{ texture.GetSize() };
 	SDL_Rect dst{};
@@ -136,7 +136,7 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, float x, float y,
 	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, &sdlCenter, flip);
 }
 
-void Engine::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void Engine::Renderer::RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
