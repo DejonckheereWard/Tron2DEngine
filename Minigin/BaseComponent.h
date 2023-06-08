@@ -4,8 +4,6 @@
 
 namespace Engine
 {
-
-
 	class BaseComponent
 	{
 	public:
@@ -17,9 +15,11 @@ namespace Engine
 		virtual void Render() const = 0;
 		virtual void OnImGui() {};  // Not const because the UI can have sliders, buttons etc. that change the values
 		
+
 	
 	protected:
 		GameObject* GetOwner() const { return m_pOwner; };  // Only needs to be accessed by inheriting components
+		TransformComponent* GetTransform() const { return m_pOwner->GetTransform(); }
 
 		template <ComponentType TComponent>
 		void RequireComponent() const;
