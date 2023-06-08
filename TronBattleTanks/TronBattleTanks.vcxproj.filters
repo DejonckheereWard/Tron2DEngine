@@ -27,7 +27,7 @@
     <Filter Include="Game Files\Components\Level">
       <UniqueIdentifier>{3f22f4cf-0c2b-468f-982a-5eca40744267}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Level">
+    <Filter Include="Resource Files\Sprites\Level">
       <UniqueIdentifier>{01acc745-b697-44d2-b538-f04101cc1456}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -161,7 +161,7 @@
       <Filter>Resource Files\Sprites</Filter>
     </Image>
     <Image Include="..\Data\Sprites\Level\CircuitBoard.png">
-      <Filter>Resource Files\Level</Filter>
+      <Filter>Resource Files\Sprites\Level</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

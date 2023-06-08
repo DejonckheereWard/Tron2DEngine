@@ -6,6 +6,10 @@
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
 
+#pragma warning(push, 0)
+#include <glm/gtx/norm.hpp>
+#pragma warning(pop)
+
 void NPCControlComponent::Init()
 {
 	RequireComponent<MoveComponent>();
@@ -17,13 +21,19 @@ void NPCControlComponent::Init()
 void NPCControlComponent::Update(float /*deltaTime*/)
 {
 	// Find the target
-	if(!m_pTarget)
+	if (!m_pTarget)
 		return;
 
 	// Get the direction to the target
-	glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition() };
-	glm::vec2 ownPos{ GetOwner()->GetTransform()->GetPosition() };
-	glm::vec2 directionToTarget{ glm::normalize(targetPos - ownPos) };
+	const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition() };
+	const glm::vec2 ownPos{ GetOwner()->GetTransform()->GetPosition() };
+	const glm::vec2 vectorToTarget{targetPos - ownPos};
+
+	if (glm::length2(vectorToTarget) >= (m_DetectionRange * m_DetectionRange))
+		return;  // Target too far
+
+	const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
+
 
 	m_pMoveComponent->Move(directionToTarget);
 
