@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "Singleton.h"
 #include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
 
 namespace Engine
 {
@@ -20,9 +21,9 @@ namespace Engine
 		void Destroy();
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
-		void RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
-		
+		void RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
+		void RenderTexture(const Texture2D& texture, const glm::vec4& srcRect, const glm::vec4 dstRect, float angle = 0.f, const glm::vec2& center = {}, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
 
 		SDL_Renderer* GetSDLRenderer() const;
 

@@ -24,6 +24,12 @@
     <Filter Include="Game Files\Components\Enemy">
       <UniqueIdentifier>{bf5bbb04-0511-48e2-9be2-1b850b5c61db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Components\Level">
+      <UniqueIdentifier>{3f22f4cf-0c2b-468f-982a-5eca40744267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Level">
+      <UniqueIdentifier>{01acc745-b697-44d2-b538-f04101cc1456}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantRotator.cpp">
@@ -61,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="NPCControlComponent.cpp">
       <Filter>Game Files\Components\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="WallRenderer.cpp">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCommands.cpp">
+      <Filter>Game Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +113,9 @@
       <Filter>Game Files\Components\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Main.h" />
+    <ClInclude Include="WallRenderer.h">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Data\background.tga">
@@ -144,6 +159,9 @@
     </Image>
     <Image Include="..\Data\Sprites\TankExplosion.png">
       <Filter>Resource Files\Sprites</Filter>
+    </Image>
+    <Image Include="..\Data\Sprites\Level\CircuitBoard.png">
+      <Filter>Resource Files\Level</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

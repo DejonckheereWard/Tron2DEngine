@@ -8,9 +8,9 @@ Engine::Texture2D::~Texture2D()
 
 glm::ivec2 Engine::Texture2D::GetSize() const
 {
-	SDL_Rect dst;
-	SDL_QueryTexture(GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	return { dst.w,dst.h };
+	glm::ivec2 size{};
+	SDL_QueryTexture(GetSDLTexture(), nullptr, nullptr, &size.x, &size.y);
+	return size;
 }
 
 SDL_Texture* Engine::Texture2D::GetSDLTexture() const

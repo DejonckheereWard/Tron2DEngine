@@ -60,3 +60,43 @@ public:
 		GetOwner()->GetComponent<TankGunComponent>()->Shoot();
 	}
 };
+
+
+
+// Debug commands
+class DebugMoveCommand final : public Command
+{
+
+public:
+	DebugMoveCommand(Engine::GameObject* actor) :
+		Command(actor)
+	{};
+
+	// Inherited via Command
+	virtual void Execute(const glm::vec2& value) override
+	{
+		// Only for debugging, not frame independent, can make any object move this way.
+		glm::vec2 localPos = GetOwner()->GetTransform()->GetLocalPosition();
+		localPos += value;
+		GetOwner()->GetTransform()->SetLocalPosition(localPos);
+	};
+
+};
+
+class DebugPrintPositionCommand final : public Command
+{
+	DebugPrintPositionCommand(Engine::GameObject* actor) :
+		Command(actor)
+	{};
+
+	// Inherited via Command
+	virtual void Execute(const glm::vec2& /*value*/) override
+	{
+		// Only for debugging, not frame independent, can make any object move this way.
+		glm::vec2 localPos = GetOwner()->GetTransform()->GetLocalPosition();
+
+		std::cout << "(" << localPos.x << ", " << localPos.y << ")\n";
+
+	};
+
+};

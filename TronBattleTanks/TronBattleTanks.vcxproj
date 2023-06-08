@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="ConstantRotator.cpp" />
+    <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="ScoreDisplay.cpp" />
     <ClCompile Include="TankGunComponent.cpp" />
     <ClCompile Include="TankTurretComponent.cpp" />
+    <ClCompile Include="WallRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletComponent.h" />
@@ -192,6 +194,7 @@
     <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="TankGunComponent.h" />
     <ClInclude Include="TankTurretComponent.h" />
+    <ClInclude Include="WallRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Data\background.tga" />
@@ -203,6 +206,7 @@
     <Image Include="..\Data\Sprites\BulletPlayer.png" />
     <Image Include="..\Data\Sprites\GreenTank.png" />
     <Image Include="..\Data\Sprites\GreenTankGun.png" />
+    <Image Include="..\Data\Sprites\Level\CircuitBoard.png" />
     <Image Include="..\Data\Sprites\PinkTank.png" />
     <Image Include="..\Data\Sprites\Recognizer.png" />
     <Image Include="..\Data\Sprites\RedTank.png" />

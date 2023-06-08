@@ -34,6 +34,7 @@
 #include "ScoreComponent.h"
 #include "NPCControlComponent.h"
 #include "MoveComponent.h"
+#include "WallRenderer.h"
 
 #include "GameCommands.h"
 #include "TankGunComponent.h"
@@ -115,6 +116,21 @@ void MainScene()
 	GameObject* pPlayer{ SpawnPlayer(scene) };
 	SpawnEnemy(scene, pPlayer);
 
+
+	{
+		std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
+		GameObject* pWall{ new GameObject() };
+		pWall->AddComponent<WallRenderer>()->SetBackgroundTexture(circuitBoardTexture);
+		pWall->GetTransform()->SetLocalPosition(0, 0);
+
+		scene->AddChild(pWall);
+
+		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_6, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 1.0f, 0.0f });
+		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_4, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ -1.0f, 0.0f });
+		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_8, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, 1.0f });
+		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_5, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, -1.0f });
+	}
+
 }
 
 Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
@@ -125,7 +141,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
 	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pPlayerTank->AddComponent<ScoreComponent>();
 	pPlayerTank->AddComponent<MoveComponent>();
-	pPlayerTank->GetTransform()->SetLocalPosition(100.0f, 100.0f);
+	pPlayerTank->GetTransform()->SetLocalPosition(0, 0);
 	scene->AddChild(pPlayerTank);
 
 
