@@ -44,7 +44,7 @@ namespace Engine
 
 
 		// Components
-		template <ComponentType TComponent> TComponent* AddComponent();
+		template <ComponentType TComponent, typename... Args> TComponent* AddComponent(Args... args);
 		template <ComponentType TComponent> TComponent* GetComponent();
 		template <ComponentType TComponent> bool HasComponent() const;
 		template <ComponentType TComponent> void RemoveComponent();
@@ -64,8 +64,8 @@ namespace Engine
 		void RemoveFromChildCollection(GameObject* child);
 	};
 
-	template<ComponentType TComponent>
-	inline TComponent* GameObject::AddComponent()
+	template<ComponentType TComponent, typename... Args>
+	inline TComponent* GameObject::AddComponent(Args... args)
 	{
 		static_assert(std::is_base_of<BaseComponent, TComponent>::value, "Component must inherit from BaseComponent");
 
@@ -77,7 +77,7 @@ namespace Engine
 		}
 
 		// Create component if it doesnt exist yet
-		TComponent* component{ new TComponent(this) };  // Create new component and give current gameobject as paramater (pOwner)
+		TComponent* component{ new TComponent(this, args...) };  // Create new component and give current gameobject as paramater (pOwner)
 		m_Components[componentTypeID] = component;
 		return component;
 	}
