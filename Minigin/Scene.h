@@ -20,7 +20,7 @@ namespace Engine
 		void OnImGui();
 
 		// Scenegraph
-		void AddChild(GameObject* child);  // Adds the child to the scene
+		GameObject* AddChild(GameObject* child);  // Adds the child to the scene
 		void RemoveChild(GameObject* child);  // Should delete
 		void RemoveChildIndex(size_t index);  // Should delete
 

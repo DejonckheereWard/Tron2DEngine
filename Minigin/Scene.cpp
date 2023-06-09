@@ -61,15 +61,16 @@ void Engine::Scene::OnImGui()
 	}
 }
 
-void Engine::Scene::AddChild(GameObject* child)
+Engine::GameObject* Engine::Scene::AddChild(GameObject* child)
 {
 	if (m_IsInitialized)
 	{
 		child->Init();
 		m_ChildrenToAdd.emplace_back(child);
-		return;
+		return child;  // Return child for chaining, saving inplace
 	}
 	m_Children.emplace_back(child);
+	return child;
 }
 
 void Engine::Scene::RemoveChild(GameObject* child)
