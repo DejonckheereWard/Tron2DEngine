@@ -179,7 +179,7 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, const glm::vec4& 
 void Engine::Renderer::RenderLine(const glm::vec2& startPos, const glm::vec2& endPos, const SDL_Color& color) const
 {
 	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
-	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(startPos.x), static_cast<int>(startPos.y), static_cast<int>(endPos.x), static_cast<int>(endPos.y));
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(startPos.x), static_cast<int>(-startPos.y + m_WindowSize.y), static_cast<int>(endPos.x), static_cast<int>(-endPos.y + m_WindowSize.y));
 	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
 }
 
