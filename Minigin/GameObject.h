@@ -7,11 +7,12 @@
 #include <stdexcept>
 #include "GameTimer.h"
 
+#include "TransformComponent.h"  // Easier usage without having to include this everywhere we use it
+
 namespace Engine
 {
 	class Texture2D;
 	class BaseComponent;
-	class TransformComponent;
 	class MissingComponent {};
 
 
@@ -37,7 +38,7 @@ namespace Engine
 		// Scenegraph
 		GameObject* GetParent() { return m_Parent; };
 		void SetParent(GameObject* parent, bool keepWorldPosition = false);  // Bit like "move child to new parent"
-		void AddChild(GameObject* child, bool keepWorldPosition = false);  // Adds the child to this gameobject, making this gameobject the owner
+		GameObject* AddChild(GameObject* child, bool keepWorldPosition = false);  // Adds the child to this gameobject, making this gameobject the owner
 		void RemoveChild(GameObject* child);  // Should delete
 
 

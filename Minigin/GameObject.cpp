@@ -67,7 +67,7 @@ void Engine::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 	}
 }
 
-void Engine::GameObject::AddChild(GameObject* child, bool keepWorldPosition)
+GameObject* Engine::GameObject::AddChild(GameObject* child, bool keepWorldPosition)
 {
 	// Takes ownership over this child, calls setparent to do the work.
 	child->SetParent(this, keepWorldPosition);
