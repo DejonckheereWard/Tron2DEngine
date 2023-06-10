@@ -56,7 +56,7 @@ bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm:
 	if ((collisionMask & pOther->GetLayer()) == 0)
 		return false;
 
-	const glm::vec2& size{ pOther->GetSize() };
+	const glm::vec2& size{ pOther->GetColliderSize() };
 	const glm::vec2& pos{ pOther->GetColliderPosition() };
 
 	const float tx1{ (pos.x - origin.x) / direction.x };
@@ -115,10 +115,10 @@ bool Engine::CollisionManager::IsColliding(CollisionComponent* pFirst, Collision
 		return false;
 	
 	
-	const glm::vec2& firstSize{ pFirst->GetSize() };
+	const glm::vec2& firstSize{ pFirst->GetColliderSize() };
 	const glm::vec2& firstPos{ pFirst->GetColliderPosition() };
 
-	const glm::vec2& secondSize{ pSecond->GetSize() };
+	const glm::vec2& secondSize{ pSecond->GetColliderSize() };
 	const glm::vec2& secondPos{ pSecond->GetColliderPosition() };
 
 

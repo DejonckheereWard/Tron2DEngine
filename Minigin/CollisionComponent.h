@@ -37,11 +37,14 @@ namespace Engine
 
 		void SetCollisionCallback(CollisionCallback callback) { m_OnCollision = callback; }
 
-		void SetColliderPosition(const glm::vec2& localPosition) { m_Position = localPosition; }
-		glm::vec2 GetColliderPosition() const;
+		void SetColliderOffset(const glm::vec2& offset) { m_ColliderOffset = offset; }
+		const glm::vec2& GetColliderOffset() const { return m_ColliderOffset; }
 
-		void SetSize(const glm::vec2& size) { m_Size = size; }
-		const glm::vec2& GetSize() { return m_Size; }
+		glm::vec2 GetColliderPosition() const;
+		glm::vec2 GetColliderCenter() const;
+
+		void SetColliderSize(const glm::vec2& size) { m_ColliderSize = size; }
+		const glm::vec2& GetColliderSize() { return m_ColliderSize; }
 
 		void OnCollision(CollisionComponent* pOther);
 
@@ -63,8 +66,8 @@ namespace Engine
 		uint8_t m_CollisionMask{ std::numeric_limits<uint8_t>::max() }; // Mask of the collider, default to collide with everything
 		
 
-		glm::vec2 m_Size{ 2.0f, 2.0f}; // Collider size
-		glm::vec2 m_Position{}; // Offset from the transform position (to position colider)
+		glm::vec2 m_ColliderSize{ 2.0f, 2.0f}; // Collider size
+		glm::vec2 m_ColliderOffset{}; // Offset from the transform position (to position colider)
 
 		CollisionCallback m_OnCollision{ nullptr };  // Callback function for when a collision happens
 	};

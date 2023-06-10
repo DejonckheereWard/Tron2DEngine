@@ -1,7 +1,10 @@
 #include "NPCControlComponent.h"
+
+#include "CollisionManager.h"
+#include "CollisionComponent.h"
+
 #include "GameObject.h"
 #include "TransformComponent.h"
-
 #include "MoveComponent.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
@@ -15,6 +18,9 @@ void NPCControlComponent::Init()
 {
 	RequireComponent<MoveComponent>();
 	m_pMoveComponent = GetOwner()->GetComponent<MoveComponent>();
+
+	RequireComponent<Engine::CollisionComponent>();
+	m_pCollisionComponent = GetOwner()->GetComponent<Engine::CollisionComponent>();
 }
 
 
@@ -34,13 +40,25 @@ void NPCControlComponent::Update()
 		return;  // Target too far
 
 	const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
-
-
 	m_pMoveComponent->Move(directionToTarget);
 
-	// Shoot target
+	// Check if we have direct line of sight
+
+	using namespace Engine;
+	const glm::vec2& center{ m_pCollisionComponent->GetColliderCenter() };
+
+	Engine::HitInfo hitInfo{};
+	if (CollisionManager::GetInstance().Raycast(center, directionToTarget, 100.0f, hitInfo))
+	{
+		if (hitInfo.pCollider->GetOwner() != m_pTarget)
+			return; // No direct line of sight
+
+	}
+
+
 	m_pTurret->SetTurretDirection(directionToTarget);
 	m_pGun->Shoot();
+
 
 }
 

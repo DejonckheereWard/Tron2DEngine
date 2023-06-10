@@ -19,6 +19,7 @@
 #include "ServiceLocator.h"
 #include "AudioServiceLogger.h"
 #include "MainAudioService.h"
+#include "NullAudioService.h"
 
 // Components
 #include "FPSComponent.h" 
@@ -104,7 +105,8 @@ void MainScene()
 	Scene* pScene = Engine::SceneManager::GetInstance().CreateMainScene();
 
 	// Set up services
-	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
+	//ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
+	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<NullAudioService>()));
 
 	//InputManager::GetInstance().AddAction(SDL_SCANCODE_UP, Engine::InputState::OnPress, std::make_unique<OnPressCommand>());
 
@@ -148,9 +150,10 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	pPlayerTank->AddComponent<MoveComponent>();
 	pPlayerTank->GetTransform()->SetLocalPosition(0, 0);
 	CollisionComponent* pCollider{ pPlayerTank->AddComponent<CollisionComponent>() };
-	pCollider->SetSize({ 28.0f, 28.0f });
-	pCollider->SetColliderPosition({ 2.0f, 2.0f });
+	pCollider->SetColliderSize({ 16.0f, 16.0f });
+	pCollider->SetColliderOffset({ 8.0f, 8.0f });
 	pCollider->SetLayer(CollisionLayer::Player);
+	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Player);  // Collide with everything except player
 
 	
 	pScene->AddChild(pPlayerTank);
@@ -212,9 +215,10 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<MoveComponent>();
 
 	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
-	pCollider->SetSize({ 28.0f, 28.0f });
-	pCollider->SetColliderPosition({ 2.0f, 2.0f });
+	pCollider->SetColliderSize({ 28.0f, 28.0f });
+	pCollider->SetColliderOffset({ 2.0f, 2.0f });
 	pCollider->SetLayer(CollisionLayer::Enemy);
+	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Enemy);  // Collide with everything except enemy
 
 	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
 	pNPC->SetTarget(pTarget);

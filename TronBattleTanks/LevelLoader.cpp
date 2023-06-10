@@ -12,6 +12,7 @@
 
 
 #include "WallRenderer.h"
+#include "PathRenderer.h"
 
 Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene)
 {
@@ -53,7 +54,12 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 					pWallRenderer->SetTexture(pWallTexture);
 					pWallRenderer->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
 					CollisionComponent* pCollider{ pCell->AddComponent<CollisionComponent>() };
-					pCollider->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
+					pCollider->SetColliderSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
+				}
+				else
+				{
+					PathRenderer* pPathRenderer{ pCell->AddComponent<PathRenderer>() };
+					pPathRenderer->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
 				}
 				colIdx++;
 			}

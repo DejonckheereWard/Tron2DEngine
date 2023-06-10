@@ -1,10 +1,16 @@
 #pragma once
-#include "GameObject.h"
 #include "BaseComponent.h"
+
+namespace Engine
+{
+	class GameObject;
+	class CollisionComponent;
+}
 
 class TankTurretComponent;
 class TankGunComponent;
 class MoveComponent;
+
 
 class NPCControlComponent final: public Engine::BaseComponent
 {
@@ -21,6 +27,7 @@ public:
 	void SetGunComponent(TankGunComponent* pGun) { m_pGun = pGun; }
 	void SetTurretComponent(TankTurretComponent* pTurret) { m_pTurret = pTurret;  }
 private:
+	Engine::CollisionComponent* m_pCollisionComponent{};
 	MoveComponent* m_pMoveComponent{};
 	TankTurretComponent* m_pTurret{};
 	TankGunComponent* m_pGun{};

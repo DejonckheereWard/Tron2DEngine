@@ -20,17 +20,23 @@ void Engine::CollisionComponent::FixedUpdate()
 void Engine::CollisionComponent::Render() const
 {
 
+
 }
 
 void Engine::CollisionComponent::RenderDebug() const
 {
 	if(m_DrawDebug)
-		Renderer::GetInstance().RenderRect(glm::vec4(GetColliderPosition(), m_Size));
+		Renderer::GetInstance().RenderRect(glm::vec4(GetColliderPosition(), m_ColliderSize));
 }
 
 glm::vec2 Engine::CollisionComponent::GetColliderPosition() const
 {
-	return GetTransform()->GetPosition() + m_Position;
+	return GetTransform()->GetPosition() + m_ColliderOffset;
+}
+
+glm::vec2 Engine::CollisionComponent::GetColliderCenter() const
+{
+	return GetColliderPosition() + m_ColliderSize * 0.5f;
 }
 
 void Engine::CollisionComponent::OnCollision(CollisionComponent* pOther)
