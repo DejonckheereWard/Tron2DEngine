@@ -26,11 +26,11 @@ void Engine::Scene::Init()
 	m_IsInitialized = true;
 }
 
-void Engine::Scene::Update(float deltaTime)
+void Engine::Scene::Update()
 {
 	for(auto& child : m_Children)
 	{
-		child->Update(deltaTime);
+		child->Update();
 	}
 
 
@@ -42,6 +42,14 @@ void Engine::Scene::Update(float deltaTime)
 			m_Children.emplace_back(child);
 		}
 		m_ChildrenToAdd.clear();
+	}
+}
+
+void Engine::Scene::FixedUpdate()
+{
+	for (auto& child : m_Children)
+	{
+		child->FixedUpdate();
 	}
 }
 

@@ -18,7 +18,7 @@ void NPCControlComponent::Init()
 
 
 
-void NPCControlComponent::Update(float /*deltaTime*/)
+void NPCControlComponent::Update()
 {
 	// Find the target
 	if (!m_pTarget)

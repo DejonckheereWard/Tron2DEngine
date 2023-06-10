@@ -18,7 +18,8 @@ namespace Engine
 		void RemoveScene(const std::string& name);
 
 		void Init();
-		void Update(float deltaTime);
+		void Update();
+		void FixedUpdate();
 		void Render() const;
 		void OnImGui();
 

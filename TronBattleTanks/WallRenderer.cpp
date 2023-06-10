@@ -14,7 +14,7 @@ void WallRenderer::Init()
 
 }
 
-void WallRenderer::Update(float /*deltaTime*/)
+void WallRenderer::Update()
 {
 
 }

@@ -15,7 +15,8 @@ namespace Engine
 		Scene& operator=(Scene&& other) = delete;
 
 		void Init();
-		void Update(float deltaTime);
+		void Update();
+		void FixedUpdate();
 		void Render() const;
 		void OnImGui();
 

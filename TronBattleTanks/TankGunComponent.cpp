@@ -16,8 +16,9 @@ void TankGunComponent::Init()
 	m_pTransform->SetLocalRotation(0);
 }
 
-void TankGunComponent::Update(float deltaTime)
+void TankGunComponent::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	if (m_CooldownElapsed < m_CooldownTime)
 	{
 		m_CooldownElapsed += deltaTime;

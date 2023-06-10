@@ -5,6 +5,7 @@
 #include <typeindex>
 #include <string>
 #include <stdexcept>
+#include "GameTimer.h"
 
 namespace Engine
 {
@@ -21,7 +22,8 @@ namespace Engine
 	{
 	public:
 		void Init();
-		void Update(float deltaTime);
+		void Update();
+		void FixedUpdate();
 		void Render() const;
 		void OnImGui();
 

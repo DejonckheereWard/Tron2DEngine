@@ -7,8 +7,9 @@ void TankTurretComponent::Init()
 	m_pTransform = GetOwner()->GetTransform();
 }
 
-void TankTurretComponent::Update(float deltaTime)
+void TankTurretComponent::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	const float maxAngleOffset{ 1.0f };
 	const float currentGunAngle{ m_pTransform->GetLocalRotation() };
 

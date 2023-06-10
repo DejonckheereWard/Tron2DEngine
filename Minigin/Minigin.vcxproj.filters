@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Engine Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
     </Filter>
@@ -100,6 +96,9 @@
     <ClInclude Include="MainAudioService.h">
       <Filter>Engine Files\Services\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Engine Files\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Font.cpp">
@@ -188,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="MainAudioService.cpp">
       <Filter>Engine Files\Services\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Engine Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

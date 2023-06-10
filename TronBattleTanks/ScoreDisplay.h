@@ -16,7 +16,7 @@ public:
 
 	// Inherited via BaseComponent
 	virtual void Init() override;
-	virtual void Update(float /*deltaTime*/) override {};
+	virtual void Update() override {};
 	virtual void Render() const override {};
 
 	void SetPrefix(const std::string& prefix) { m_Prefix = prefix; };

@@ -202,6 +202,7 @@
     <ClInclude Include="AudioServiceLogger.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="NullAudioService.h" />
     <ClInclude Include="Observer.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="..\3rdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="AudioServiceLogger.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="MainAudioService.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />

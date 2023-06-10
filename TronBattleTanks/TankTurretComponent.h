@@ -11,7 +11,7 @@ public:
 		BaseComponent(pParent) {}
 
 	virtual void Init() override;
-	virtual void Update(float deltaTime) override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 	void SetTurretDirection(const glm::vec2& dir);

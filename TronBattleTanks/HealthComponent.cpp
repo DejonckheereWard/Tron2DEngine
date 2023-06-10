@@ -6,7 +6,7 @@ void HealthComponent::Init()
 
 }
 
-void HealthComponent::Update(float /*deltaTime*/)
+void HealthComponent::Update()
 {
 }
 

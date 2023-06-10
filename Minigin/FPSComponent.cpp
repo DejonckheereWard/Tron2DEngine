@@ -2,6 +2,7 @@
 #include "TextComponent.h"
 #include <numeric>
 
+
 Engine::FPSComponent::FPSComponent(GameObject* pOwner):
 	BaseComponent(pOwner)
 {
@@ -15,8 +16,9 @@ void Engine::FPSComponent::Init()
 	m_pTextComponent->SetText("0");
 }
 
-void Engine::FPSComponent::Update(float deltaTime)
+void Engine::FPSComponent::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	if(m_DeltaTimeSamples.size() >= (size_t)m_NrOfSamples)
 	{
 		m_DeltaTimeSamples.erase(m_DeltaTimeSamples.begin()); // Delete oldest time

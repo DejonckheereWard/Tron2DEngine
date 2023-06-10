@@ -11,8 +11,9 @@ void MoveComponent::Init()
 	RequireComponent<Engine::TransformComponent>();
 }
 
-void MoveComponent::Update(float deltaTime)
+void MoveComponent::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	// Limit the movement direction to only 4 directions
 	// Get the biggest value of the direction vector and set the other values to 0
 	if (abs(m_MoveDirection.x) > abs(m_MoveDirection.y))

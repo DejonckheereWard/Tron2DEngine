@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "GameTimer.h"
 #include <chrono>
 
 SDL_Window* g_window{};
@@ -84,14 +85,19 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& gameTime = GameTimer::GetInstance();
 
 	auto lastTime{ std::chrono::high_resolution_clock::now() };
 
 	const int frameRateCap{ 144 };  // Max framerate we want
 	const int minMsPerFrame{ 1000 / frameRateCap };  // Min time before we want to update a frame again. (*1000 to convert from Seconds to Millis)
 
+	const float fixedTimeStep{ 1.0f / 60.0f };  // 60 fps
+	gameTime.SetFixedDeltaTime(fixedTimeStep);
+
 	sceneManager.Init();
 	
+	float lagTime{};  // Catchup time if we are behind on updating
 	// todo: this update loop could use some work.
 	bool doContinue = true;
 	while (doContinue)
@@ -99,8 +105,19 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		const auto currentTime{ std::chrono::high_resolution_clock::now()};  // Total time elapsed since start of program
 		const auto deltaTime{ std::chrono::duration<float>(currentTime - lastTime).count()};
 
+		gameTime.UpdateDeltaTime(deltaTime);  // Updates deltaTime & totalTime
 		doContinue = input.ProcessInput();
-		sceneManager.Update(deltaTime);
+
+		lagTime += deltaTime;  // Add time passed since last frame to lagTime
+
+		if (lagTime >= fixedTimeStep)  // If we are behind on updating
+		{
+			sceneManager.FixedUpdate();  // Update physics
+			lagTime -= fixedTimeStep;  // Remove fixedTimeStep from lagTime
+		}
+
+
+		sceneManager.Update();
 		renderer.Render();
 		
 		lastTime = currentTime;

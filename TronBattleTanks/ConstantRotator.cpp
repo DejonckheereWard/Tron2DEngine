@@ -14,8 +14,9 @@ void Engine::ConstantRotator::Init()
 	//m_Radius =  glm::distance(glm::vec2(0,0), m_pTransform->GetLocalPosition());
 }
 
-void Engine::ConstantRotator::Update(float deltaTime)
+void Engine::ConstantRotator::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	const glm::vec2 newPosition{ glm::rotate(m_pTransform->GetLocalPosition(), glm::radians(m_AnglePerSec) * deltaTime) };
 	m_pTransform->SetLocalPosition(newPosition);
 }

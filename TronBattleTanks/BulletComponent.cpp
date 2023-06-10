@@ -6,8 +6,9 @@ void BulletComponent::Init()
 	m_pTransform = GetOwner()->GetTransform();
 }
 
-void BulletComponent::Update(float deltaTime)
+void BulletComponent::Update()
 {
+	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	m_LifeTimer += deltaTime;
 	if(m_LifeTimer >= m_LifeTime)
 	{

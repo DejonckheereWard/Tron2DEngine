@@ -105,18 +105,33 @@ void Engine::GameObject::Init()
 	}
 }
 
-void Engine::GameObject::Update(float deltaTime)
+void Engine::GameObject::Update()
 {
 	// GameObject has ownership over its children, update these
 	for(GameObject* child: m_Children)
 	{ 
-		child->Update(deltaTime);
+		child->Update();
 	}
 
 	// Go through all the components in the map and run update
 	for(std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
 	{
-		component.second->Update(deltaTime);
+		component.second->Update();
+	}
+}
+
+void Engine::GameObject::FixedUpdate()
+{
+	// GameObject has ownership over its children, update these
+	for (GameObject* child : m_Children)
+	{
+		child->FixedUpdate();
+	}
+
+	// Go through all the components in the map and run update
+	for (std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
+	{
+		component.second->FixedUpdate();
 	}
 }
 

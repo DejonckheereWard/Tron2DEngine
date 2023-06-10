@@ -14,7 +14,7 @@ namespace Engine
 
 		// Inherited via BaseComponent
 		virtual void Init() override;
-		virtual void Update(float) override {};
+		virtual void Update() override {};
 		virtual void Render() const override;
 
 		virtual void SetTexture(std::shared_ptr<Texture2D> pTexture) { m_Texture = pTexture; };

@@ -20,7 +20,7 @@ void Engine::TextComponent::Init()
 	m_pRenderComponent = GetOwner()->GetComponent<RenderComponent>();
 }
 
-void Engine::TextComponent::Update(float)
+void Engine::TextComponent::Update()
 {
 	// Only update texture if the text is changed (dirty)
 	if(m_TextIsDirty)

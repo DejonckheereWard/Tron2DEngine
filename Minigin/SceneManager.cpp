@@ -12,13 +12,23 @@ void Engine::SceneManager::Init()
 	}
 }
 
-void Engine::SceneManager::Update(float deltaTime)
+void Engine::SceneManager::Update()
 {
 	if(m_MainScene)
-		m_MainScene->Update(deltaTime);
+		m_MainScene->Update();
 	for(auto& scene : m_Scenes)
 	{
-		scene->Update(deltaTime);
+		scene->Update();
+	}
+}
+
+void Engine::SceneManager::FixedUpdate()
+{
+	if(m_MainScene)
+		m_MainScene->FixedUpdate();
+	for (auto& scene : m_Scenes)
+	{
+		scene->FixedUpdate();
 	}
 }
 

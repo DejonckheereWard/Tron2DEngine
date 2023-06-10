@@ -19,7 +19,7 @@ void LevelComponent::Init()
 
 }
 
-void LevelComponent::Update(float /*deltaTime*/)
+void LevelComponent::Update()
 {
 }
 
