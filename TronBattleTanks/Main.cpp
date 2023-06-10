@@ -26,7 +26,6 @@
 #include "RenderComponent.h"
 
 // Custom Components
-#include "ConstantRotator.h"
 #include "HealthDisplay.h"
 #include "LivesDisplay.h"
 #include "HealthComponent.h"
