@@ -25,6 +25,7 @@
 #include "TextComponent.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "CollisionComponent.h"
 
 // Custom Components
 #include "HealthDisplay.h"
@@ -146,6 +147,12 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	pPlayerTank->AddComponent<ScoreComponent>();
 	pPlayerTank->AddComponent<MoveComponent>();
 	pPlayerTank->GetTransform()->SetLocalPosition(0, 0);
+	CollisionComponent* pCollider{ pPlayerTank->AddComponent<CollisionComponent>() };
+	pCollider->SetSize({ 28.0f, 28.0f });
+	pCollider->SetColliderPosition({ 2.0f, 2.0f });
+	pCollider->SetLayer(CollisionLayer::Player);
+
+	
 	pScene->AddChild(pPlayerTank);
 
 
@@ -165,7 +172,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 		auto* renderComponent = pPlayerTankGun->AddComponent<RenderComponent>();
 		renderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTankGun.png"));
 		renderComponent->SetTextureOffset({ 0.5f, 0.5f });
-		pPlayerTankGun->AddComponent<TankGunComponent>();
+		pPlayerTankGun->AddComponent<TankGunComponent>()->SetBulletCollisionLayer(CollisionLayer::Player);
 		pPlayerTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 	}
 
@@ -203,9 +210,15 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pTank->AddComponent<ScoreComponent>();
 	pTank->AddComponent<MoveComponent>();
+
+	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
+	pCollider->SetSize({ 28.0f, 28.0f });
+	pCollider->SetColliderPosition({ 2.0f, 2.0f });
+	pCollider->SetLayer(CollisionLayer::Enemy);
+
 	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
 	pNPC->SetTarget(pTarget);
-	pTank->GetTransform()->SetLocalPosition(500.0f, 500.0f);
+	pTank->GetTransform()->SetLocalPosition(200.0f, 200.0f);
 	pScene->AddChild(pTank);
 
 
@@ -228,6 +241,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 		pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTankGun.png"));
 		pRenderComponent->SetTextureOffset({ 0.5f, 0.5f });
 		TankGunComponent* pGunComp{ pTankGun->AddComponent<TankGunComponent>() };
+		pGunComp->SetBulletCollisionLayer(CollisionLayer::Enemy);
 		pTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 
 		pNPC->SetGunComponent(pGunComp);

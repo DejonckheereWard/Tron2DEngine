@@ -25,6 +25,10 @@ namespace Engine
 		void RenderTexture(const Texture2D& texture, float x, float y, float angle, const glm::vec2& center, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
 		void RenderTexture(const Texture2D& texture, const glm::vec4& srcRect, const glm::vec4 dstRect, float angle = 0.f, const glm::vec2& center = {}, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
 
+		void RenderLine(const glm::vec2& startPos, const glm::vec2& endPos, const SDL_Color& color = { 255,255,255,255 } ) const;
+		void RenderRect(const glm::vec4& rect, const SDL_Color& color = { 255,255,255,255 }) const;
+		void RenderPoint(const glm::vec2& pos, float size, const SDL_Color& color = { 255,255,255,255 }) const;
+
 		SDL_Renderer* GetSDLRenderer() const;
 
 		glm::vec2 GetWindowSize() const;

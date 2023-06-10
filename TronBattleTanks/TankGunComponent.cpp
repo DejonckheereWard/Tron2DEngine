@@ -45,15 +45,16 @@ void TankGunComponent::Shoot()
 
 	const float currentGunAngle{ glm::radians(m_pTransform->GetRotation()) };
 	const glm::vec2 bulletDirection{ glm::cos(currentGunAngle), glm::sin(currentGunAngle) };
-	const glm::vec2 bulletOrigin{ bulletDirection * 20.0f };
 
 	GameObject* pBullet{ new GameObject() };
 	Engine::RenderComponent* pRenderComponent{ pBullet->AddComponent<Engine::RenderComponent>() };
 	pRenderComponent->SetTexture(Engine::ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
 	pRenderComponent->SetTextureOffset({0.5f, 0.5f});
-	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition() + bulletOrigin);
+	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition());
 	pBullet->GetTransform()->SetLocalScale(0.7f, 0.7f);
-	pBullet->AddComponent<BulletComponent>()->SetDirection(bulletDirection);
+	BulletComponent* pBulletComponent{ pBullet->AddComponent<BulletComponent>() };
+	pBulletComponent->SetDirection(bulletDirection);
+	pBulletComponent->SetCollisionLayer(m_BulletCollisionLayer);
 	pScene->AddChild(pBullet);
 
 	// Play sound

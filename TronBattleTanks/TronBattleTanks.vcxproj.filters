@@ -56,9 +56,6 @@
     <ClCompile Include="TankTurretComponent.cpp">
       <Filter>Game Files\Components\Tank</Filter>
     </ClCompile>
-    <ClCompile Include="BulletComponent.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="MoveComponent.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletComponent.cpp">
+      <Filter>Game Files\Components\Tank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +100,6 @@
     <ClInclude Include="TankTurretComponent.h">
       <Filter>Game Files\Components\Tank</Filter>
     </ClInclude>
-    <ClInclude Include="BulletComponent.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="MoveComponent.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
@@ -117,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="Main.h">
       <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletComponent.h">
+      <Filter>Game Files\Components\Tank</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

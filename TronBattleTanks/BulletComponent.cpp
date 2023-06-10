@@ -1,5 +1,7 @@
+#include "CollisionManager.h"
 #include "BulletComponent.h"
 #include "TransformComponent.h"
+#include "CollisionComponent.h"
 
 void BulletComponent::Init()
 {
@@ -12,13 +14,32 @@ void BulletComponent::Update()
 	m_LifeTimer += deltaTime;
 	if(m_LifeTimer >= m_LifeTime)
 	{
-		//GetOwner()->Destroy();
+		//GetOwner()->Destroy(); // TODO: Implement removal of game objects
 		return;
 	}
 
-	glm::vec2 currentPos{ m_pTransform->GetLocalPosition() };
-	currentPos += m_Direction * m_Speed * deltaTime;
-	m_pTransform->SetLocalPosition(currentPos);
+
+}
+
+void BulletComponent::FixedUpdate()
+{
+	uint8_t collisionMask{ std::numeric_limits<uint8_t>::max() };
+	collisionMask &= ~m_CollisionLayer;  // Dont collide with given layer
+
+	const float fixedDelta{ GameTimer::GetInstance().GetFixedDeltaTime() };
+	const glm::vec2& currentPos{ m_pTransform->GetPosition() };
+
+	Engine::HitInfo hitInfo{};
+	if (Engine::CollisionManager::GetInstance().Raycast(currentPos, m_Direction, m_Speed * fixedDelta, hitInfo, collisionMask))
+	{
+		// Reflect the bullet using the normal of the hit
+
+		const glm::vec2 reflectedDir{ glm::reflect(m_Direction, hitInfo.normal) };
+		SetDirection(reflectedDir);
+	}
+
+	const glm::vec2 newPos{ currentPos + m_Direction * m_Speed * fixedDelta };
+	m_pTransform->SetLocalPosition(newPos);
 }
 
 void BulletComponent::Render() const

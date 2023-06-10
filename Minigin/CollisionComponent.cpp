@@ -1,6 +1,7 @@
 #include "CollisionComponent.h"
 #include "TransformComponent.h"
 #include "CollisionManager.h"
+#include "Renderer.h"
 
 
 void Engine::CollisionComponent::Init()
@@ -18,11 +19,18 @@ void Engine::CollisionComponent::FixedUpdate()
 
 void Engine::CollisionComponent::Render() const
 {
+
 }
 
-glm::vec2 Engine::CollisionComponent::GetColliderPosition()
+void Engine::CollisionComponent::RenderDebug() const
 {
-	return GetTransform()->GetPosition() + m_PositionOffset;
+	if(m_DrawDebug)
+		Renderer::GetInstance().RenderRect(glm::vec4(GetColliderPosition(), m_Size));
+}
+
+glm::vec2 Engine::CollisionComponent::GetColliderPosition() const
+{
+	return GetTransform()->GetPosition() + m_Position;
 }
 
 void Engine::CollisionComponent::OnCollision(CollisionComponent* pOther)

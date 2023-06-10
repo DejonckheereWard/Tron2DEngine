@@ -16,6 +16,7 @@ namespace Engine
 		virtual void Init() = 0;
 		virtual void Update() = 0;
 		virtual void Render() const = 0;
+		virtual void RenderDebug() const {};
 		virtual void FixedUpdate() {};
 		virtual void OnImGui() {};  // Not const because the UI can have sliders, buttons etc. that change the values
 		

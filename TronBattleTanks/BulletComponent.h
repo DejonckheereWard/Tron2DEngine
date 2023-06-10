@@ -10,12 +10,17 @@ public:
 
 	virtual void Init() override;
 	virtual void Update() override;
+	virtual void FixedUpdate() override;
 	virtual void Render() const override;
 
 	void SetDirection(const glm::vec2& dir);
+	void SetCollisionLayer(uint8_t layer) { m_CollisionLayer = layer; }
+
 
 private:
 	Engine::TransformComponent* m_pTransform{ nullptr };
+	uint8_t m_CollisionLayer{ 0 };
+
 	const float m_Speed{ 200.0f };
 	glm::vec2 m_Direction{};
 

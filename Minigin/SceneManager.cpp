@@ -42,6 +42,17 @@ void Engine::SceneManager::Render() const
 	}
 }
 
+void Engine::SceneManager::RenderDebug() const
+{
+	// Seperate loop for debug rendering so it's always on top
+	if(m_MainScene)
+		m_MainScene->RenderDebug();
+	for (auto& scene : m_Scenes)
+	{
+		scene->RenderDebug();
+	}
+}
+
 void Engine::SceneManager::OnImGui()
 {
 	if(m_MainScene)

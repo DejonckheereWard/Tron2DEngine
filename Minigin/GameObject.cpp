@@ -152,6 +152,22 @@ void Engine::GameObject::Render() const
 
 }
 
+void Engine::GameObject::RenderDebug() const
+{
+	// Seperate loop for debug rendering so that the debug rendering is always on top
+
+	for (const std::pair<const std::type_index, Engine::BaseComponent*>& component : m_Components)
+	{
+		component.second->RenderDebug();
+	}
+
+	// GameObject has ownership over its children, render these
+	for (const GameObject* child : m_Children)
+	{
+		child->RenderDebug();
+	}
+}
+
 void Engine::GameObject::OnImGui()
 {
 	for(GameObject* child : m_Children)

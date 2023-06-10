@@ -69,6 +69,8 @@ void Engine::Renderer::Render() const
 	ImGuiIO& io = ImGui::GetIO();
 
 	SceneManager::GetInstance().Render();
+	SceneManager::GetInstance().RenderDebug();
+
 	// Render scene's onimgui, after the scene has been rendered, so the scene can be rendered on top of the imgui
 	SceneManager::GetInstance().OnImGui();  
 
@@ -172,6 +174,37 @@ void Engine::Renderer::RenderTexture(const Texture2D& texture, const glm::vec4& 
 
 	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst, angle, &sdlCenter, flip);
 
+}
+
+void Engine::Renderer::RenderLine(const glm::vec2& startPos, const glm::vec2& endPos, const SDL_Color& color) const
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
+	SDL_RenderDrawLine(GetSDLRenderer(), static_cast<int>(startPos.x), static_cast<int>(startPos.y), static_cast<int>(endPos.x), static_cast<int>(endPos.y));
+	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
+}
+
+void Engine::Renderer::RenderRect(const glm::vec4& rect, const SDL_Color& color) const
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
+	SDL_Rect sdlRect{};
+	sdlRect.x = static_cast<int>(rect.x);
+	sdlRect.y = static_cast<int>(-rect.y + m_WindowSize.y - rect.w);
+	sdlRect.w = static_cast<int>(rect.z);
+	sdlRect.h = static_cast<int>(rect.w);
+	SDL_RenderDrawRect(GetSDLRenderer(), &sdlRect);
+	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
+}
+
+void Engine::Renderer::RenderPoint(const glm::vec2& pos, float size, const SDL_Color& color) const
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), color.r, color.g, color.b, color.a);
+	SDL_Rect sdlRect{};
+	sdlRect.x = static_cast<int>(pos.x - size / 2);
+	sdlRect.y = static_cast<int>(-pos.y + m_WindowSize.y - size / 2);
+	sdlRect.w = static_cast<int>(size);
+	sdlRect.h = static_cast<int>(size);
+	SDL_RenderDrawRect(GetSDLRenderer(), &sdlRect);
+	SDL_SetRenderDrawColor(GetSDLRenderer(), 0, 0, 0, 255);
 }
 
 inline SDL_Renderer* Engine::Renderer::GetSDLRenderer() const { return m_renderer; }

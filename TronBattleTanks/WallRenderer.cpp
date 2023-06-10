@@ -20,8 +20,8 @@ void WallRenderer::Render() const
 	const glm::vec2 position{ GetTransform()->GetLocalPosition() };
 
 	const glm::vec2 textureSampleScale{ glm::vec2(2.5f, 2.5f) };
-	const glm::vec4 srcRect{ (position * textureSampleScale), (m_Size * textureSampleScale) };
-	const glm::vec4 dstRect{ position, m_Size };
+	const glm::vec4 srcRect{ (position * textureSampleScale), (m_Size * textureSampleScale) };  // Use local position for texture sample
+	const glm::vec4 dstRect{  GetTransform()->GetPosition(), m_Size };  // Use world position for texture position
 
 	Engine::Renderer::GetInstance().RenderTexture(*m_pTexture, srcRect, dstRect);
 }

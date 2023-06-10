@@ -61,6 +61,15 @@ void Engine::Scene::Render() const
 	}
 }
 
+void Engine::Scene::RenderDebug() const
+{
+	// Seperate loop for debug rendering so that debug rendering is always on top
+	for (auto& child : m_Children)
+	{
+		child->RenderDebug();
+	}
+}
+
 void Engine::Scene::OnImGui()
 {
 	for(auto& child : m_Children)

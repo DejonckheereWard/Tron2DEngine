@@ -25,6 +25,7 @@ namespace Engine
 		void Update();
 		void FixedUpdate();
 		void Render() const;
+		void RenderDebug() const;
 		void OnImGui();
 
 		GameObject();

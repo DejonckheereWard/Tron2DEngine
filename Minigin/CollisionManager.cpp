@@ -18,8 +18,9 @@ void Engine::CollisionManager::FixedUpdate()
 	// Check for collisions on every pair of colliders
 	for (size_t i{}; i < m_Colliders.size(); ++i)
 	{
-		// j = i + 1 to prevent checking the same collision twice, since previous collisions are already checked
-		for (size_t j{ i + 1 }; j < m_Colliders.size(); ++j)
+		// Since A collide with B is not the same as B colliding with A we check all pairs regardless if they have been checked before
+		// A could ignore B but B could still collide with A
+		for (size_t j{}; j < m_Colliders.size(); ++j)
 		{
 			if (IsColliding(m_Colliders[i], m_Colliders[j]))
 			{
@@ -38,62 +39,69 @@ void Engine::CollisionManager::FixedUpdate()
 
 }
 
-bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit)
+bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask)
 {
 	outHit.distance = maxDistance;
 	// Check for collisions on every collider
 	for (CollisionComponent* pCollider : m_Colliders)
 	{
-		RaycastSingle(origin, direction, maxDistance, pCollider, outHit);
+		RaycastSingle(origin, direction, maxDistance, pCollider, outHit, collisionMask);
 	}
 	return outHit.isHit;
 }
 
-bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit)
+bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit, uint8_t collisionMask)
 {
+	// Check collision mask
+	if ((collisionMask & pOther->GetLayer()) == 0)
+		return false;
+
 	const glm::vec2& size{ pOther->GetSize() };
 	const glm::vec2& pos{ pOther->GetColliderPosition() };
 
-	float txmin = (pos.x - origin.x) / direction.x;
-	float txmax = (pos.x + size.x - origin.x) / direction.x;
+	const float tx1{ (pos.x - origin.x) / direction.x };
+	const float tx2{ (pos.x + size.x - origin.x) / direction.x };
 
-	if (txmin > txmax) {
-		std::swap(txmin, txmax);
-	}
+	float tmin = std::min(tx1, tx2);
+	float tmax = std::max(tx1, tx2);
 
-	float tymin = (pos.y - origin.y) / direction.y;
-	float tymax = (pos.y + size.y - origin.y) / direction.y;
+	const float ty1{ (pos.y - origin.y) / direction.y };
+	const float ty2{ (pos.y + size.y - origin.y) / direction.y };
 
-	if (tymin > tymax) {
-		std::swap(tymin, tymax);
-	}
+	tmin = std::max(tmin, std::min(ty1, ty2));
+	tmax = std::min(tmax, std::max(ty1, ty2));
 
-	if ((txmin > tymax) || (tymin > txmax)) {
+	if (not (tmax > 0 && tmax >= tmin)) {
 		return false;
 	}
 
-	if (tymin > txmin) {
-		txmin = tymin;
-	}
-
-	if (tymax < txmax) {
-		txmax = tymax;
-	}
-
-	if (txmin < 0) {
-		txmin = 0;
-	}
-
-	float distance{ txmin };
-
-	if (distance > maxDistance) {
+	if (tmin > maxDistance) {
 		return false;
+	}	
+
+	// Hit has been found
+	// Calculate normal
+
+	if (tmin == tx1) {
+		outHit.normal = { -1, 0 };
+	}
+	else if (tmin == tx2) {
+		outHit.normal = { 1, 0 };
+	}
+	else if (tmin == ty1) {
+		outHit.normal = { 0, -1 };
+	}
+	else if (tmin == ty2) {
+		outHit.normal = { 0, 1 };
 	}
 
+	
+	// Fill in the HitInfo
 	outHit.isHit = true;
-	outHit.distance = distance;
-	outHit.point = origin + direction * distance;
+	outHit.distance = tmin;
+	outHit.point = origin + direction * tmin;
 	outHit.pCollider = pOther;
+
 
 	return true;
 
@@ -102,11 +110,19 @@ bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm:
 
 bool Engine::CollisionManager::IsColliding(CollisionComponent* pFirst, CollisionComponent* pSecond)
 {
+	// Check collisions mask with second layer
+	if ((pFirst->GetCollisionMask() & pSecond->GetLayer()) == 0)
+		return false;
+	
+	
 	const glm::vec2& firstSize{ pFirst->GetSize() };
 	const glm::vec2& firstPos{ pFirst->GetColliderPosition() };
 
 	const glm::vec2& secondSize{ pSecond->GetSize() };
 	const glm::vec2& secondPos{ pSecond->GetColliderPosition() };
+
+
+
 
 	// Check if the two rectangles are colliding
 	if (firstPos.x < secondPos.x + secondSize.x &&
