@@ -21,11 +21,10 @@ namespace Engine
 		virtual void OnImGui() {};  // Not const because the UI can have sliders, buttons etc. that change the values
 		
 		TransformComponent* GetTransform() const { return m_pOwner->GetTransform(); }
+		GameObject* GetOwner() const { return m_pOwner; }
 
 	
 	protected:
-		GameObject* GetOwner() const { return m_pOwner; };  // Only needs to be accessed by inheriting components
-
 		template <ComponentType TComponent>
 		void RequireComponent() const;
 
