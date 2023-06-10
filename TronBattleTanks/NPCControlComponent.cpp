@@ -6,9 +6,10 @@
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
 
-#pragma warning(push, 0)
+#pragma warning(push)
+#pragma warning(disable: 4201)
 #include <glm/gtx/norm.hpp>
-#pragma warning(pop)
+# pragma warning(pop)
 
 void NPCControlComponent::Init()
 {

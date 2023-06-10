@@ -2,9 +2,10 @@
 #include "TransformComponent.h"
 #include <algorithm>
 
-#pragma warning(push, 0)
-#include "glm/gtx/norm.hpp"
-#pragma warning(pop)
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#include <glm/gtx/norm.hpp>
+# pragma warning(pop)
 
 void MoveComponent::Init()
 {
