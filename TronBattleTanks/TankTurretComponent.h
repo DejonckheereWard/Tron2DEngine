@@ -14,12 +14,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() const override;
 
-	void SetTurretDirection(const glm::vec2& dir);
+	void SetTurretDirection(glm::vec2 dir);
 
 private:
 	Engine::TransformComponent* m_pTransform{ nullptr };
 
-	const float m_RotationSpeed{ 540.0f };   // Can be quite high but dont want instant snapping
+	const float m_RotationSpeed{ 720.0f };   // Can be quite high but dont want instant snapping
 	glm::vec2 m_DesiredDirection{ 0.0f };
 };
 
