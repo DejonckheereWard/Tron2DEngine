@@ -189,8 +189,8 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_DOWN, std::make_unique<AimTurretCommand>(pPlayerTankTurret), glm::vec2{ 0.0f, -1.0f });
 
 	// Shooting
-	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder, InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
-	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, Engine::InputState::OnPress, std::make_unique<ShootCommand>(pPlayerTankGun));
+	InputManager::GetInstance().AddAction(controllerIdx, Engine::XController::ControllerButton::RightShoulder, InputState::Pressed, std::make_unique<ShootCommand>(pPlayerTankGun));
+	InputManager::GetInstance().AddAction(SDL_SCANCODE_SPACE, Engine::InputState::Pressed, std::make_unique<ShootCommand>(pPlayerTankGun));
 
 	return pPlayerTank;
 }
