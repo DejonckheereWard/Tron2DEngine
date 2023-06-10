@@ -112,7 +112,7 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 
 		lagTime += deltaTime;  // Add time passed since last frame to lagTime
 
-		if (lagTime >= fixedTimeStep)  // If we are behind on updating
+		while (lagTime >= fixedTimeStep)  // If we are behind on updating
 		{
 			sceneManager.FixedUpdate();  // Update physics
 			collisionManager.FixedUpdate();
