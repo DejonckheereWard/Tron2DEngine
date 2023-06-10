@@ -7,12 +7,11 @@
 #include <stdexcept>
 #include "GameTimer.h"
 
-#include "TransformComponent.h"  // Easier usage without having to include this everywhere we use it
-
 namespace Engine
 {
 	class Texture2D;
 	class BaseComponent;
+	class TransformComponent;
 	class MissingComponent {};
 
 

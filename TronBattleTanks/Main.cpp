@@ -7,6 +7,7 @@
 #endif
 #endif
 
+#include "Main.h"
 #include "Minigin.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -34,12 +35,13 @@
 #include "NPCControlComponent.h"
 #include "MoveComponent.h"
 #include "WallRenderer.h"
-#include "LevelComponent.h"
 
 #include "GameCommands.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
-#include "Main.h"
+
+// Other
+#include "LevelLoader.h"
 
 
 void PrintManual()
@@ -238,19 +240,25 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 void CreateLevel(Engine::Scene* pScene)
 {
 	using namespace Engine;
-	Renderer& pRenderer{ Renderer::GetInstance() };
-	const int levelSize{ static_cast<int>(pRenderer.GetWindowSize().y) };  // Size in pixels
+	//Renderer& pRenderer{ Renderer::GetInstance() };
 
+	LevelSettings levelSettings{};
+	levelSettings.FilePath = "Level/Level_0.csv";
+	levelSettings.CellSize = 20;
+	levelSettings.Position = { 100.0f, 0.0f };
+	levelSettings.WallTexturePath = "Sprites/Level/CircuitBoard.png";
 
-	std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
-	Engine::GameObject* pLevel{ pScene->AddChild(new Engine::GameObject()) };
-	pLevel->AddComponent<WallRenderer>()->SetBackgroundTexture(circuitBoardTexture);
-	LevelComponent* pLevelComp{ pLevel->AddComponent<LevelComponent>(levelSize) };
-	pLevelComp->SetLevelFile("Level/Level_0.csv");
+	GameObject* pLevel{ LevelLoader::LoadLevel(levelSettings, pScene) };
+	pLevel;
+	//std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
+	//Engine::GameObject* pLevel{ pScene->AddChild(new Engine::GameObject()) };
+	//pLevel->AddComponent<WallRenderer>()->SetTexture(circuitBoardTexture);
+	//LevelComponent* pLevelComp{ pLevel->AddComponent<LevelComponent>(levelSize) };
+	//pLevelComp->SetLevelFile("Level/Level_0.csv");
 
 	// Center level
-	const glm::vec2 windowSize{ pRenderer.GetWindowSize() };
-	pLevel->GetTransform()->SetLocalPosition((windowSize.x - levelSize) / 2.0f, (windowSize.y - levelSize) / 2.0f);
+	//const glm::vec2 windowSize{ pRenderer.GetWindowSize() };
+	//pLevel->GetTransform()->SetLocalPosition((windowSize.x - levelSize) / 2.0f, (windowSize.y - levelSize) / 2.0f);
 }
 
 

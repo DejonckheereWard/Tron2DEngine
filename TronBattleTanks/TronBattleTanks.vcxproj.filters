@@ -71,8 +71,8 @@
     <ClCompile Include="GameCommands.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelComponent.cpp">
-      <Filter>Game Files\Components\Level</Filter>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Game Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,12 +109,14 @@
     <ClInclude Include="NPCControlComponent.h">
       <Filter>Game Files\Components\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h" />
     <ClInclude Include="WallRenderer.h">
       <Filter>Game Files\Components\Level</Filter>
     </ClInclude>
-    <ClInclude Include="LevelComponent.h">
-      <Filter>Game Files\Components\Level</Filter>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Game Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

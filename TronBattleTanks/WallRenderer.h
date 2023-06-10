@@ -14,12 +14,12 @@ public:
 	virtual void Update() override;
 	virtual void Render() const override;
 
-	void SetBackgroundTexture(std::shared_ptr<Engine::Texture2D> pTexture) { m_pBackgroundTexture = pTexture; }
-	void DrawAtPos(const glm::vec2& position, const glm::vec2& size);
+	void SetTexture(const std::shared_ptr<Engine::Texture2D>& pTexture) { m_pTexture = pTexture; }
+	void SetSize(const glm::vec2& size) { m_Size = size; }
 
 private:
-	std::shared_ptr<Engine::Texture2D> m_pBackgroundTexture{};  // Wall texture to sample from
-
+	std::shared_ptr<Engine::Texture2D> m_pTexture{};  // Wall texture to sample from
+	glm::vec2 m_Size{};
 
 };
 

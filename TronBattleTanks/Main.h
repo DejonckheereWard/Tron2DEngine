@@ -1,5 +1,11 @@
 #pragma once
 
+namespace Engine
+{
+	class GameObject;
+	class Scene;
+}
+
 void MainScene();
 
 Engine::GameObject* SpawnPlayer(Engine::Scene* pScene);
