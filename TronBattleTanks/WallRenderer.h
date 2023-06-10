@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "BaseComponent.h"
 #include "RenderComponent.h"
+#include <glm/vec2.hpp>
 
 class Engine::Texture2D;
 class WallRenderer final : public Engine::BaseComponent
