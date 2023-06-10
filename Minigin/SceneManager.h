@@ -23,6 +23,7 @@ namespace Engine
 		void Render() const;
 		void OnImGui();
 
+		void CleanUp();
 
 	private:
 		friend class Singleton<SceneManager>;

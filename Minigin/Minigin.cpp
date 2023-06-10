@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "CollisionManager.h"
 #include "GameTimer.h"
 #include <chrono>
 
@@ -82,6 +83,7 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
+	auto& collisionManager = CollisionManager::GetInstance();
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
@@ -113,6 +115,7 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		if (lagTime >= fixedTimeStep)  // If we are behind on updating
 		{
 			sceneManager.FixedUpdate();  // Update physics
+			collisionManager.FixedUpdate();
 			lagTime -= fixedTimeStep;  // Remove fixedTimeStep from lagTime
 		}
 
@@ -127,4 +130,6 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		const auto sleepTime = currentTime + std::chrono::milliseconds(minMsPerFrame) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
 	}
+
+	sceneManager.CleanUp();
 }

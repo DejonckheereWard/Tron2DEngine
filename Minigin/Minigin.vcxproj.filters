@@ -108,6 +108,12 @@
     <ClInclude Include="Command.h">
       <Filter>Engine Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Engine Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Engine Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -199,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Engine Files\ResourceHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>Engine Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Engine Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

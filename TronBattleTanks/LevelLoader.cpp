@@ -2,14 +2,21 @@
 #include <cassert>
 #include <fstream>
 #include <sstream>
-#include "GameObject.h"
-#include "TransformComponent.h"
-#include "WallRenderer.h"
+
 #include "ResourceManager.h"
+#include "CollisionManager.h"
+#include "GameObject.h"
+
+#include "TransformComponent.h"
+#include "CollisionComponent.h"
+
+
+#include "WallRenderer.h"
 
 Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene)
 {
 	using Engine::GameObject;
+	using Engine::CollisionComponent;
 
 	assert(levelSettings.FilePath != "");
 	assert(pScene != nullptr);
@@ -45,7 +52,8 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 					WallRenderer* pWallRenderer{ pCell->AddComponent<WallRenderer>() };
 					pWallRenderer->SetTexture(pWallTexture);
 					pWallRenderer->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
-					//pCell->AddComponent<CollisionComponent>(levelSettings.CellSize, levelSettings.CellSize);
+					CollisionComponent* pCollider{ pCell->AddComponent<CollisionComponent>() };
+					pCollider->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
 				}
 				colIdx++;
 			}
