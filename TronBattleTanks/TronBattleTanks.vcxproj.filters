@@ -74,6 +74,9 @@
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Game Files\Components\Tank</Filter>
     </ClCompile>
+    <ClCompile Include="PathRenderer.cpp">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -117,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="BulletComponent.h">
       <Filter>Game Files\Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="PathRenderer.h">
+      <Filter>Game Files\Components\Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

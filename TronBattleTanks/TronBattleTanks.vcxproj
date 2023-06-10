@@ -174,6 +174,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
     <ClCompile Include="NPCControlComponent.cpp" />
+    <ClCompile Include="PathRenderer.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
     <ClCompile Include="TankGunComponent.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="MoveComponent.h" />
     <ClInclude Include="NPCControlComponent.h" />
+    <ClInclude Include="PathRenderer.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="TankGunComponent.h" />
