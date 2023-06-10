@@ -52,6 +52,7 @@ void TankGunComponent::Shoot()
 	pRenderComponent->SetTexture(Engine::ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
 	pRenderComponent->SetTextureOffset({0.5f, 0.5f});
 	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition() + bulletOrigin);
+	pBullet->GetTransform()->SetLocalScale(0.7f, 0.7f);
 	pBullet->AddComponent<BulletComponent>()->SetDirection(bulletDirection);
 	pScene->AddChild(pBullet);
 
