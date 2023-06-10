@@ -48,7 +48,8 @@ public:
 	// Inherited via Command
 	virtual void Execute(const glm::vec2& value) override
 	{
-		if (glm::length2(value) <= 0.2f)
+		constexpr float inputMargin{ 0.2f * 0.2f };
+		if (glm::length2(value) <= inputMargin)
 			return;  // Only significant input wanted (even if outside deadzone)
 		const glm::vec2 normalizedValue{ glm::normalize(value) };
 		GetOwner()->GetComponent<TankTurretComponent>()->SetTurretDirection(normalizedValue);

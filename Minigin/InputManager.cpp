@@ -144,7 +144,7 @@ void Engine::InputManager::HandleControllerInput()
 		// Check if the mapping should be executed
 		// first.first is the controller index
 		// First.second.first is the key
-		const float deadZone{ 0.2f };
+		const float deadZone{ 0.05f };
 		switch(static_cast<XController::ControllerAxis>(controllerMapping.first.second.first))
 		{
 			case XController::ControllerAxis::LeftThumbXY:
