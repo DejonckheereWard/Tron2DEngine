@@ -4,6 +4,12 @@
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#include <glm/gtx/norm.hpp>
+# pragma warning(pop)
+
+
 using Engine::Command;
 
 // Game commands
@@ -42,6 +48,8 @@ public:
 	// Inherited via Command
 	virtual void Execute(const glm::vec2& value) override
 	{
+		if (glm::length2(value) <= 0.2f)
+			return;  // Only significant input wanted (even if outside deadzone)
 		const glm::vec2 normalizedValue{ glm::normalize(value) };
 		GetOwner()->GetComponent<TankTurretComponent>()->SetTurretDirection(normalizedValue);
 	}

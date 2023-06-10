@@ -34,7 +34,19 @@ public:
 
 	glm::vec2 GetLeftThumb() const
 	{
+		const short sThumbX{ m_CurrentState.Gamepad.sThumbLX };
+		const short sThumbY{ m_CurrentState.Gamepad.sThumbLY };
 		glm::vec2 value{};
+
+		if (sThumbX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE || sThumbX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		{
+			return value;
+		}
+		if (sThumbY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE || sThumbY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+		{
+			return value;
+		}
+
 		// Division value from xinput documentation (max value is 32767)
 		value.x = static_cast<float>(m_CurrentState.Gamepad.sThumbLX) / 32767.0f;
 		value.y = static_cast<float>(m_CurrentState.Gamepad.sThumbLY) / 32767.0f;
@@ -43,7 +55,19 @@ public:
 	}
 	glm::vec2  GetRightThumb() const
 	{
+		const short sThumbX{ m_CurrentState.Gamepad.sThumbRX };
+		const short sThumbY{ m_CurrentState.Gamepad.sThumbRY };
 		glm::vec2 value{};
+
+		if (sThumbX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || sThumbX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+		{
+			return value;
+		}
+		if (sThumbY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE || sThumbY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+		{
+			return value;
+		}
+
 		// Division value from xinput documentation (max value is 32767)
 		value.x = static_cast<float>(m_CurrentState.Gamepad.sThumbRX) / 32767.0f;
 		value.y = static_cast<float>(m_CurrentState.Gamepad.sThumbRY) / 32767.0f;
