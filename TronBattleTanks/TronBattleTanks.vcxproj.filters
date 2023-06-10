@@ -74,6 +74,9 @@
     <ClCompile Include="GameCommands.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantRotator.h">
@@ -114,6 +117,9 @@
     </ClInclude>
     <ClInclude Include="Main.h" />
     <ClInclude Include="WallRenderer.h">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
       <Filter>Game Files\Components\Level</Filter>
     </ClInclude>
   </ItemGroup>

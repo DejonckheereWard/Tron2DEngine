@@ -35,11 +35,13 @@
 #include "NPCControlComponent.h"
 #include "MoveComponent.h"
 #include "WallRenderer.h"
+#include "LevelComponent.h"
 
 #include "GameCommands.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
 #include "Main.h"
+
 
 void PrintManual()
 {
@@ -97,7 +99,7 @@ void MainScene()
 	using namespace Engine;
 
 	// Create main scene
-	Scene* scene = Engine::SceneManager::GetInstance().CreateMainScene();
+	Scene* pScene = Engine::SceneManager::GetInstance().CreateMainScene();
 
 	// Set up services
 	ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
@@ -106,34 +108,35 @@ void MainScene()
 
 	PrintManual();
 
-	// Spawn in background
-	auto backGround = new GameObject();
-	std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
-	backGround->AddComponent<RenderComponent>()->SetTexture(bgTexture);
-	scene->AddChild(backGround);
+	//// Spawn in background
+	//auto backGround = new GameObject();
+	//std::shared_ptr<Texture2D> bgTexture{ ResourceManager::GetInstance().LoadTexture("background.tga") };
+	//backGround->AddComponent<RenderComponent>()->SetTexture(bgTexture);
+	//pScene->AddChild(backGround);
+
+	// Create the level
+	CreateLevel(pScene);
 
 	// Spawn in player
-	GameObject* pPlayer{ SpawnPlayer(scene) };
-	SpawnEnemy(scene, pPlayer);
-
-
+	GameObject* pPlayer{ SpawnPlayer(pScene) };
+	SpawnEnemy(pScene, pPlayer);
 	{
-		std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
-		GameObject* pWall{ new GameObject() };
-		pWall->AddComponent<WallRenderer>()->SetBackgroundTexture(circuitBoardTexture);
-		pWall->GetTransform()->SetLocalPosition(0, 0);
+		//std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
+		//GameObject* pWall{ new GameObject() };
+		//pWall->AddComponent<WallRenderer>()->SetBackgroundTexture(circuitBoardTexture);
+		//pWall->GetTransform()->SetLocalPosition(0, 0);
 
-		scene->AddChild(pWall);
+		//pScene->AddChild(pWall);
 
-		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_6, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 1.0f, 0.0f });
-		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_4, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ -1.0f, 0.0f });
-		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_8, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, 1.0f });
-		InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_5, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, -1.0f });
+		//InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_6, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 1.0f, 0.0f });
+		//InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_4, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ -1.0f, 0.0f });
+		//InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_8, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, 1.0f });
+		//InputManager::GetInstance().AddAxisMapping(SDL_SCANCODE_KP_5, std::make_unique<DebugMoveCommand>(pWall), glm::vec2{ 0.0f, -1.0f });
 	}
 
 }
 
-Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
+Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 {
 	using namespace Engine;
 	GameObject* pPlayerTank{ new GameObject() };
@@ -142,7 +145,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
 	pPlayerTank->AddComponent<ScoreComponent>();
 	pPlayerTank->AddComponent<MoveComponent>();
 	pPlayerTank->GetTransform()->SetLocalPosition(0, 0);
-	scene->AddChild(pPlayerTank);
+	pScene->AddChild(pPlayerTank);
 
 
 	GameObject* pPlayerTankTurret{ new GameObject };
@@ -191,7 +194,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* scene)
 	return pPlayerTank;
 }
 
-Engine::GameObject* SpawnEnemy(Engine::Scene* scene, Engine::GameObject* pTarget)
+Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarget)
 {
 	using namespace Engine;
 	GameObject* pTank{ new GameObject() };
@@ -202,7 +205,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* scene, Engine::GameObject* pTarget
 	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
 	pNPC->SetTarget(pTarget);
 	pTank->GetTransform()->SetLocalPosition(500.0f, 500.0f);
-	scene->AddChild(pTank);
+	pScene->AddChild(pTank);
 
 
 	GameObject* pTankTurret{ new GameObject };
@@ -223,7 +226,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* scene, Engine::GameObject* pTarget
 		RenderComponent* pRenderComponent{ pTankGun->AddComponent<RenderComponent>() };
 		pRenderComponent->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTankGun.png"));
 		pRenderComponent->SetTextureOffset({ 0.5f, 0.5f });
-		TankGunComponent* pGunComp{ pTankGun->AddComponent<TankGunComponent>() } ;
+		TankGunComponent* pGunComp{ pTankGun->AddComponent<TankGunComponent>() };
 		pTankGun->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 
 		pNPC->SetGunComponent(pGunComp);
@@ -231,6 +234,24 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* scene, Engine::GameObject* pTarget
 
 
 	return pTank;
+}
+
+void CreateLevel(Engine::Scene* pScene)
+{
+	using namespace Engine;
+	Renderer& pRenderer{ Renderer::GetInstance() };
+	const int levelSize{ static_cast<int>(pRenderer.GetWindowSize().y) };  // Size in pixels
+
+
+	std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
+	Engine::GameObject* pLevel{ pScene->AddChild(new Engine::GameObject()) };
+	pLevel->AddComponent<WallRenderer>()->SetBackgroundTexture(circuitBoardTexture);
+	LevelComponent* pLevelComp{ pLevel->AddComponent<LevelComponent>(levelSize) };
+	pLevelComp->SetLevelFile("Level/Level_0.csv");
+
+	// Center level
+	const glm::vec2 windowSize{ pRenderer.GetWindowSize() };
+	pLevel->GetTransform()->SetLocalPosition((windowSize.x - levelSize) / 2.0f, (windowSize.y - levelSize) / 2.0f);
 }
 
 

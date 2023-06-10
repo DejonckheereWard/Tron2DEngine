@@ -142,7 +142,7 @@ public:
 				std::lock_guard musicLock{ m_MusicMutex };
 
 				// Handle music seperately (it has its own channel)
-				const std::string& filePath{ Engine::ResourceManager::GetInstance().GetSoundPath(audioEvent.filePath) };
+				const std::string& filePath{ Engine::ResourceManager::GetInstance().GetResourcePath(audioEvent.filePath) };
 
 				if(m_pMusic)
 				{
@@ -177,7 +177,7 @@ public:
 				else
 				{
 					// Load the audio if it isn't loaded yet
-					const std::string& filePath{ Engine::ResourceManager::GetInstance().GetSoundPath(audioEvent.filePath) };
+					const std::string& filePath{ Engine::ResourceManager::GetInstance().GetResourcePath(audioEvent.filePath) };
 					pChunk = Mix_LoadWAV(filePath.c_str());
 					m_AudioMap[audioEvent.filePath] = pChunk;
 				}

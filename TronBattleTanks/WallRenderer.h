@@ -15,6 +15,7 @@ public:
 	virtual void Render() const override;
 
 	void SetBackgroundTexture(std::shared_ptr<Engine::Texture2D> pTexture) { m_pBackgroundTexture = pTexture; }
+	void DrawAtPos(const glm::vec2& position, const glm::vec2& size);
 
 private:
 	std::shared_ptr<Engine::Texture2D> m_pBackgroundTexture{};  // Wall texture to sample from

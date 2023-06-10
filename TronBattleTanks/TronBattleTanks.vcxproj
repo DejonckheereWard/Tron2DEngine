@@ -170,6 +170,7 @@
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
+    <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MoveComponent.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
+    <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="MoveComponent.h" />

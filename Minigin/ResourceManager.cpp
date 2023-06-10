@@ -8,7 +8,7 @@
 
 void Engine::ResourceManager::Init(const std::string& dataPath)
 {
-	m_dataPath = dataPath;
+	m_DataPath = dataPath;
 
 	if (TTF_Init() != 0)
 	{
@@ -18,7 +18,7 @@ void Engine::ResourceManager::Init(const std::string& dataPath)
 
 std::shared_ptr<Engine::Texture2D> Engine::ResourceManager::LoadTexture(const std::string& file) const
 {
-	const auto fullPath = m_dataPath + file;
+	const auto fullPath = m_DataPath + file;
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr)
 	{
@@ -29,10 +29,11 @@ std::shared_ptr<Engine::Texture2D> Engine::ResourceManager::LoadTexture(const st
 
 std::shared_ptr<Engine::Font> Engine::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
-	return std::make_shared<Font>(m_dataPath + file, size);
+	return std::make_shared<Font>(m_DataPath + file, size);
 }
 
-std::string Engine::ResourceManager::GetSoundPath(const std::string& file) const
+std::string Engine::ResourceManager::GetResourcePath(const std::string& file) const
 {
-	return m_dataPath + file;
+	return m_DataPath + file;
 }
+
