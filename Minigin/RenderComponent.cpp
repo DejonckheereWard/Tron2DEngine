@@ -1,6 +1,7 @@
 #include "RenderComponent.h"
 #include "TransformComponent.h"
 #include "Renderer.h"
+#include "Texture2D.h"
 
 Engine::RenderComponent::RenderComponent(GameObject* pOwner):
 	BaseComponent(pOwner)
@@ -20,5 +21,8 @@ void Engine::RenderComponent::Render() const
 	const glm::vec2& pos{ m_pTransform->GetPosition() };
 
 	// -rotation because SDL rotates clockwise while in the engine, positive rotations are counter clockwise
-	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, -m_pTransform->GetRotation(), m_TextureOffset );
+
+	const glm::vec2 bulletSize{  static_cast<glm::vec2>(m_Texture->GetSize())* GetTransform()->GetScale() };
+
+	Renderer::GetInstance().RenderTexture(*m_Texture, {}, { pos, bulletSize }, -m_pTransform->GetRotation(), m_TextureOffset);
 }
