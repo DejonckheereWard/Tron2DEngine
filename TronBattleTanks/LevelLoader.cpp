@@ -14,7 +14,7 @@
 #include "WallRenderer.h"
 #include "PathRenderer.h"
 
-Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene)
+Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize)
 {
 	using Engine::GameObject;
 	using Engine::CollisionComponent;
@@ -31,10 +31,11 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 
 		std::shared_ptr<Engine::Texture2D> pWallTexture{ Engine::ResourceManager::GetInstance().LoadTexture(levelSettings.WallTexturePath) };
 		int rowIdx{};
+		int colIdx{};
 		std::string inputLine{};
 		while (std::getline(levelFile, inputLine))
 		{
-			int colIdx{};
+			colIdx = 0;
 			std::stringstream stringStream{ inputLine };
 			std::string tileValue{};
 			while (std::getline(stringStream, tileValue, ','))
@@ -65,6 +66,8 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 			}
 			rowIdx++;
 		}
+		outGridSize.x = colIdx;
+		outGridSize.y = rowIdx;
 		return pLevel;
 	}
 	else

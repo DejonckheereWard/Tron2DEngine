@@ -22,10 +22,7 @@ namespace Engine
 	public:
 		typedef void(*CollisionCallback)(GameObject* pOther);
 
-		CollisionComponent(Engine::GameObject* pParent) :
-			BaseComponent(pParent) {}
-
-
+		CollisionComponent(Engine::GameObject* pParent);
 		virtual ~CollisionComponent() = default;
 
 		// Inherited via BaseComponent

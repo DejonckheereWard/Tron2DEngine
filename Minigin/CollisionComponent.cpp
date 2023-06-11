@@ -4,9 +4,14 @@
 #include "Renderer.h"
 
 
-void Engine::CollisionComponent::Init()
+Engine::CollisionComponent::CollisionComponent(Engine::GameObject* pParent):
+	BaseComponent(pParent)
 {
 	CollisionManager::GetInstance().AddCollision(this);
+}
+
+void Engine::CollisionComponent::Init()
+{
 }
 
 void Engine::CollisionComponent::Update()
@@ -19,8 +24,6 @@ void Engine::CollisionComponent::FixedUpdate()
 
 void Engine::CollisionComponent::Render() const
 {
-
-
 }
 
 void Engine::CollisionComponent::RenderDebug() const

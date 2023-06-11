@@ -26,9 +26,10 @@ namespace Engine
 
 		void FixedUpdate();
 
+		bool IsPointInCollider(const glm::vec2& point, uint8_t collisionMask = UINT8_MAX) const;  // Numeric limits not working due to C4003 error
 
-		bool Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask = UINT8_MAX);  // Numeric limits not working due to C4003 error
-		bool RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit, uint8_t collisionMask = UINT8_MAX);
+		bool Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask = UINT8_MAX) const;  // Numeric limits not working due to C4003 error
+		bool RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit, uint8_t collisionMask = UINT8_MAX) const;
 
 	private:
 		friend class Singleton<CollisionManager>;

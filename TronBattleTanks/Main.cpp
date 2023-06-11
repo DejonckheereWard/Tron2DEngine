@@ -41,9 +41,11 @@
 #include "GameCommands.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
+#include "NavmeshComponent.h"
 
 // Other
 #include "LevelLoader.h"
+#include "NavmeshManager.h"	
 
 
 void PrintManual()
@@ -215,8 +217,8 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<MoveComponent>();
 
 	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
-	pCollider->SetColliderSize({ 28.0f, 28.0f });
-	pCollider->SetColliderOffset({ 2.0f, 2.0f });
+	pCollider->SetColliderSize({ 16.0f, 16.0f });
+	pCollider->SetColliderOffset({ 8.0f, 8.0f });
 	pCollider->SetLayer(CollisionLayer::Enemy);
 	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Enemy);  // Collide with everything except enemy
 
@@ -224,6 +226,8 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pNPC->SetTarget(pTarget);
 	pTank->GetTransform()->SetLocalPosition(200.0f, 200.0f);
 	pScene->AddChild(pTank);
+
+	pTank->AddComponent<NavmeshComponent>();
 
 
 	GameObject* pTankTurret{ new GameObject };
@@ -266,8 +270,18 @@ void CreateLevel(Engine::Scene* pScene)
 	levelSettings.Position = { 100.0f, 0.0f };
 	levelSettings.WallTexturePath = "Sprites/Level/CircuitBoard.png";
 
-	GameObject* pLevel{ LevelLoader::LoadLevel(levelSettings, pScene) };
-	pLevel;
+	NavmeshManager& navMeshManager{ NavmeshManager::GetInstance() };
+	glm::ivec2 outGridSize{};
+	LevelLoader::LoadLevel(levelSettings, pScene, outGridSize);  // Loads in all the walls
+
+	// Create navmesh
+	NavmeshSettings navMeshSettings{};
+	navMeshSettings.CellSize = { levelSettings.CellSize, levelSettings.CellSize };
+	navMeshSettings.Position = levelSettings.Position;
+	navMeshSettings.GridSize = outGridSize;
+
+	navMeshManager.GenerateNavMesh(navMeshSettings);
+
 	//std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
 	//Engine::GameObject* pLevel{ pScene->AddChild(new Engine::GameObject()) };
 	//pLevel->AddComponent<WallRenderer>()->SetTexture(circuitBoardTexture);

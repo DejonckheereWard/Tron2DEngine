@@ -39,7 +39,32 @@ void Engine::CollisionManager::FixedUpdate()
 
 }
 
-bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask)
+bool Engine::CollisionManager::IsPointInCollider(const glm::vec2& point, uint8_t collisionMask) const
+{
+	// Check for collisions on every collider
+	for (CollisionComponent* pCollider : m_Colliders)
+	{
+		// Check collision mask
+		if ((collisionMask & pCollider->GetLayer()) == 0)
+					continue;
+
+		const glm::vec2& size{ pCollider->GetColliderSize() };
+		const glm::vec2& pos{ pCollider->GetColliderPosition() };
+
+		// Check if the point is inside the collider
+		if (point.x > pos.x && 
+			point.x < pos.x + size.x &&
+			point.y > pos.y && 
+			point.y < pos.y + size.y)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask) const
 {
 	outHit.distance = maxDistance;
 	// Check for collisions on every collider
@@ -50,7 +75,7 @@ bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2&
 	return outHit.isHit;
 }
 
-bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit, uint8_t collisionMask)
+bool Engine::CollisionManager::RaycastSingle(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, Engine::CollisionComponent* pOther, HitInfo& outHit, uint8_t collisionMask) const
 {
 	// Check collision mask
 	if ((collisionMask & pOther->GetLayer()) == 0)

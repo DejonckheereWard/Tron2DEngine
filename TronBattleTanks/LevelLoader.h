@@ -24,7 +24,7 @@ class LevelLoader final
 	};
 
 public:
-	static Engine::GameObject* LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene);
+	static Engine::GameObject* LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize);
 
 
 };

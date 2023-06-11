@@ -30,6 +30,12 @@
     <Filter Include="Resource Files\Sprites\Level">
       <UniqueIdentifier>{01acc745-b697-44d2-b538-f04101cc1456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Components\UI">
+      <UniqueIdentifier>{5c67443b-81ff-4bd4-83fb-222702d0395c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files\Level">
+      <UniqueIdentifier>{d491e6c7-3320-4816-8333-736afb86b469}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HealthComponent.cpp">
@@ -38,13 +44,7 @@
     <ClCompile Include="HealthDisplay.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplay.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -68,14 +68,26 @@
     <ClCompile Include="GameCommands.cpp">
       <Filter>Game Files</Filter>
     </ClCompile>
-    <ClCompile Include="LevelLoader.cpp">
-      <Filter>Game Files</Filter>
-    </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
       <Filter>Game Files\Components\Tank</Filter>
     </ClCompile>
     <ClCompile Include="PathRenderer.cpp">
       <Filter>Game Files\Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="NavmeshComponent.cpp">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplay.cpp">
+      <Filter>Game Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
+      <Filter>Game Files\Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="NavmeshManager.cpp">
+      <Filter>Game Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Game Files\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,13 +97,7 @@
     <ClInclude Include="HealthDisplay.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreComponent.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplay.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="GameCommands.h">
@@ -112,9 +118,6 @@
     <ClInclude Include="WallRenderer.h">
       <Filter>Game Files\Components\Level</Filter>
     </ClInclude>
-    <ClInclude Include="LevelLoader.h">
-      <Filter>Game Files</Filter>
-    </ClInclude>
     <ClInclude Include="Main.h">
       <Filter>Game Files</Filter>
     </ClInclude>
@@ -123,6 +126,21 @@
     </ClInclude>
     <ClInclude Include="PathRenderer.h">
       <Filter>Game Files\Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="NavmeshComponent.h">
+      <Filter>Game Files\Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDisplay.h">
+      <Filter>Game Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>Game Files\Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="NavmeshManager.h">
+      <Filter>Game Files\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Game Files\Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
