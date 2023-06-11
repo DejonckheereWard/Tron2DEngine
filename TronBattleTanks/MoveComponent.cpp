@@ -129,7 +129,7 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 
 	// Offset to get both side of the owner
 	glm::vec2 offset{ m_pCollisionComponent->GetColliderSize() / 2.0f };
-	offset -= 1; // Subtract 1 for smoother working (doesnt get stuck in wall in 2 directions)
+	offset -= 2.0f; // Subtract for smoother working (doesnt get stuck in wall in 2 directions)
 
 	float distance{};
 	if (std::abs(direction.x) > std::abs(direction.y))

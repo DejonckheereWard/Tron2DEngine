@@ -35,7 +35,7 @@ private:
 	glm::vec2 m_PreferedMoveDirection{ 1.0f, 1.0f };  // Based on previous inputs
 
 	glm::vec2 m_MoveDirection{};
-	float m_Speed{ 100.f };
+	float m_Speed{ 70.f };
 	
 
 	// Debug rendering
