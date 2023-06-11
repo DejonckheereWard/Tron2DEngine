@@ -14,7 +14,7 @@ void BulletComponent::Update()
 	m_LifeTimer += deltaTime;
 	if(m_LifeTimer >= m_LifeTime)
 	{
-		//GetOwner()->Destroy(); // TODO: Implement removal of game objects
+		GetOwner()->MarkForDeletion();
 		return;
 	}
 

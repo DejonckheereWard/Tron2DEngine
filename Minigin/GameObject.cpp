@@ -118,6 +118,20 @@ void Engine::GameObject::Update()
 	{
 		component.second->Update();
 	}
+
+	std::vector<GameObject*> toRemove{};
+	for (auto& child : m_Children)
+	{
+		if (child->IsMarkedForDelete())
+		{
+			toRemove.emplace_back(child);
+		}
+	}
+
+	for (auto& child : toRemove)
+	{
+		RemoveChild(child);
+	}
 }
 
 void Engine::GameObject::FixedUpdate()

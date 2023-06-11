@@ -43,6 +43,21 @@ void Engine::Scene::Update()
 		}
 		m_ChildrenToAdd.clear();
 	}
+
+	std::vector<GameObject*> toRemove{};
+	for (auto& child : m_Children)
+	{
+		if (child->IsMarkedForDelete())
+		{
+			toRemove.emplace_back(child);
+		}
+	}
+
+	for (auto& child : toRemove)
+	{
+		RemoveChild(child);
+	}
+
 }
 
 void Engine::Scene::FixedUpdate()
@@ -93,6 +108,7 @@ Engine::GameObject* Engine::Scene::AddChild(GameObject* child)
 void Engine::Scene::RemoveChild(GameObject* child)
 {
 	std::erase(m_Children, child);
+	delete child;
 }
 
 void Engine::Scene::RemoveChildIndex(size_t index)

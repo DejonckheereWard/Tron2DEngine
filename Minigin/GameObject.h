@@ -41,6 +41,8 @@ namespace Engine
 		GameObject* AddChild(GameObject* child, bool keepWorldPosition = false);  // Adds the child to this gameobject, making this gameobject the owner
 		void RemoveChild(GameObject* child);  // Should delete
 
+		void MarkForDeletion() { m_SetForDeletion = true; };
+		bool IsMarkedForDelete() const { return m_SetForDeletion; };
 
 		//const std::vector<std::unique_ptr<GameObject>>& GetChildren() { return m_Children; };
 		const std::vector<GameObject*>& GetChildren() { return m_Children; };
@@ -61,6 +63,8 @@ namespace Engine
 
 		GameObject* m_Parent{ nullptr };
 		std::vector<GameObject*> m_Children{};
+
+		bool m_SetForDeletion{ false };
 
 
 		void AddToChildCollection(GameObject* child);
