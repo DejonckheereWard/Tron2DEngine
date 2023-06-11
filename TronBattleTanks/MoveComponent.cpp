@@ -83,7 +83,6 @@ void MoveComponent::FixedUpdate()
 		m_PreferedMoveDirection.y = m_MoveDirection.y;
 	}
 
-
 	m_MoveDirection = glm::vec2(0, 0); // Reset the movement direction
 }
 
@@ -162,16 +161,7 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 void MoveComponent::ClampDirectionToAxis(glm::vec2& direction)
 {
 	// Limit the movement direction to only 4 directions
-	// Get the biggest value of the direction vector and set the other values to 0
-	if (abs(direction.x) > abs(direction.y))
-	{
-		direction.x = std::clamp(direction.x, -1.0f, 1.0f);
-		direction.y = 0;
-	}
-	else
-	{
-		direction.y = std::clamp(direction.y, -1.0f, 1.0f);
-		direction.x = 0;
-	}
-
+	// Fixes the direction so it it only goes along either the x or y axis
+	direction.x = std::round(direction.x);
+	direction.y = std::round(direction.y);
 }
