@@ -40,7 +40,7 @@ private:
 
 	// Debug rendering
 	glm::vec2 m_PreviousMoveDirection{};  // Used for debug rendering
-	bool m_RenderDebug{ true };
+	bool m_RenderDebug{ false };
 
 
 };

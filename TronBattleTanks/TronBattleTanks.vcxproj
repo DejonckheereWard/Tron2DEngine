@@ -178,6 +178,7 @@
     <ClCompile Include="NavmeshManager.cpp" />
     <ClCompile Include="NPCControlComponent.cpp" />
     <ClCompile Include="PathRenderer.cpp" />
+    <ClCompile Include="RotateWithMovementComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
     <ClCompile Include="StateComponent.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="NavmeshManager.h" />
     <ClInclude Include="NPCControlComponent.h" />
     <ClInclude Include="PathRenderer.h" />
+    <ClInclude Include="RotateWithMovementComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="State.h" />

@@ -41,6 +41,7 @@
 #include "TankTurretComponent.h"
 #include "NavmeshComponent.h"
 #include "StateComponent.h"
+#include "RotateWithMovementComponent.h"
 
 // State
 #include "EnemyStates.h"
@@ -149,10 +150,21 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 {
 	using namespace Engine;
 	GameObject* pPlayerTank{ new GameObject() };
-	pPlayerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
+	GameObject* pTankTextureObj{ pPlayerTank->AddChild( new GameObject() ) };
+	pTankTextureObj->GetTransform()->SetLocalPosition(16.0f, 16.0f);
+
+	
+
 	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pPlayerTank->AddComponent<ScoreComponent>();
-	pPlayerTank->AddComponent<MoveComponent>()->SetSpeed(50.0f);
+	MoveComponent* pMoveComp{ pPlayerTank->AddComponent<MoveComponent>() };
+	pMoveComp->SetSpeed(50.0f);
+
+	RenderComponent* pTankRenderComp{ pTankTextureObj->AddComponent<RenderComponent>() };
+	pTankRenderComp->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
+	pTankRenderComp->SetTextureOffset({ 0.5f, 0.5f });
+	pTankTextureObj->AddComponent< RotateWithMovementComponent>()->SetMovementComponent(pMoveComp);
+
 	pPlayerTank->GetTransform()->SetLocalPosition(110, 100);
 	pPlayerTank->SetTag("Player");
 	CollisionComponent* pCollider{ pPlayerTank->AddComponent<CollisionComponent>() };
