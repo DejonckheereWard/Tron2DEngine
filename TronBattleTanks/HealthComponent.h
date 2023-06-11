@@ -23,9 +23,13 @@ public:
 	int GetMaxHealth() const;
 	float GetHealthPercentage() const;
 
-	void TakeDamage(int damage);
-	void Heal(int heal);
+	void ResetHealth();
+	void RemoveExtraLife();
 
+	void TakeDamage(int damage);
+	void Heal(int heal); 
+
+	void SetExtraLives(int lives);
 	int GetExtraLives();
 
 	Engine::Subject* GetSubject() { return m_pSubject.get(); };

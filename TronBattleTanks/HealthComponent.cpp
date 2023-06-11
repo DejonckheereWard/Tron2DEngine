@@ -41,6 +41,18 @@ float HealthComponent::GetHealthPercentage() const
 	return float(m_Health) / float(m_MaxHealth);
 }
 
+void HealthComponent::ResetHealth()
+{
+	m_Health = m_MaxHealth;
+	m_pSubject->Notify(GetOwner(), "HealthChanged");
+}
+
+void HealthComponent::RemoveExtraLife()
+{
+	--m_ExtraLives;
+	m_pSubject->Notify(GetOwner(), "HealthChanged");
+}
+
 void HealthComponent::TakeDamage(int damage)
 {
 	if(m_Health > 0)
@@ -75,6 +87,12 @@ void HealthComponent::Heal(int heal)
 			m_Health = m_MaxHealth;
 		}
 	}
+	m_pSubject->Notify(GetOwner(), "HealthChanged");
+}
+
+void HealthComponent::SetExtraLives(int lives)
+{
+	m_ExtraLives = lives;
 	m_pSubject->Notify(GetOwner(), "HealthChanged");
 }
 
