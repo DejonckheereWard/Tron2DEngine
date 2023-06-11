@@ -20,7 +20,7 @@ class LevelLoader final
 	enum class CellType {
 		Wall,
 		Path,
-		Finish
+		Diamond
 	};
 
 public:
