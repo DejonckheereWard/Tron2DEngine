@@ -52,6 +52,8 @@ void TankGunComponent::Shoot()
 	pRenderComponent->SetTextureOffset({0.5f, 0.5f});
 	pBullet->GetTransform()->SetLocalPosition(m_pTransform->GetPosition());
 	pBullet->GetTransform()->SetLocalScale(0.7f, 0.7f);
+	pBullet->SetTag("Bullet");
+
 	BulletComponent* pBulletComponent{ pBullet->AddComponent<BulletComponent>() };
 	pBulletComponent->SetDirection(bulletDirection);
 	pBulletComponent->SetCollisionLayer(m_BulletCollisionLayer);

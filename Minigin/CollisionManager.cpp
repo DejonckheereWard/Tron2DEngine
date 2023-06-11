@@ -72,6 +72,8 @@ bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2&
 	{
 		RaycastSingle(origin, direction, outHit.distance, pCollider, outHit, collisionMask);
 	}
+
+
 	return outHit.isHit;
 }
 

@@ -171,7 +171,12 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	pCollider->SetColliderOffset({ 4.0f, 4.0f });
 	pCollider->SetLayer(CollisionLayer::Player);
 	pCollider->SetCollisionMask(CollisionLayer::World);  // Collide with everything except player
-
+	pCollider->SetCollisionCallback([pPlayerTank](GameObject* pOther) {
+		if (pOther->GetTag() == "Bullet")
+		{
+			pPlayerTank->GetComponent<HealthComponent>()->TakeDamage(1);
+		}
+	});
 	
 	pScene->AddChild(pPlayerTank);
 
@@ -226,7 +231,9 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	using namespace Engine;
 	GameObject* pTank{ new GameObject() };
 	pTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTank.png"));
-	pTank->AddComponent<HealthComponent>()->SetHealth(1);
+	HealthComponent* pHealthComp{ pTank->AddComponent<HealthComponent>() };
+	pHealthComp->SetHealth(1);
+	pHealthComp->SetExtraLives(0);
 	pTank->AddComponent<ScoreComponent>();
 	pTank->AddComponent<StateComponent>(new States::RoamingState());
 	pTank->SetTag("EnemyTank");
@@ -248,6 +255,13 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pCollider->SetColliderOffset({ 4.0f, 4.0f });
 	pCollider->SetLayer(CollisionLayer::Enemy);
 	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Enemy);  // Collide with everything except enemy
+	pCollider->SetCollisionCallback([pTank](GameObject* pOther) {
+		if (pOther->GetTag() == "Bullet")
+		{
+			pTank->GetComponent<HealthComponent>()->TakeDamage(1);
+		}
+	});
+
 
 	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
 	pNPC->SetTarget(pTarget);

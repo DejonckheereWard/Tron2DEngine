@@ -1,10 +1,13 @@
 #pragma once
 #include "BaseComponent.h"
 #include "glm/vec2.hpp"
+#include "CollisionComponent.h"
+#include <functional>
 
 class BulletComponent final: public Engine::BaseComponent
 {
 public:
+
 	BulletComponent(Engine::GameObject* pParent): 
 		BaseComponent(pParent) {}
 
@@ -28,5 +31,6 @@ private:
 	int m_NrOfBounces{ 0 };
 	const float m_LifeTime{ 10.0f };
 	float m_LifeTimer{ 0.0f };
+
 };
 

@@ -36,6 +36,16 @@ void BulletComponent::FixedUpdate()
 
 		const glm::vec2 reflectedDir{ glm::reflect(m_Direction, hitInfo.normal) };
 		SetDirection(reflectedDir);
+
+		hitInfo.pCollider->OnCollision(GetOwner());
+
+		assert(hitInfo.pCollider != nullptr);
+		Engine::CollisionLayer otherLayer{ hitInfo.pCollider->GetLayer() };
+		if (otherLayer != Engine::CollisionLayer::World)
+		{
+			GetOwner()->MarkForDeletion();
+		}
+
 		++m_NrOfBounces;
 	}
 

@@ -47,3 +47,9 @@ void Engine::CollisionComponent::OnCollision(CollisionComponent* pOther)
 	if (m_OnCollision)
 		m_OnCollision(pOther->GetOwner());
 }
+
+void Engine::CollisionComponent::OnCollision(GameObject* pOther)
+{
+	if (m_OnCollision)
+		m_OnCollision(pOther);
+}

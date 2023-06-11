@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "glm/vec2.hpp"
+#include <functional>
 
 namespace Engine
 {
@@ -20,7 +21,7 @@ namespace Engine
 	class CollisionComponent final: public BaseComponent
 	{
 	public:
-		typedef void(*CollisionCallback)(GameObject* pOther);
+		typedef std::function<void(GameObject* otherGameObject)> OnCollisionCallback;
 
 		CollisionComponent(Engine::GameObject* pParent);
 		virtual ~CollisionComponent() = default;
@@ -32,7 +33,7 @@ namespace Engine
 		virtual void Render() const override;
 		virtual void RenderDebug() const override;
 
-		void SetCollisionCallback(CollisionCallback callback) { m_OnCollision = callback; }
+		void SetCollisionCallback(OnCollisionCallback callback) { m_OnCollision = callback; }
 
 		void SetColliderOffset(const glm::vec2& offset) { m_ColliderOffset = offset; }
 		const glm::vec2& GetColliderOffset() const { return m_ColliderOffset; }
@@ -44,6 +45,7 @@ namespace Engine
 		const glm::vec2& GetColliderSize() { return m_ColliderSize; }
 
 		void OnCollision(CollisionComponent* pOther);
+		void OnCollision(GameObject* pOther);
 
 		void SetDebugDraw(bool draw) { m_DrawDebug = draw; }
 
@@ -66,7 +68,7 @@ namespace Engine
 		glm::vec2 m_ColliderSize{ 2.0f, 2.0f}; // Collider size
 		glm::vec2 m_ColliderOffset{}; // Offset from the transform position (to position colider)
 
-		CollisionCallback m_OnCollision{ nullptr };  // Callback function for when a collision happens
+		OnCollisionCallback m_OnCollision{ nullptr };  // Callback function for when a collision happens
 	};
 }
 
