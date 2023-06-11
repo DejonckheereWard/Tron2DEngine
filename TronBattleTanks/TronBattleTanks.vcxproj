@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BulletComponent.cpp" />
+    <ClCompile Include="EnemyStates.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
@@ -179,12 +180,14 @@
     <ClCompile Include="PathRenderer.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
+    <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TankGunComponent.cpp" />
     <ClCompile Include="TankTurretComponent.cpp" />
     <ClCompile Include="WallRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletComponent.h" />
+    <ClInclude Include="EnemyStates.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
@@ -198,6 +201,8 @@
     <ClInclude Include="PathRenderer.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="ScoreDisplay.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateComponent.h" />
     <ClInclude Include="TankGunComponent.h" />
     <ClInclude Include="TankTurretComponent.h" />
     <ClInclude Include="WallRenderer.h" />

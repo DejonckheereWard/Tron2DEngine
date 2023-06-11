@@ -37,13 +37,16 @@
 #include "NPCControlComponent.h"
 #include "MoveComponent.h"
 #include "WallRenderer.h"
-
-#include "GameCommands.h"
 #include "TankGunComponent.h"
 #include "TankTurretComponent.h"
 #include "NavmeshComponent.h"
+#include "StateComponent.h"
+
+// State
+#include "EnemyStates.h"
 
 // Other
+#include "GameCommands.h"
 #include "LevelLoader.h"
 #include "NavmeshManager.h"	
 
@@ -149,11 +152,12 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	pPlayerTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
 	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pPlayerTank->AddComponent<ScoreComponent>();
-	pPlayerTank->AddComponent<MoveComponent>();
+	pPlayerTank->AddComponent<MoveComponent>()->SetSpeed(50.0f);
 	pPlayerTank->GetTransform()->SetLocalPosition(110, 100);
+	pPlayerTank->SetTag("Player");
 	CollisionComponent* pCollider{ pPlayerTank->AddComponent<CollisionComponent>() };
-	pCollider->SetColliderSize({ 16.0f, 16.0f });
-	pCollider->SetColliderOffset({ 8.0f, 8.0f });
+	pCollider->SetColliderSize({ 24.0f, 24.0f });
+	pCollider->SetColliderOffset({ 4.0f, 4.0f });
 	pCollider->SetLayer(CollisionLayer::Player);
 	pCollider->SetCollisionMask(CollisionLayer::World);  // Collide with everything except player
 
@@ -214,10 +218,12 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pTank->AddComponent<ScoreComponent>();
 	pTank->AddComponent<MoveComponent>()->SetSpeed(50.0f);
+	pTank->AddComponent<StateComponent>(new States::RoamingState());
+	pTank->SetTag("EnemyTank");
 
 	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
-	pCollider->SetColliderSize({ 16.0f, 16.0f });
-	pCollider->SetColliderOffset({ 8.0f, 8.0f });
+	pCollider->SetColliderSize({ 24.0f, 24.0f });
+	pCollider->SetColliderOffset({ 4.0f, 4.0f });
 	pCollider->SetLayer(CollisionLayer::Enemy);
 	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Enemy);  // Collide with everything except enemy
 
@@ -262,9 +268,9 @@ void CreateLevel(Engine::Scene* pScene)
 	//Renderer& pRenderer{ Renderer::GetInstance() };
 
 	LevelSettings levelSettings{};
-	levelSettings.FilePath = "Level/Level_0.csv";
-	levelSettings.CellSize = 20;
-	levelSettings.Position = { 100.0f, 0.0f };
+	levelSettings.FilePath = "Level/Level_1.csv";
+	levelSettings.CellSize = 16;
+	levelSettings.Position = { 100.0f, 16.0f };
 	levelSettings.WallTexturePath = "Sprites/Level/CircuitBoard.png";
 
 	NavmeshManager& navMeshManager{ NavmeshManager::GetInstance() };

@@ -1,5 +1,7 @@
 #include "NPCControlComponent.h"
 
+#include "SceneManager.h"
+
 #include "CollisionManager.h"
 #include "CollisionComponent.h"
 
@@ -34,50 +36,9 @@ void NPCControlComponent::Update()
 	using namespace Engine;
 	bool aimTowardsMovement{ true };
 	
-	// Find the target
-	if (!m_pTarget)
-		return;
 
-	// Get the direction to the target
-	const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition()  };
 	const glm::vec2& centerPos{ m_pCollisionComponent->GetColliderCenter() };
-	const glm::vec2 vectorToTarget{targetPos - centerPos};
-	const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
-
-	// Set own position in the navmesh
 	m_pNavmeshComponent->SetPosition(centerPos);
-	
-	// if the target is in range, set the destination to the target
-	if (glm::length2(vectorToTarget) <= (m_DetectionRange * m_DetectionRange))
-	{
-		m_pNavmeshComponent->SetDestination(targetPos);
-	}
-
-	// Check if we have direct line of sight
-	const glm::vec2& center{ m_pCollisionComponent->GetColliderCenter() };
-	uint8_t collisionMask{ std::numeric_limits<uint8_t>::max() };
-	collisionMask &= ~m_pCollisionComponent->GetLayer();  // Dont collide own layer
-
-	Engine::HitInfo hitInfo{};
-	glm::vec2 fixedDirection{ directionToTarget };
-	fixedDirection.x = std::roundf(fixedDirection.x);
-	fixedDirection.y = std::roundf(fixedDirection.y);
-	if (CollisionManager::GetInstance().Raycast(center, fixedDirection, FLT_MAX, hitInfo, collisionMask))
-	{
-		if (hitInfo.pCollider != nullptr)
-		{
-			GameObject* pOther{ hitInfo.pCollider->GetOwner() };
-			if (pOther == m_pTarget)
-			{
-				// Direct line of sight
-				m_pNavmeshComponent->SetDestination(targetPos);
-				m_pTurret->SetTurretDirection(fixedDirection);
-				m_pGun->Shoot();
-				aimTowardsMovement = false;
-			}
-		}
-	}
-
 
 	// Move towards the target using the navmesh
 	const glm::vec2& navmeshPos{ m_pNavmeshComponent->GetNextInPath() };
@@ -92,9 +53,88 @@ void NPCControlComponent::Update()
 		}
 	}
 
+	// Check if we can shoot target if we have one
+	if (m_pTarget)
+	{
+		// Get the direction to the target
+		const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition()  };
+		const glm::vec2 vectorToTarget{targetPos - centerPos};
+		const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
+
+		// Check if we have direct line of sight
+		const glm::vec2& center{ m_pCollisionComponent->GetColliderCenter() };
+		uint8_t collisionMask{ std::numeric_limits<uint8_t>::max() };
+		collisionMask &= ~m_pCollisionComponent->GetLayer();  // Dont collide own layer
+
+		Engine::HitInfo hitInfo{};
+		if (CollisionManager::GetInstance().Raycast(center, directionToTarget, FLT_MAX, hitInfo, collisionMask))
+		{
+			if (hitInfo.pCollider != nullptr)
+			{
+				GameObject* pOther{ hitInfo.pCollider->GetOwner() };
+				if (pOther == m_pTarget)
+				{
+					// Direct line of sight -> Shoot
+					m_pTurret->SetTurretDirection(directionToTarget);
+					m_pGun->Shoot();
+					aimTowardsMovement = false;
+				}
+			}
+		}
+	}
+
+
+
 
 }
 
 void NPCControlComponent::Render() const
 {
+}
+
+Engine::GameObject* NPCControlComponent::LookForTarget() const
+{
+	// Find all objects with player tag
+	Engine::SceneManager& sceneManager{ Engine::SceneManager::GetInstance() };
+	const std::vector<Engine::GameObject*> pPlayers{ sceneManager.GetChildrenWithTag("Player") };
+
+	// Find the closest player
+	Engine::GameObject* pClosestPlayer{ nullptr };
+	float closestDistance{ FLT_MAX };
+	glm::vec2 directionToTarget{ 0.f, 0.f };
+
+	const glm::vec2& ownPos{ GetTransform()->GetPosition()  };
+	for (Engine::GameObject* pPlayer : pPlayers)
+	{
+		const glm::vec2& playerPos{ pPlayer->GetTransform()->GetPosition() };
+		const float distance{ glm::distance(playerPos, ownPos) };
+		if (distance < closestDistance)
+		{
+			pClosestPlayer = pPlayer;
+			closestDistance = distance;
+			directionToTarget = glm::normalize(playerPos - ownPos);
+		}
+	}
+
+	Engine::HitInfo hitInfo{};
+	if (Engine::CollisionManager::GetInstance().Raycast(ownPos, directionToTarget, FLT_MAX, hitInfo, m_pCollisionComponent->GetCollisionMask() | Engine::CollisionLayer::Player | Engine::CollisionLayer::Friendly))
+	{
+		if (hitInfo.pCollider != nullptr)
+		{
+			Engine::GameObject* pOther{ hitInfo.pCollider->GetOwner() };
+			if (pOther == pClosestPlayer)
+			{
+				return pClosestPlayer;
+			}
+		}
+	}
+
+	if (closestDistance <= m_DetectionRange)
+	{
+		return pClosestPlayer;
+	}
+	else
+	{
+		return nullptr;
+	}
 }

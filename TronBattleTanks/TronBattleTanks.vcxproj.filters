@@ -36,6 +36,9 @@
     <Filter Include="Game Files\Level">
       <UniqueIdentifier>{d491e6c7-3320-4816-8333-736afb86b469}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Files\Components\States">
+      <UniqueIdentifier>{b6c93e80-12ad-4c6e-92f9-e774d4597d96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HealthComponent.cpp">
@@ -89,6 +92,12 @@
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Game Files\Level</Filter>
     </ClCompile>
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>Game Files\Components\States</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStates.cpp">
+      <Filter>Game Files\Components\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -141,6 +150,15 @@
     </ClInclude>
     <ClInclude Include="LevelLoader.h">
       <Filter>Game Files\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>Game Files\Components\States</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Game Files\Components\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyStates.h">
+      <Filter>Game Files\Components\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

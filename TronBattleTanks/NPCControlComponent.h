@@ -28,6 +28,8 @@ public:
 	void SetGunComponent(TankGunComponent* pGun) { m_pGun = pGun; }
 	void SetTurretComponent(TankTurretComponent* pTurret) { m_pTurret = pTurret;  }
 
+	Engine::GameObject* LookForTarget() const;
+
 private:
 	Engine::CollisionComponent* m_pCollisionComponent{};
 	MoveComponent* m_pMoveComponent{};
