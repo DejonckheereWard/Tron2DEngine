@@ -25,7 +25,7 @@ private:
 	uint8_t m_BulletCollisionLayer{ 0 };
 	std::shared_ptr<Engine::Texture2D> m_pBulletTexture{};
 
-	float m_CooldownTime{ 0.5f };  // Time before can shoot again
+	float m_CooldownTime{ 0.8f };  // Time before can shoot again
 	float m_CooldownElapsed{ FLT_MAX };  // Time since last shot
 
 
