@@ -150,16 +150,15 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 {
 	using namespace Engine;
 	GameObject* pPlayerTank{ new GameObject() };
-	GameObject* pTankTextureObj{ pPlayerTank->AddChild( new GameObject() ) };
-	pTankTextureObj->GetTransform()->SetLocalPosition(16.0f, 16.0f);
-
-	
 
 	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pPlayerTank->AddComponent<ScoreComponent>();
 	MoveComponent* pMoveComp{ pPlayerTank->AddComponent<MoveComponent>() };
 	pMoveComp->SetSpeed(50.0f);
 
+	// Make texture subobject for easy rotation around the center;
+	GameObject* pTankTextureObj{ pPlayerTank->AddChild(new GameObject()) };
+	pTankTextureObj->GetTransform()->SetLocalPosition(16.0f, 16.0f);
 	RenderComponent* pTankRenderComp{ pTankTextureObj->AddComponent<RenderComponent>() };
 	pTankRenderComp->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/RedTank.png"));
 	pTankRenderComp->SetTextureOffset({ 0.5f, 0.5f });
@@ -229,9 +228,20 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTank.png"));
 	pTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pTank->AddComponent<ScoreComponent>();
-	pTank->AddComponent<MoveComponent>()->SetSpeed(50.0f);
 	pTank->AddComponent<StateComponent>(new States::RoamingState());
 	pTank->SetTag("EnemyTank");
+	
+	MoveComponent* pMoveComp{ pTank->AddComponent<MoveComponent>() };
+	pMoveComp->SetSpeed(50.0f);
+
+	// Make texture subobject for easy rotation around the center;
+	GameObject* pTankTextureObj{ pTank->AddChild(new GameObject()) };
+	pTankTextureObj->GetTransform()->SetLocalPosition(16.0f, 16.0f);
+	RenderComponent* pTankRenderComp{ pTankTextureObj->AddComponent<RenderComponent>() };
+	pTankRenderComp->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTank.png"));
+	pTankRenderComp->SetTextureOffset({ 0.5f, 0.5f });
+	pTankTextureObj->AddComponent< RotateWithMovementComponent>()->SetMovementComponent(pMoveComp);
+
 
 	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
 	pCollider->SetColliderSize({ 24.0f, 24.0f });
@@ -245,7 +255,6 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pScene->AddChild(pTank);
 
 	pTank->AddComponent<NavmeshComponent>();
-
 
 	GameObject* pTankTurret{ new GameObject };
 	{
