@@ -57,7 +57,7 @@ void NPCControlComponent::Update()
 	if (m_pTarget)
 	{
 		// Get the direction to the target
-		const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition()  };
+		const glm::vec2 targetPos{ m_pTarget->GetComponent<CollisionComponent>()->GetColliderCenter() };
 		const glm::vec2 vectorToTarget{targetPos - centerPos};
 		const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
 

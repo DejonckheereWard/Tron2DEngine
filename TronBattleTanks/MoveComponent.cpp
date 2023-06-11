@@ -27,14 +27,14 @@ void MoveComponent::FixedUpdate()
 {
 	const float fixedDeltaTime{ GameTimer::GetInstance().GetFixedDeltaTime() };
 
-	ClampDirectionToAxis(m_MoveDirection);  // Inplace
-	m_PreviousMoveDirection = m_MoveDirection;
-
 	// Also check if the movement is significant enough to move
 	if (glm::length2(m_MoveDirection) <= FLT_EPSILON)
 	{
 		return;
 	}
+
+	ClampDirectionToAxis(m_MoveDirection);  // Inplace
+	m_PreviousMoveDirection = m_MoveDirection;
 
 	// Can we move in the direction we want to move?
 	if (!CanMove(m_MoveDirection))
@@ -150,6 +150,12 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 	}
 
 	hitInfo = Engine::HitInfo{};  // Reset the hit info
+	if (CollisionManager::GetInstance().Raycast(center, direction, distance, hitInfo, collisionLayer))
+	{
+		return false;
+	}
+
+	hitInfo = Engine::HitInfo{};  // Reset the hit info
 	if (CollisionManager::GetInstance().Raycast(center - offset, direction, distance, hitInfo, collisionLayer))
 	{
 		return false;
@@ -160,8 +166,18 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 
 void MoveComponent::ClampDirectionToAxis(glm::vec2& direction)
 {
+
 	// Limit the movement direction to only 4 directions
 	// Fixes the direction so it it only goes along either the x or y axis
-	direction.x = std::round(direction.x);
-	direction.y = std::round(direction.y);
+	if (abs(direction.x) > abs(direction.y))
+	{
+		direction.x = (direction.x > 0) ? 1.0f : -1.0f;
+		direction.y = 0;
+	}
+	else
+	{
+		direction.x = 0;
+		direction.y = (direction.y > 0) ? 1.0f : -1.0f;
+	}
+
 }
