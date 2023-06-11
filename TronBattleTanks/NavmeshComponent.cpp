@@ -75,3 +75,9 @@ void NavmeshComponent::SetDestination(const glm::vec2& destination)
 {
 	m_Destination = destination;
 }
+
+bool NavmeshComponent::IsAtDestination() const
+{
+	const float distanceThreshold{ 16.0f };
+	return glm::distance(m_Position, m_Destination) < distanceThreshold;
+}

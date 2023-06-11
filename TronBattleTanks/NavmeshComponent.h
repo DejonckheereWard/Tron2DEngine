@@ -17,7 +17,11 @@ public:
 	glm::vec2 GetNextInPath();
 
 	void SetDestination(const glm::vec2& destination);
+	const glm::vec2& GetDestination() const { return m_Destination; }
+	bool IsAtDestination() const;
+
 	void SetPosition(const glm::vec2& position) { m_Position = position; }
+
 
 private:
 	class NavmeshManager* m_pNavmeshManager = nullptr;
