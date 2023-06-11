@@ -12,7 +12,7 @@ void BulletComponent::Update()
 {
 	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
 	m_LifeTimer += deltaTime;
-	if(m_LifeTimer >= m_LifeTime)
+	if(m_LifeTimer >= m_LifeTime || m_NrOfBounces == m_MaxBounces)
 	{
 		GetOwner()->MarkForDeletion();
 		return;
@@ -36,6 +36,7 @@ void BulletComponent::FixedUpdate()
 
 		const glm::vec2 reflectedDir{ glm::reflect(m_Direction, hitInfo.normal) };
 		SetDirection(reflectedDir);
+		++m_NrOfBounces;
 	}
 
 	const glm::vec2 newPos{ currentPos + m_Direction * m_Speed * fixedDelta };
