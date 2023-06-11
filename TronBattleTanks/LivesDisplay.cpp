@@ -18,6 +18,6 @@ void LivesDisplay::OnNotify(Engine::GameObject* pGameObject, const std::string& 
 {
 	if(eventName == "PlayerDeath")
 	{
-		m_pTextComponent->SetText(m_Prefix + "Lives: " + std::to_string(pGameObject->GetComponent<HealthComponent>()->GetLives()));
+		m_pTextComponent->SetText(m_Prefix + "Lives: " + std::to_string(pGameObject->GetComponent<HealthComponent>()->GetExtraLives()));
 	}
 }

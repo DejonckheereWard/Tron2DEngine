@@ -50,10 +50,10 @@ void HealthComponent::TakeDamage(int damage)
 	}
 	if(m_Health <= 0)
 	{
-		--m_Lives;
+		--m_ExtraLives;
 		m_Health = 0;
 
-		if(m_Lives > 0)
+		if(m_ExtraLives > 0)
 		{
 			m_Health = m_MaxHealth;
 			m_pSubject->Notify(GetOwner(), "HealthChanged");
@@ -78,7 +78,7 @@ void HealthComponent::Heal(int heal)
 	m_pSubject->Notify(GetOwner(), "HealthChanged");
 }
 
-int HealthComponent::GetLives()
+int HealthComponent::GetExtraLives()
 {
-	return m_Lives;
+	return m_ExtraLives;
 }
