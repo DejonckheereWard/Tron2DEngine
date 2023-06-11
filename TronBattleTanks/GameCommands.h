@@ -1,8 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "ServiceLocator.h"
-#include "TankGunComponent.h"
-#include "TankTurretComponent.h"
+
 
 #pragma warning(push)
 #pragma warning(disable: 4201)
@@ -11,6 +10,9 @@
 
 
 using Engine::Command;
+class MoveComponent;
+class TankTurretComponent;
+class TankGunComponent;
 
 // Game commands
 class MoveCommand final : public Command
@@ -23,16 +25,7 @@ public:
 	{};
 
 	// Inherited via Command
-	virtual void Execute(const glm::vec2& value) override
-	{
-		// Get movement component and move the actor
-		if (!m_pMoveComponent)
-		{
-			m_pMoveComponent = GetOwner()->GetComponent<MoveComponent>();
-		}
-
-		m_pMoveComponent->Move(value);
-	};
+	virtual void Execute(const glm::vec2& value) override;
 
 private:
 	MoveComponent* m_pMoveComponent;
@@ -46,14 +39,7 @@ public:
 	{};
 
 	// Inherited via Command
-	virtual void Execute(const glm::vec2& value) override
-	{
-		constexpr float inputMargin{ 0.2f * 0.2f };
-		if (glm::length2(value) <= inputMargin)
-			return;  // Only significant input wanted (even if outside deadzone)
-		const glm::vec2 normalizedValue{ glm::normalize(value) };
-		GetOwner()->GetComponent<TankTurretComponent>()->SetTurretDirection(normalizedValue);
-	}
+	virtual void Execute(const glm::vec2& value) override;
 };
 
 class ShootCommand final : public Command
@@ -64,10 +50,7 @@ public:
 	{};
 
 	// Inherited via Command
-	virtual void Execute(const glm::vec2& /*value*/) override
-	{
-		GetOwner()->GetComponent<TankGunComponent>()->Shoot();
-	}
+	virtual void Execute(const glm::vec2& value) override;
 };
 
 
@@ -82,13 +65,7 @@ public:
 	{};
 
 	// Inherited via Command
-	virtual void Execute(const glm::vec2& value) override
-	{
-		// Only for debugging, not frame independent, can make any object move this way.
-		glm::vec2 localPos = GetOwner()->GetTransform()->GetLocalPosition();
-		localPos += value;
-		GetOwner()->GetTransform()->SetLocalPosition(localPos);
-	};
+	virtual void Execute(const glm::vec2& value) override;
 
 };
 
@@ -99,13 +76,6 @@ class DebugPrintPositionCommand final : public Command
 	{};
 
 	// Inherited via Command
-	virtual void Execute(const glm::vec2& /*value*/) override
-	{
-		// Only for debugging, not frame independent, can make any object move this way.
-		glm::vec2 localPos = GetOwner()->GetTransform()->GetLocalPosition();
-
-		std::cout << "(" << localPos.x << ", " << localPos.y << ")\n";
-
-	};
+	virtual void Execute(const glm::vec2& value) override;
 
 };
