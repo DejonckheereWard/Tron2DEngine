@@ -32,19 +32,19 @@ void NPCControlComponent::Init()
 void NPCControlComponent::Update()
 {
 	using namespace Engine;
+	bool aimTowardsMovement{ true };
 	
 	// Find the target
 	if (!m_pTarget)
 		return;
 
 	// Get the direction to the target
-	const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition() };
-	const glm::vec2 ownPos{ GetTransform()->GetPosition() };
-	const glm::vec2 vectorToTarget{targetPos - ownPos};
+	const glm::vec2 targetPos{ m_pTarget->GetTransform()->GetPosition()  };
+	const glm::vec2& centerPos{ m_pCollisionComponent->GetColliderCenter() };
+	const glm::vec2 vectorToTarget{targetPos - centerPos};
 	const glm::vec2 directionToTarget{ glm::normalize(vectorToTarget) };
 
 	// Set own position in the navmesh
-	const glm::vec2& centerPos{ m_pCollisionComponent->GetColliderCenter() };
 	m_pNavmeshComponent->SetPosition(centerPos);
 	
 	// if the target is in range, set the destination to the target
@@ -59,7 +59,10 @@ void NPCControlComponent::Update()
 	collisionMask &= ~m_pCollisionComponent->GetLayer();  // Dont collide own layer
 
 	Engine::HitInfo hitInfo{};
-	if (CollisionManager::GetInstance().Raycast(center, directionToTarget, FLT_MAX, hitInfo, collisionMask))
+	glm::vec2 fixedDirection{ directionToTarget };
+	fixedDirection.x = std::roundf(fixedDirection.x);
+	fixedDirection.y = std::roundf(fixedDirection.y);
+	if (CollisionManager::GetInstance().Raycast(center, fixedDirection, FLT_MAX, hitInfo, collisionMask))
 	{
 		if (hitInfo.pCollider != nullptr)
 		{
@@ -68,8 +71,9 @@ void NPCControlComponent::Update()
 			{
 				// Direct line of sight
 				m_pNavmeshComponent->SetDestination(targetPos);
-				m_pTurret->SetTurretDirection(directionToTarget);
+				m_pTurret->SetTurretDirection(fixedDirection);
 				m_pGun->Shoot();
+				aimTowardsMovement = false;
 			}
 		}
 	}
@@ -77,10 +81,15 @@ void NPCControlComponent::Update()
 
 	// Move towards the target using the navmesh
 	const glm::vec2& navmeshPos{ m_pNavmeshComponent->GetNextInPath() };
-	if (glm::length2(navmeshPos - ownPos) >= FLT_EPSILON)
+	if (glm::length2(navmeshPos - centerPos) >= FLT_EPSILON)
 	{
 		const glm::vec2 navmeshDirection{ glm::normalize(navmeshPos - centerPos) };
 		m_pMoveComponent->Move(navmeshDirection);
+
+		if (aimTowardsMovement)
+		{
+			m_pTurret->SetTurretDirection(navmeshDirection);
+		}
 	}
 
 

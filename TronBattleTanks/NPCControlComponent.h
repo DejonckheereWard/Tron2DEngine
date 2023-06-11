@@ -35,6 +35,6 @@ private:
 	TankTurretComponent* m_pTurret{};
 	TankGunComponent* m_pGun{};
 	Engine::GameObject* m_pTarget{};
-	const float m_DetectionRange{ 500.0f };
+	const float m_DetectionRange{ 150.0f };
 };
 

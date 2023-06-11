@@ -48,16 +48,24 @@ void NavmeshComponent::RenderDebug() const
 
 glm::vec2 NavmeshComponent::GetNextInPath()
 {
-	const float distanceThreshold{ 10.0f };
+	const float distanceThreshold{ 8.0f };
 	if (not m_Path.empty())
 	{
-		if(glm::distance(GetTransform()->GetPosition(), m_Path.back()) < distanceThreshold)
+		if(glm::distance(m_Position, m_Path.back()) < distanceThreshold)
 		{
 			m_Path.pop_back();
 		}
 
 
-		return m_Path.back();
+		if (not m_Path.empty())
+		{
+			return m_Path.back();
+		}
+		else
+		{
+			return m_Destination;
+		}
+
 	}
 	return GetTransform()->GetPosition();
 

@@ -15,6 +15,7 @@ public:
 
 	virtual void Init() override;
 	virtual void Update() override;
+	virtual void FixedUpdate() override;
 	virtual void Render() const override;
 	virtual void RenderDebug() const override;
 
@@ -24,6 +25,9 @@ public:
 
 	void SetSpeed(float speed) { m_Speed = speed; }
 
+	const glm::vec2& GetPreviousMoveDirection() { return m_PreviousMoveDirection; }
+
+	static void ClampDirectionToAxis(glm::vec2& direction);  // Not private since it can be useful while working with movements
 
 private:
 	Engine::CollisionComponent* m_pCollisionComponent{};
@@ -33,7 +37,6 @@ private:
 	glm::vec2 m_MoveDirection{};
 	float m_Speed{ 100.f };
 	
-	static void ClampDirectionToAxis(glm::vec2& direction);
 
 	// Debug rendering
 	glm::vec2 m_PreviousMoveDirection{};  // Used for debug rendering

@@ -21,7 +21,7 @@ private:
 	Engine::TransformComponent* m_pTransform{ nullptr };
 	uint8_t m_CollisionLayer{ 0 };
 
-	const float m_Speed{ 200.0f };
+	const float m_Speed{ 100.0f };
 	glm::vec2 m_Direction{};
 
 	const float m_LifeTime{ 10.0f };

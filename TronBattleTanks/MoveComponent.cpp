@@ -20,7 +20,12 @@ void MoveComponent::Init()
 
 void MoveComponent::Update()
 {
-	const float deltaTime{ GameTimer::GetInstance().GetDeltaTime() };
+	
+}
+
+void MoveComponent::FixedUpdate()
+{
+	const float fixedDeltaTime{ GameTimer::GetInstance().GetFixedDeltaTime() };
 
 	ClampDirectionToAxis(m_MoveDirection);  // Inplace
 	m_PreviousMoveDirection = m_MoveDirection;
@@ -65,7 +70,7 @@ void MoveComponent::Update()
 
 	// Move the owner
 	glm::vec2 localPos = GetOwner()->GetTransform()->GetLocalPosition();
-	localPos += m_MoveDirection * m_Speed * deltaTime;  // Frame independent movement
+	localPos += m_MoveDirection * m_Speed * fixedDeltaTime;  // Frame independent movement
 	GetOwner()->GetTransform()->SetLocalPosition(localPos);
 
 	// Get dominant axis, save that axis's direction as prefered direction for future movement
