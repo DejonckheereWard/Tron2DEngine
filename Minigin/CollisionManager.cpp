@@ -70,7 +70,7 @@ bool Engine::CollisionManager::Raycast(const glm::vec2& origin, const glm::vec2&
 	// Check for collisions on every collider
 	for (CollisionComponent* pCollider : m_Colliders)
 	{
-		RaycastSingle(origin, direction, maxDistance, pCollider, outHit, collisionMask);
+		RaycastSingle(origin, direction, outHit.distance, pCollider, outHit, collisionMask);
 	}
 	return outHit.isHit;
 }

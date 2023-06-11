@@ -99,11 +99,11 @@ void MoveComponent::RenderDebug() const
 	if (GetOwner()->HasComponent<CollisionComponent>())
 	{
 		CollisionComponent* pCollision{ GetOwner()->GetComponent<CollisionComponent>() };
-		center += pCollision->GetColliderSize() / 2.0f;
+		center = pCollision->GetColliderCenter();
 	}
 
 	// Draw the movement direction
-	Renderer::GetInstance().RenderLine(center, center + m_PreviousMoveDirection * 10.0f);
+	Renderer::GetInstance().RenderLine(center, center + m_PreviousMoveDirection * 20.0f);
 }
 
 bool MoveComponent::CanMove(const glm::vec2& direction) const

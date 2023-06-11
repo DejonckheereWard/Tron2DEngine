@@ -27,7 +27,8 @@ class NavmeshManager final : public Engine::Singleton<NavmeshManager>
 public:
 	~NavmeshManager();
 
-	NavmeshNode* GetNodeAtPosition(const glm::vec2& position) const;
+	NavmeshNode* GetClosestNode(const glm::vec2& position) const;
+	NavmeshNode* GetRandomNode() const;
 
 	void GenerateNavMesh(const NavmeshSettings& navmeshSettings);
 
@@ -43,6 +44,9 @@ private:
 
 	std::vector<NavmeshNode*> m_pNavMeshNodes;
 	NavmeshSettings m_NavmeshSettings;
+
+
+	NavmeshNode* GetNodeAtPosition(const glm::vec2& position) const;
 
 };
 

@@ -5,6 +5,12 @@
 #include <queue>
 #include <vector>
 #include <unordered_map>
+#include <glm/vec2.hpp>
+
+#pragma warning(push)
+#pragma warning(disable: 4201)
+#include <glm/gtx/norm.hpp>
+# pragma warning(pop)
 
 
 NavmeshManager::~NavmeshManager()
@@ -24,9 +30,9 @@ NavmeshNode* NavmeshManager::GetNodeAtPosition(const glm::vec2& position) const
 	for (NavmeshNode* pNode : m_pNavMeshNodes)
 	{
 		// Positions are central
-		if (position.x >= pNode->Position.x - cellSize.x / 2.0f && 
+		if (position.x >= pNode->Position.x - cellSize.x / 2.0f &&
 			position.x <= pNode->Position.x + cellSize.x / 2.0f &&
-			position.y >= pNode->Position.y - cellSize.y / 2.0f && 
+			position.y >= pNode->Position.y - cellSize.y / 2.0f &&
 			position.y <= pNode->Position.y + cellSize.y / 2.0f)
 		{
 			return pNode;
@@ -34,6 +40,34 @@ NavmeshNode* NavmeshManager::GetNodeAtPosition(const glm::vec2& position) const
 	}
 	return nullptr;
 
+}
+
+NavmeshNode* NavmeshManager::GetClosestNode(const glm::vec2& position) const
+{
+	// Gets the closest node to the given position
+	assert(m_IsInitialized && "NavmeshManager::GetPath >> NavmeshManager is not initialized");
+
+	NavmeshNode* pClosestNode{ nullptr };
+	float closestDistance{ FLT_MAX };
+
+	for (NavmeshNode* pNode : m_pNavMeshNodes)
+	{
+		float distance{ glm::distance2(position, pNode->Position) };
+		if (distance < closestDistance)
+		{
+			pClosestNode = pNode;
+			closestDistance = distance;
+		}
+	}
+	return pClosestNode;
+
+
+}
+
+NavmeshNode* NavmeshManager::GetRandomNode() const
+{
+	assert(m_IsInitialized && "NavmeshManager::GetPath >> NavmeshManager is not initialized");
+	return m_pNavMeshNodes[rand() % m_pNavMeshNodes.size()];
 }
 
 void NavmeshManager::GenerateNavMesh(const NavmeshSettings& navmeshSettings)
@@ -90,8 +124,8 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 	// Breadth-first search to find A path
 	assert(m_IsInitialized && "NavmeshManager::GetPath >> NavmeshManager is not initialized");
 
-	NavmeshNode* pStartNode{ GetNodeAtPosition(startPos) };
-	NavmeshNode* pEndNode{ GetNodeAtPosition(endPos) };
+	NavmeshNode* pStartNode{ GetClosestNode(startPos) };
+	NavmeshNode* pEndNode{ GetClosestNode(endPos) };
 	std::vector<glm::vec2> path{};
 
 	if (!pStartNode || !pEndNode)
@@ -107,13 +141,14 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 
 	// Find path from start to end
 	std::queue<NavmeshNode*> openList{};
-	std::unordered_map<NavmeshNode* , NavmeshNode*> closedList{};  // Key = current node, Value = previous node
-	
+	std::unordered_map<NavmeshNode*, NavmeshNode*> closedList{};  // Key = current node, Value = previous node
+
 	openList.push(pStartNode);  // Start with start node (duh)
 
 	while (not openList.empty())
 	{
 		NavmeshNode* pCurrentNode{ openList.front() };
+		assert(pCurrentNode != nullptr && "NavmeshManager::GetPath >> pCurrentNode is nullptr");
 		openList.pop();
 
 		// Check if we found the correct destination, stop the loop if we did
@@ -125,13 +160,16 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 		// Fill all the neighbours to the openList
 		std::vector<NavmeshNode*> neighbors{
 			pCurrentNode->pRight,
-			pCurrentNode->pLeft,
-			pCurrentNode->pUp,
-			pCurrentNode->pDown
+				pCurrentNode->pLeft,
+				pCurrentNode->pUp,
+				pCurrentNode->pDown
 		};
 
 		for (NavmeshNode* pNeighbor : neighbors)
 		{
+			if (pNeighbor == nullptr)
+				continue;
+
 			if (closedList.find(pNeighbor) == closedList.end())
 			{
 				openList.push(pNeighbor);
@@ -140,7 +178,7 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 		}
 	}
 
-	if(closedList.find(pEndNode) == closedList.end())
+	if (closedList.find(pEndNode) == closedList.end())
 	{
 		path.emplace_back(pEndNode->Position);
 		return path;
@@ -155,7 +193,7 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 	}
 
 	// Add start position
-	path.emplace_back(pStartNode->Position);
+	//path.emplace_back(pStartNode->Position);
 
 	// Reverse the path
 	std::reverse(path.begin(), path.end());
@@ -166,29 +204,30 @@ std::vector<glm::vec2> NavmeshManager::GetPath(const glm::vec2& startPos, const 
 
 void NavmeshManager::RenderMesh() const
 {
+
 	const SDL_Color& color{ SDL_Color{ 255, 0, 0, 255} };
 	for (NavmeshNode* pNode : m_pNavMeshNodes)
+	{
+		// Draw connections
+		if (pNode->pRight)
 		{
-			// Draw connections
-			if (pNode->pRight)
-			{
-				Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pRight->Position, color);
-			}
-			if (pNode->pLeft)
-			{
-				Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pLeft->Position, color);
-			}
-			if (pNode->pUp)
-			{
-				Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pUp->Position, color);
-			}
-			if (pNode->pDown)
-			{
-				Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pDown->Position, color);
-			}
+			Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pRight->Position, color);
+		}
+		if (pNode->pLeft)
+		{
+			Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pLeft->Position, color);
+		}
+		if (pNode->pUp)
+		{
+			Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pUp->Position, color);
+		}
+		if (pNode->pDown)
+		{
+			Engine::Renderer::GetInstance().RenderLine(pNode->Position, pNode->pDown->Position, color);
+		}
 
-			// Draw node
-			Engine::Renderer::GetInstance().RenderPoint(pNode->Position, 2.0f);
+		// Draw node
+		Engine::Renderer::GetInstance().RenderPoint(pNode->Position, 2.0f);
 	}
 
 

@@ -150,12 +150,12 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pPlayerTank->AddComponent<ScoreComponent>();
 	pPlayerTank->AddComponent<MoveComponent>();
-	pPlayerTank->GetTransform()->SetLocalPosition(0, 0);
+	pPlayerTank->GetTransform()->SetLocalPosition(110, 100);
 	CollisionComponent* pCollider{ pPlayerTank->AddComponent<CollisionComponent>() };
 	pCollider->SetColliderSize({ 16.0f, 16.0f });
 	pCollider->SetColliderOffset({ 8.0f, 8.0f });
 	pCollider->SetLayer(CollisionLayer::Player);
-	pCollider->SetCollisionMask(std::numeric_limits<uint8_t>::max() & ~CollisionLayer::Player);  // Collide with everything except player
+	pCollider->SetCollisionMask(CollisionLayer::World);  // Collide with everything except player
 
 	
 	pScene->AddChild(pPlayerTank);
@@ -214,7 +214,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	pTank->AddComponent<RenderComponent>()->SetTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BlueTank.png"));
 	pTank->AddComponent<HealthComponent>()->SetHealth(1);
 	pTank->AddComponent<ScoreComponent>();
-	pTank->AddComponent<MoveComponent>();
+	pTank->AddComponent<MoveComponent>()->SetSpeed(50.0f);
 
 	CollisionComponent* pCollider{ pTank->AddComponent<CollisionComponent>() };
 	pCollider->SetColliderSize({ 16.0f, 16.0f });
@@ -224,7 +224,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 
 	NPCControlComponent* pNPC{ pTank->AddComponent<NPCControlComponent>() };
 	pNPC->SetTarget(pTarget);
-	pTank->GetTransform()->SetLocalPosition(200.0f, 200.0f);
+	pTank->GetTransform()->SetLocalPosition(200.0f, 195.0f);
 	pScene->AddChild(pTank);
 
 	pTank->AddComponent<NavmeshComponent>();

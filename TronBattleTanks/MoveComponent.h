@@ -22,6 +22,9 @@ public:
 	void Move(const glm::vec2& direction) { m_MoveDirection = direction; }
 	bool CanMove(const glm::vec2& direction) const;
 
+	void SetSpeed(float speed) { m_Speed = speed; }
+
+
 private:
 	Engine::CollisionComponent* m_pCollisionComponent{};
 
@@ -34,7 +37,7 @@ private:
 
 	// Debug rendering
 	glm::vec2 m_PreviousMoveDirection{};  // Used for debug rendering
-	bool m_RenderDebug{ false };
+	bool m_RenderDebug{ true };
 
 
 };

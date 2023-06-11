@@ -10,6 +10,7 @@ namespace Engine
 class TankTurretComponent;
 class TankGunComponent;
 class MoveComponent;
+class NavmeshComponent;
 
 
 class NPCControlComponent final: public Engine::BaseComponent
@@ -26,12 +27,14 @@ public:
 	void SetTarget(Engine::GameObject* pTarget) { m_pTarget = pTarget; }
 	void SetGunComponent(TankGunComponent* pGun) { m_pGun = pGun; }
 	void SetTurretComponent(TankTurretComponent* pTurret) { m_pTurret = pTurret;  }
+
 private:
 	Engine::CollisionComponent* m_pCollisionComponent{};
 	MoveComponent* m_pMoveComponent{};
+	NavmeshComponent* m_pNavmeshComponent{};
 	TankTurretComponent* m_pTurret{};
 	TankGunComponent* m_pGun{};
 	Engine::GameObject* m_pTarget{};
-	const float m_DetectionRange{ 200.0f };
+	const float m_DetectionRange{ 500.0f };
 };
 
