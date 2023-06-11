@@ -49,6 +49,7 @@
 // Other
 #include "GameCommands.h"
 #include "LevelLoader.h"
+#include "GameMode.h"
 #include "NavmeshManager.h"	
 
 
@@ -61,6 +62,7 @@ void PrintManual()
 	std::cout << "SPACE - Shoot" << std::endl;
 	std::cout << "ARROWS - Aiming" << std::endl;
 }
+
 
 // Tron main scene
 void MainScene()
@@ -109,6 +111,16 @@ void MainScene()
 
 	// Create main scene
 	Scene* pScene = Engine::SceneManager::GetInstance().CreateMainScene();
+	Scene* pPermanentScene = Engine::SceneManager::GetInstance().CreateScene("PermanentScene");
+
+	// Create the gamemode
+	GameObject* pGameObject{ pPermanentScene->AddChild(new GameObject()) };
+	pGameObject->SetTag("GameMode");
+	GameMode* pGameMode{ pGameObject->AddComponent<GameMode>() };
+
+
+
+
 
 	// Set up services
 	//ServiceLocator::RegisterAudioService(std::make_unique<AudioServiceLogger>(std::make_unique<MainAudioService>()));
@@ -125,7 +137,7 @@ void MainScene()
 	//pScene->AddChild(backGround);
 
 	// Create the level
-	CreateLevel(pScene);
+	CreateLevel(pScene, pGameMode);
 
 	// Add FPS counter
 	{
@@ -139,8 +151,8 @@ void MainScene()
 	}
 
 	// Spawn in player
-	GameObject* pPlayer{ SpawnPlayer(pScene) };
-	SpawnEnemy(pScene, pPlayer);
+	GameObject* pPlayer{ SpawnPlayer(pScene, pGameMode) };
+	SpawnEnemy(pScene, pPlayer, pGameMode);
 	{
 		//std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
 		//GameObject* pWall{ new GameObject() };
@@ -157,7 +169,7 @@ void MainScene()
 
 }
 
-Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
+Engine::GameObject* SpawnPlayer(Engine::Scene* pScene, GameMode* pGameMode)
 {
 	using namespace Engine;
 
@@ -191,10 +203,12 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	GameObject* pPlayerTank{ new GameObject() };
 
 	HealthComponent* pHealthComponent{ pPlayerTank->AddComponent<HealthComponent>() };
+
 	pHealthComponent->SetHealth(1);
 	pHealthComponent->SetMaxHealth(1);
 	pHealthComponent->SetExtraLives(3);
 	pHealthComponent->GetSubject()->AddObserver(pLivesDisplay); // Add the Display as an observer to the health component
+	pHealthComponent->GetSubject()->AddObserver(pGameMode);
 
 	ScoreComponent* pScoreComponent{ pPlayerTank->AddComponent<ScoreComponent>() };
 	pScoreComponent->SetScore(0);
@@ -275,7 +289,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 	return pPlayerTank;
 }
 
-Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarget)
+Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarget, GameMode* pGameMode)
 {
 	using namespace Engine;
 	GameObject* pTank{ new GameObject() };
@@ -283,6 +297,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	HealthComponent* pHealthComp{ pTank->AddComponent<HealthComponent>() };
 	pHealthComp->SetHealth(1);
 	pHealthComp->SetExtraLives(0);
+	pHealthComp->GetSubject()->AddObserver(pGameMode);
 	pTank->AddComponent<ScoreComponent>();
 	pTank->AddComponent<StateComponent>(new States::RoamingState());
 	pTank->SetTag("EnemyTank");
@@ -346,7 +361,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 	return pTank;
 }
 
-void CreateLevel(Engine::Scene* pScene)
+void CreateLevel(Engine::Scene* pScene, GameMode* /*pGameMode*/)
 {
 	using namespace Engine;
 	//Renderer& pRenderer{ Renderer::GetInstance() };
@@ -368,16 +383,6 @@ void CreateLevel(Engine::Scene* pScene)
 	navMeshSettings.GridSize = outGridSize;
 
 	navMeshManager.GenerateNavMesh(navMeshSettings);
-
-	//std::shared_ptr<Texture2D> circuitBoardTexture{ ResourceManager::GetInstance().LoadTexture("Sprites/Level/CircuitBoard.png") };
-	//Engine::GameObject* pLevel{ pScene->AddChild(new Engine::GameObject()) };
-	//pLevel->AddComponent<WallRenderer>()->SetTexture(circuitBoardTexture);
-	//LevelComponent* pLevelComp{ pLevel->AddComponent<LevelComponent>(levelSize) };
-	//pLevelComp->SetLevelFile("Level/Level_0.csv");
-
-	// Center level
-	//const glm::vec2 windowSize{ pRenderer.GetWindowSize() };
-	//pLevel->GetTransform()->SetLocalPosition((windowSize.x - levelSize) / 2.0f, (windowSize.y - levelSize) / 2.0f);
 }
 
 

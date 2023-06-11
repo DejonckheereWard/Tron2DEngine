@@ -168,6 +168,7 @@
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="EnemyStates.cpp" />
     <ClCompile Include="GameCommands.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="EnemyStates.h" />
     <ClInclude Include="GameCommands.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
     <ClInclude Include="LevelLoader.h" />
