@@ -42,9 +42,20 @@ void Engine::TextComponent::SetFont(std::shared_ptr<Font> font)
 	m_TextIsDirty = true;
 }
 
+void Engine::TextComponent::SetColor(const glm::vec3& color)
+{
+	assert(m_Color.r <= 1.f && m_Color.g <= 1.f && m_Color.b <= 1.f && "Color values should be between 0 and 1");
+	assert(m_Color.r >= 0.f && m_Color.g <= 0.f && m_Color.b <= 0.f && "Color values should be between 0 and 1");
+	m_Color = color;
+	m_TextIsDirty = true;
+}
+
 void Engine::TextComponent::UpdateTexture()
 {
-	const SDL_Color color = { 255,255,255 }; // only white text is supported now
+	SDL_Color sdlColor{};
+	sdlColor.r = static_cast<Uint8>(m_Color.r * 255);
+	sdlColor.g = static_cast<Uint8>(m_Color.g * 255);
+	sdlColor.b = static_cast<Uint8>(m_Color.b * 255);
 
 	if(m_Text == "")
 	{
@@ -53,7 +64,7 @@ void Engine::TextComponent::UpdateTexture()
 		return;
 	}
 
-	const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
+	const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), sdlColor);
 	if(surf == nullptr)
 	{
 		throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());

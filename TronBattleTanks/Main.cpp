@@ -127,6 +127,17 @@ void MainScene()
 	// Create the level
 	CreateLevel(pScene);
 
+	// Add FPS counter
+	{
+		// Add fps counter
+		auto fpsFont = Engine::ResourceManager::GetInstance().LoadFont("Lingua.otf", 12);
+		GameObject* pFpsCounter{ pScene->AddChild(new GameObject()) };
+		pFpsCounter->AddComponent<Engine::FPSComponent>();
+		pFpsCounter->AddComponent<Engine::RenderComponent>();
+		pFpsCounter->AddComponent<Engine::TextComponent>()->SetFont(fpsFont);
+		pFpsCounter->GetTransform()->SetLocalPosition(10.0f, 10.0f);
+	}
+
 	// Spawn in player
 	GameObject* pPlayer{ SpawnPlayer(pScene) };
 	SpawnEnemy(pScene, pPlayer);
@@ -149,10 +160,47 @@ void MainScene()
 Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 {
 	using namespace Engine;
+
+	const glm::vec2& windowSize{ Renderer::GetInstance().GetWindowSize() };
+	std::shared_ptr<Font> defaultFont{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 18) };
+
+	// Create HUD for the player
+	GameObject* pHUD{ pScene->AddChild(new GameObject()) };
+	pHUD->GetTransform()->SetLocalPosition(0, 0);
+
+	GameObject* pPlayerTextObj{ pHUD->AddChild(new GameObject()) };
+	pPlayerTextObj->GetTransform()->SetLocalPosition(10.0f, windowSize.y - 25.0f);
+	pPlayerTextObj->AddComponent<RenderComponent>();
+	pPlayerTextObj->AddComponent<TextComponent>()->SetFont(defaultFont);
+	pPlayerTextObj->GetComponent<TextComponent>()->SetText("PLAYER 1");
+
+	GameObject* pLivesDisplayObj{ pHUD->AddChild(new GameObject()) };
+	LivesDisplay* pLivesDisplay{ pLivesDisplayObj->AddComponent<LivesDisplay>() };
+	pLivesDisplay->SetPrefix("LIVES: ");
+	pLivesDisplayObj->AddComponent<RenderComponent>();
+	pLivesDisplayObj->AddComponent<TextComponent>()->SetFont(defaultFont);
+	pLivesDisplayObj->GetTransform()->SetLocalPosition(10.0f, windowSize.y - 50.0f);
+
+	GameObject* pScoreDisplayObj{ pHUD->AddChild(new GameObject()) };
+	ScoreDisplay* pScoreDisplay{ pScoreDisplayObj->AddComponent<ScoreDisplay>() };
+	pScoreDisplay->SetPrefix("SCORE: ");
+	pScoreDisplayObj->AddComponent<RenderComponent>();
+	pScoreDisplayObj->AddComponent<TextComponent>()->SetFont(defaultFont);
+	pScoreDisplayObj->GetTransform()->SetLocalPosition(10.0f, windowSize.y - 75.0f);
+
 	GameObject* pPlayerTank{ new GameObject() };
 
-	pPlayerTank->AddComponent<HealthComponent>()->SetHealth(1);
-	pPlayerTank->AddComponent<ScoreComponent>();
+	HealthComponent* pHealthComponent{ pPlayerTank->AddComponent<HealthComponent>() };
+	pHealthComponent->SetHealth(1);
+	pHealthComponent->SetMaxHealth(1);
+	pHealthComponent->SetExtraLives(3);
+	pHealthComponent->GetSubject()->AddObserver(pLivesDisplay); // Add the Display as an observer to the health component
+
+	ScoreComponent* pScoreComponent{ pPlayerTank->AddComponent<ScoreComponent>() };
+	pScoreComponent->SetScore(0);
+	pScoreComponent->GetSubject()->AddObserver(pScoreDisplay);
+
+
 	MoveComponent* pMoveComp{ pPlayerTank->AddComponent<MoveComponent>() };
 	pMoveComp->SetSpeed(50.0f);
 
@@ -199,6 +247,7 @@ Engine::GameObject* SpawnPlayer(Engine::Scene* pScene)
 		pTankGunComp->SetBulletCollisionLayer(CollisionLayer::Player);
 		pTankGunComp->SetBulletTexture(ResourceManager::GetInstance().LoadTexture("Sprites/BulletPlayer.png"));
 	}
+
 
 
 	// Create controller

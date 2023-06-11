@@ -44,9 +44,6 @@
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="HealthDisplay.cpp">
-      <Filter>Game Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
@@ -101,12 +98,12 @@
     <ClCompile Include="RotateWithMovementComponent.cpp">
       <Filter>Game Files\Components\Tank</Filter>
     </ClCompile>
+    <ClCompile Include="HealthDisplay.cpp">
+      <Filter>Game Files\Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
-      <Filter>Game Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthDisplay.h">
       <Filter>Game Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
@@ -165,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="RotateWithMovementComponent.h">
       <Filter>Game Files\Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthDisplay.h">
+      <Filter>Game Files\Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

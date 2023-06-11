@@ -16,7 +16,7 @@ void HealthDisplay::OnNotify(Engine::GameObject* pGameObject, const std::string&
 {
 	if(eventName == "HealthChanged")
 	{
-		m_pTextComponent->SetText(m_Prefix + "Health: " + std::to_string(pGameObject->GetComponent<HealthComponent>()->GetHealth()));
+		m_pTextComponent->SetText(m_Prefix + std::to_string(pGameObject->GetComponent<HealthComponent>()->GetHealth()));
 	}
 
 }

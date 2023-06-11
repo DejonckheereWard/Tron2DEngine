@@ -18,7 +18,7 @@ void ScoreDisplay::OnNotify(Engine::GameObject* pGameObject, const std::string& 
 {
 	if(eventName == "ScoreChanged")
 	{
-		m_pTextComponent->SetText(m_Prefix + "Score: " + std::to_string(pGameObject->GetComponent<ScoreComponent>()->GetScore()));
+		m_pTextComponent->SetText(m_Prefix + std::to_string(pGameObject->GetComponent<ScoreComponent>()->GetScore()));
 	}
 
 }
