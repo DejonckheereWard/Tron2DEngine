@@ -7,6 +7,7 @@
 
 namespace Engine
 {
+	class GameObject;
 	class Scene;
 	class SceneManager final : public Singleton<SceneManager>
 	{
@@ -25,6 +26,8 @@ namespace Engine
 		void OnImGui();
 
 		void CleanUp();
+
+		std::vector<GameObject*> GetChildrenWithTag(const std::string& tag) const;
 
 	private:
 		friend class Singleton<SceneManager>;

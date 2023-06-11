@@ -28,6 +28,8 @@ namespace Engine
 
 		const std::vector<GameObject*>& GetChildren() { return m_Children; };
 
+		std::vector<GameObject*> GetChildrenWithTag(const std::string& tag) const;
+
 		const std::string& GetName() { return m_SceneName; };
 
 	private:		

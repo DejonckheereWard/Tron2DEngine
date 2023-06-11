@@ -116,3 +116,21 @@ void Engine::Scene::RemoveChildIndex(size_t index)
 	assert(index >= 0 && index < m_Children.size() && "Index out of bounds");
 	m_Children.erase(m_Children.begin() + index);
 }
+
+std::vector<Engine::GameObject*> Engine::Scene::GetChildrenWithTag(const std::string& tag) const
+{
+	std::vector<Engine::GameObject*> children{};
+	for (auto& child : m_Children)
+	{
+		if (child->GetTag() == tag)
+		{
+			children.emplace_back(child);
+		}
+
+		// Recursively check children
+		const std::vector<Engine::GameObject*>& subChildren{ child->GetChildrenWithTag(tag)};
+		children.insert(children.end(), subChildren.begin(), subChildren.end());
+
+	}
+	return children;
+}

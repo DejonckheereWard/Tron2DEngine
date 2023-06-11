@@ -80,6 +80,22 @@ void Engine::GameObject::RemoveChild(GameObject* child)
 	delete child;  // Will call its destructor, deleting subchildren too
 }
 
+std::vector<Engine::GameObject*> Engine::GameObject::GetChildrenWithTag(const std::string& tag) const
+{
+	std::vector<GameObject*> children{};
+	for (GameObject* child : m_Children)
+	{
+		if (child->GetTag() == tag)
+		{
+			children.emplace_back(child);
+		}
+		const std::vector<GameObject*>& subChildren = child->GetChildrenWithTag(tag);
+		children.insert(children.end(), subChildren.begin(), subChildren.end());
+
+	}
+	return children;
+}
+
 void Engine::GameObject::AddToChildCollection(GameObject* child)
 {
 	m_Children.emplace_back(child);

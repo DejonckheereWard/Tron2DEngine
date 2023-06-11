@@ -73,6 +73,23 @@ void Engine::SceneManager::CleanUp()
 	}
 }
 
+std::vector<Engine::GameObject*> Engine::SceneManager::GetChildrenWithTag(const std::string& tag) const
+{
+	std::vector<GameObject*> children{};
+	if (m_MainScene)
+	{
+		const std::vector<GameObject*>& mainChildren = m_MainScene->GetChildrenWithTag(tag);
+		children.insert(children.end(), mainChildren.begin(), mainChildren.end());
+	}
+	for (auto& scene : m_Scenes)
+	{
+		const std::vector<GameObject*>& sceneChildren = scene->GetChildrenWithTag(tag);
+		children.insert(children.end(), sceneChildren.begin(), sceneChildren.end());
+	}
+	return children;
+
+}
+
 Engine::SceneManager::~SceneManager()
 {
 	
