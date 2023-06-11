@@ -16,9 +16,6 @@
     <Filter Include="Engine Files\Services\Audio">
       <UniqueIdentifier>{b4fe4772-0640-4d45-a18c-47f27d6e7de3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine Files\ObjectTree">
-      <UniqueIdentifier>{820a4868-22af-4d85-903f-ac485c33193d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine Files\SubjectObserver">
       <UniqueIdentifier>{165fe83a-8917-4637-8710-fe7217ef5a46}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="Engine Files\ResourceHandlers">
       <UniqueIdentifier>{1c08345c-510a-4a1d-beba-7a41acc04dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Files\SceneGraph">
+      <UniqueIdentifier>{820a4868-22af-4d85-903f-ac485c33193d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,10 +70,10 @@
       <Filter>Engine Files\Services\Audio</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Engine Files\SubjectObserver</Filter>
@@ -97,7 +97,7 @@
       <Filter>Engine Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Engine Files\ResourceHandlers</Filter>
@@ -174,10 +174,10 @@
       <Filter>Engine Files\Services\Audio</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="Observer.cpp">
       <Filter>Engine Files\SubjectObserver</Filter>
@@ -198,7 +198,7 @@
       <Filter>Engine Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Engine Files\ObjectTree</Filter>
+      <Filter>Engine Files\SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Engine Files\ResourceHandlers</Filter>
