@@ -240,7 +240,7 @@ Engine::GameObject* SpawnEnemy(Engine::Scene* pScene, Engine::GameObject* pTarge
 		pTank->AddChild(pTankTurret);
 		TankTurretComponent* pTurretComp{ pTankTurret->AddComponent<TankTurretComponent>() };
 		pTankTurret->GetTransform()->SetLocalPosition(16.0f, 16.0f); // Set to center of tank
-
+		pTurretComp->SetRotationSpeed(1024.0f);  // Increased speed for faster aiming (since enemy is not human controlled)
 		pNPC->SetTurretComponent(pTurretComp);
 
 	}

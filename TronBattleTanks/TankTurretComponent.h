@@ -16,10 +16,12 @@ public:
 
 	void SetTurretDirection(glm::vec2 dir);
 
+	void SetRotationSpeed(float speed) { m_RotationSpeed = speed; }
+
 private:
 	Engine::TransformComponent* m_pTransform{ nullptr };
 
-	const float m_RotationSpeed{ 720.0f };   // Can be quite high but dont want instant snapping
+	float m_RotationSpeed{ 540.0f };   // Can be quite high but dont want instant snapping, but rather a quick rotation
 	glm::vec2 m_DesiredDirection{ 0.0f };
 };
 
