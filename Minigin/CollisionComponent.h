@@ -57,7 +57,7 @@ namespace Engine
 
 
 	private:
-		bool m_DrawDebug{ true };
+		bool m_DrawDebug{ false };
 
 		CollisionLayer m_Layer{ CollisionLayer::World }; // Layer of the collider
 		uint8_t m_CollisionMask{ std::numeric_limits<uint8_t>::max() }; // Mask of the collider, default to collide with everything
