@@ -21,6 +21,8 @@ namespace Engine
 		void RenderDebug() const;
 		void OnImGui();
 
+		void Cleanup();
+
 		// Scenegraph
 		GameObject* AddChild(GameObject* child);  // Adds the child to the scene
 		void RemoveChild(GameObject* child);  // Should delete

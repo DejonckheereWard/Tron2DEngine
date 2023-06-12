@@ -10,6 +10,11 @@ Engine::CollisionComponent::CollisionComponent(Engine::GameObject* pParent):
 	CollisionManager::GetInstance().AddCollision(this);
 }
 
+Engine::CollisionComponent::~CollisionComponent()
+{
+	CollisionManager::GetInstance().RemoveCollision(this);
+}
+
 void Engine::CollisionComponent::Init()
 {
 }

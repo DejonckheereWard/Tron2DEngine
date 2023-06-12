@@ -121,7 +121,8 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 	}
 
 	// Get the collision layer of the owner
-	uint8_t collisionLayer{ m_pCollisionComponent->GetCollisionMask() };
+	uint8_t collisionMask{ m_pCollisionComponent->GetCollisionMask() };
+	collisionMask &= ~static_cast<uint8_t>(CollisionLayer::TriggerLayer);  // Ignore trigger layers
 
 	// Get center of the owner
 	const glm::vec2& center{ m_pCollisionComponent->GetColliderCenter() };
@@ -144,19 +145,19 @@ bool MoveComponent::CanMove(const glm::vec2& direction) const
 
 	// Check if we can move in the given direction
 	Engine::HitInfo hitInfo{};
-	if (CollisionManager::GetInstance().Raycast(center + offset, direction, distance, hitInfo, collisionLayer))
+	if (CollisionManager::GetInstance().Raycast(center + offset, direction, distance, hitInfo, collisionMask))
 	{
 		return false;
 	}
 
 	hitInfo = Engine::HitInfo{};  // Reset the hit info
-	if (CollisionManager::GetInstance().Raycast(center, direction, distance, hitInfo, collisionLayer))
+	if (CollisionManager::GetInstance().Raycast(center, direction, distance, hitInfo, collisionMask))
 	{
 		return false;
 	}
 
 	hitInfo = Engine::HitInfo{};  // Reset the hit info
-	if (CollisionManager::GetInstance().Raycast(center - offset, direction, distance, hitInfo, collisionLayer))
+	if (CollisionManager::GetInstance().Raycast(center - offset, direction, distance, hitInfo, collisionMask))
 	{
 		return false;
 	}

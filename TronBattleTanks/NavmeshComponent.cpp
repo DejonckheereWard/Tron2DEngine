@@ -32,6 +32,10 @@ void NavmeshComponent::Render() const
 
 void NavmeshComponent::RenderDebug() const
 {
+
+	if (not m_RenderDebug)
+		return;
+
 	const SDL_Color color = { 255, 0, 0, 255 };
 
 	// Draw path

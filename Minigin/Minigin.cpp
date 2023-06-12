@@ -94,7 +94,7 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 	const int frameRateCap{ 144 };  // Max framerate we want
 	const int minMsPerFrame{ 1000 / frameRateCap };  // Min time before we want to update a frame again. (*1000 to convert from Seconds to Millis)
 
-	const float fixedTimeStep{ 1.0f / 60.0f };  // 60 fps
+	const float fixedTimeStep{ 1.0f / 30.0f }; 
 	gameTime.SetFixedDeltaTime(fixedTimeStep);
 
 	sceneManager.Init();
@@ -125,11 +125,12 @@ void Engine::Minigin::Run(const std::function<void()>& load)
 		
 		lastTime = currentTime;
 
-		
+		sceneManager.Cleanup();  // Cleanup all objects that are marked for deletion
+		collisionManager.Cleanup();  // Cleanup all objects that are marked for deletion
 		// Sleep time later (limit fps)
 		const auto sleepTime = currentTime + std::chrono::milliseconds(minMsPerFrame) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
 	}
 
-	sceneManager.CleanUp();
+	sceneManager.DestroyAll();
 }

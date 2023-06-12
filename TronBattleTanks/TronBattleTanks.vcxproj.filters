@@ -104,6 +104,9 @@
     <ClCompile Include="GameMode.cpp">
       <Filter>Game Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameStates.cpp">
+      <Filter>Game Files\Components\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HealthComponent.h">
@@ -171,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="GameMode.h">
       <Filter>Game Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStates.h">
+      <Filter>Game Files\Components\States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

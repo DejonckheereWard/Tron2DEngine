@@ -14,7 +14,7 @@ namespace Engine
 		CustomLayer0 = 1 << 4,
 		CustomLayer1 = 1 << 5,
 		CustomLayer2 = 1 << 6,
-		CustomLayer3 = 1 << 7
+		TriggerLayer = 1 << 7
 	};
 
 
@@ -24,7 +24,7 @@ namespace Engine
 		typedef std::function<void(GameObject* otherGameObject)> OnCollisionCallback;
 
 		CollisionComponent(Engine::GameObject* pParent);
-		virtual ~CollisionComponent() = default;
+		virtual ~CollisionComponent();
 
 		// Inherited via BaseComponent
 		virtual void Init() override;

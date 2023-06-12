@@ -3,6 +3,8 @@
 #include <glm/vec2.hpp>
 
 #include "Scene.h"
+#include <string>
+#include <unordered_map>
 
 struct LevelSettings
 {
@@ -23,9 +25,11 @@ class LevelLoader final
 		Diamond
 	};
 
-public:
-	static Engine::GameObject* LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize);
 
+
+public:
+	static Engine::GameObject* LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize, std::unordered_map<std::string, std::vector<glm::vec2>>& outObjectPositions);
+	
 
 };
 

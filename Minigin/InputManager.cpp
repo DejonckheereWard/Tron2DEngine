@@ -89,6 +89,19 @@ unsigned int Engine::InputManager::AddController()
 	return controllerIdx;
 }
 
+void Engine::InputManager::ClearAllMappings()
+{
+	m_KeyboardCommands.clear();
+	m_ControllerCommands.clear();
+	m_KeyboardAxisCommands.clear();
+	m_ControllerAxisCommands.clear();
+}
+
+void Engine::InputManager::ClearControllers()
+{
+	m_Controllers.clear();
+}
+
 Engine::InputManager::InputManager():
 	m_Controllers{}
 {

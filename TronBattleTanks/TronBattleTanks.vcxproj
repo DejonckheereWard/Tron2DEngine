@@ -169,6 +169,7 @@
     <ClCompile Include="EnemyStates.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="GameMode.cpp" />
+    <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="HealthDisplay.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="EnemyStates.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameMode.h" />
+    <ClInclude Include="GameStates.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="HealthDisplay.h" />
     <ClInclude Include="LevelLoader.h" />

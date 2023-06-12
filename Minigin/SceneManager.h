@@ -25,7 +25,9 @@ namespace Engine
 		void RenderDebug() const;
 		void OnImGui();
 
-		void CleanUp();
+		void Cleanup();
+
+		void DestroyAll();
 
 		std::vector<GameObject*> GetChildrenWithTag(const std::string& tag) const;
 

@@ -14,7 +14,7 @@
 #include "WallRenderer.h"
 #include "PathRenderer.h"
 
-Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize)
+Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, Engine::Scene* pScene, glm::ivec2& outGridSize, std::unordered_map<std::string, std::vector<glm::vec2>>& outObjectPositions)
 {
 	using Engine::GameObject;
 	using Engine::CollisionComponent;
@@ -26,14 +26,25 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 	std::ifstream levelFile{ Engine::ResourceManager::GetInstance().GetResourcePath(levelSettings.FilePath)};
 	if (levelFile.is_open())
 	{
+		// Reverse read in lines
+		std::vector<std::string> lines{};
+		std::string line{};
+		while (std::getline(levelFile, line))
+		{
+			lines.emplace_back(line);
+		}
+		std::reverse(lines.begin(), lines.end());
+
+
+
 		GameObject* pLevel{ pScene->AddChild(new GameObject()) };
 		pLevel->GetTransform()->SetLocalPosition(levelSettings.Position);
 
 		std::shared_ptr<Engine::Texture2D> pWallTexture{ Engine::ResourceManager::GetInstance().LoadTexture(levelSettings.WallTexturePath) };
 		int rowIdx{};
 		int colIdx{};
-		std::string inputLine{};
-		while (std::getline(levelFile, inputLine))
+
+		for(const std::string& inputLine: lines)
 		{
 			colIdx = 0;
 			std::stringstream stringStream{ inputLine };
@@ -59,8 +70,24 @@ Engine::GameObject* LevelLoader::LoadLevel(const LevelSettings& levelSettings, E
 				}
 				else
 				{
-					PathRenderer* pPathRenderer{ pCell->AddComponent<PathRenderer>() };
-					pPathRenderer->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
+					//PathRenderer* pPathRenderer{ pCell->AddComponent<PathRenderer>() };
+					//pPathRenderer->SetSize(glm::vec2{ levelSettings.CellSize, levelSettings.CellSize });
+					//
+					const glm::vec2 cellCenterPosition{ cellPosition };
+					if(cellValue == 1)
+					{
+						outObjectPositions["Player"].push_back(cellCenterPosition);
+					}
+					else if (cellValue == 3)
+					{
+						outObjectPositions["EnemyTank"].push_back(cellCenterPosition);
+					}
+					else if (cellValue == 4)
+					{
+						outObjectPositions["EnemyRecognizer"].push_back(cellCenterPosition);
+					}
+
+
 				}
 				colIdx++;
 			}

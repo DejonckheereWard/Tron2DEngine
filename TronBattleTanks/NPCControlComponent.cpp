@@ -34,8 +34,6 @@ void NPCControlComponent::Init()
 void NPCControlComponent::Update()
 {
 	using namespace Engine;
-	bool aimTowardsMovement{ true };
-	
 
 	const glm::vec2& centerPos{ m_pCollisionComponent->GetColliderCenter() };
 	m_pNavmeshComponent->SetPosition(centerPos);
@@ -47,7 +45,7 @@ void NPCControlComponent::Update()
 		const glm::vec2 navmeshDirection{ glm::normalize(navmeshPos - centerPos) };
 		m_pMoveComponent->Move(navmeshDirection);
 
-		if (aimTowardsMovement)
+		if (m_pTurret != nullptr)
 		{
 			m_pTurret->SetTurretDirection(navmeshDirection);
 		}
@@ -74,10 +72,11 @@ void NPCControlComponent::Update()
 				GameObject* pOther{ hitInfo.pCollider->GetOwner() };
 				if (pOther == m_pTarget)
 				{
-					// Direct line of sight -> Shoot
-					m_pTurret->SetTurretDirection(directionToTarget);
-					m_pGun->Shoot();
-					aimTowardsMovement = false;
+					if (m_pTurret != nullptr && m_pGun != nullptr)
+					{
+						m_pTurret->SetTurretDirection(directionToTarget);
+						m_pGun->Shoot();
+					}
 				}
 			}
 		}

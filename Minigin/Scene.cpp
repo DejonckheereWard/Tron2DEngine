@@ -43,21 +43,6 @@ void Engine::Scene::Update()
 		}
 		m_ChildrenToAdd.clear();
 	}
-
-	std::vector<GameObject*> toRemove{};
-	for (auto& child : m_Children)
-	{
-		if (child->IsMarkedForDelete())
-		{
-			toRemove.emplace_back(child);
-		}
-	}
-
-	for (auto& child : toRemove)
-	{
-		RemoveChild(child);
-	}
-
 }
 
 void Engine::Scene::FixedUpdate()
@@ -90,6 +75,25 @@ void Engine::Scene::OnImGui()
 	for(auto& child : m_Children)
 	{
 		child->OnImGui();
+	}
+}
+
+void Engine::Scene::Cleanup()
+{
+
+	std::vector<GameObject*> toRemove{};
+	for (auto& child : m_Children)
+	{
+		if (child->IsMarkedForDelete())
+		{
+			child->Cleanup();
+			toRemove.emplace_back(child);
+		}
+	}
+
+	for (auto& child : toRemove)
+	{
+		RemoveChild(child);
 	}
 }
 

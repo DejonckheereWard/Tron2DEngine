@@ -45,7 +45,7 @@ void Engine::TextComponent::SetFont(std::shared_ptr<Font> font)
 void Engine::TextComponent::SetColor(const glm::vec3& color)
 {
 	assert(m_Color.r <= 1.f && m_Color.g <= 1.f && m_Color.b <= 1.f && "Color values should be between 0 and 1");
-	assert(m_Color.r >= 0.f && m_Color.g <= 0.f && m_Color.b <= 0.f && "Color values should be between 0 and 1");
+	assert(m_Color.r >= 0.f && m_Color.g >= 0.f && m_Color.b >= 0.f && "Color values should be between 0 and 1");
 	m_Color = color;
 	m_TextIsDirty = true;
 }

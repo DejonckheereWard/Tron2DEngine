@@ -34,3 +34,24 @@ void ScoreComponent::SubtractScore(int score)
 	m_Score -= score;
 	m_pSubject->Notify(GetOwner(), "ScoreChanged");
 }
+
+void ScoreComponent::OnNotify(Engine::GameObject* entity, const std::string& eventName)
+{
+	if(eventName == "PlayerDeath")
+	{
+		if (entity->GetTag() == "EnemyTank")
+		{
+			AddScore(100);
+		}
+		else if (entity->GetTag() == "EnemyRecognizer")
+		{
+			AddScore(250);
+		}
+		else
+		{
+			AddScore(150);  // Player kills?
+		}
+			
+
+	}
+}

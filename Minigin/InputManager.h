@@ -35,6 +35,9 @@ namespace Engine
 		unsigned int AddController();  // Returns index of the added controller
 		//void AddCommand(SDL_KeyCode keyCode, SDL_Key)
 
+		void ClearAllMappings();
+		void ClearControllers();
+
 	private:
 		friend class Singleton<InputManager>;
 		InputManager();

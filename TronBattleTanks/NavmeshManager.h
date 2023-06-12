@@ -42,8 +42,8 @@ private:
 
 	bool m_IsInitialized{ false };
 
-	std::vector<NavmeshNode*> m_pNavMeshNodes;
-	NavmeshSettings m_NavmeshSettings;
+	std::vector<NavmeshNode*> m_pNavMeshNodes{};
+	NavmeshSettings m_NavmeshSettings{};
 
 
 	NavmeshNode* GetNodeAtPosition(const glm::vec2& position) const;

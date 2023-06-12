@@ -3,8 +3,9 @@
 
 #include "BaseComponent.h"
 #include "Subject.h"
+#include "Observer.h"
 
-class ScoreComponent final: public Engine::BaseComponent
+class ScoreComponent final: public Engine::BaseComponent, public Engine::Observer
 {
 public:
 	ScoreComponent(Engine::GameObject* parent);
@@ -24,10 +25,15 @@ public:
 
 	Engine::Subject* GetSubject() { return m_pSubject.get(); };
 
+	// Inherited via Observer
+	virtual void OnNotify(Engine::GameObject* entity, const std::string& eventName) override;
+
 private:
 	std::unique_ptr<Engine::Subject> m_pSubject{};
 
 	int m_Score{ 0 };
+
+
 
 
 

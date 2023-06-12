@@ -80,6 +80,25 @@ void Engine::GameObject::RemoveChild(GameObject* child)
 	delete child;  // Will call its destructor, deleting subchildren too
 }
 
+void Engine::GameObject::Cleanup()
+{
+	// Cleanup children
+	std::vector<GameObject*> toRemove{};
+	for (auto& child : m_Children)
+	{
+		if (child->IsMarkedForDelete())
+		{
+			child->Cleanup();
+			toRemove.emplace_back(child);
+		}
+	}
+
+	for (auto& child : toRemove)
+	{
+		RemoveChild(child);
+	}
+}
+
 std::vector<Engine::GameObject*> Engine::GameObject::GetChildrenWithTag(const std::string& tag) const
 {
 	std::vector<GameObject*> children{};
@@ -94,6 +113,18 @@ std::vector<Engine::GameObject*> Engine::GameObject::GetChildrenWithTag(const st
 
 	}
 	return children;
+}
+
+void Engine::GameObject::MarkForDeletion()
+{
+	// Mark children for deletion
+	for (GameObject* child : m_Children)
+	{
+		child->MarkForDeletion();
+	}
+
+	// Mark this object for deletion
+	m_MarkForDeletion = true;
 }
 
 void Engine::GameObject::AddToChildCollection(GameObject* child)
@@ -135,19 +166,6 @@ void Engine::GameObject::Update()
 		component.second->Update();
 	}
 
-	std::vector<GameObject*> toRemove{};
-	for (auto& child : m_Children)
-	{
-		if (child->IsMarkedForDelete())
-		{
-			toRemove.emplace_back(child);
-		}
-	}
-
-	for (auto& child : toRemove)
-	{
-		RemoveChild(child);
-	}
 }
 
 void Engine::GameObject::FixedUpdate()

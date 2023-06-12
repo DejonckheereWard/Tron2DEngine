@@ -29,14 +29,16 @@ void Engine::CollisionManager::FixedUpdate()
 			}
 		}
 	}
+}
 
+void Engine::CollisionManager::Cleanup()
+{	
 	// Remove all colliders that are marked for removal
 	for (CollisionComponent* pCollider : m_CollidersToRemove)
 	{
 		std::erase_if(m_Colliders, [pCollider](CollisionComponent* pOther) { return pCollider == pOther; });
 	}
 	m_CollidersToRemove.clear();
-
 }
 
 bool Engine::CollisionManager::IsPointInCollider(const glm::vec2& point, uint8_t collisionMask) const

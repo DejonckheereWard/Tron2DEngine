@@ -26,13 +26,15 @@ public:
 private:
 	class NavmeshManager* m_pNavmeshManager = nullptr;
 
-	const float m_UpdateInterval{ 0.5f };  // how often the path is updated
+	const float m_UpdateInterval{ 1.0f };  // how often the path is updated
 	float m_UpdateTimer = 0.f;  // timer to keep track of when to update the path
 
 	glm::vec2 m_Position{};
 	glm::vec2 m_Destination{};
 
 	std::vector<glm::vec2> m_Path{};
+
+	bool m_RenderDebug{ false };
 
 
 

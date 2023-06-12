@@ -63,7 +63,17 @@ void Engine::SceneManager::OnImGui()
 	}
 }
 
-void Engine::SceneManager::CleanUp()
+void Engine::SceneManager::Cleanup()
+{
+	if(m_MainScene)
+		m_MainScene->Cleanup();
+	for(auto& scene : m_Scenes)
+	{
+		scene->Cleanup();
+	}
+}
+
+void Engine::SceneManager::DestroyAll()
 {
 	if(m_MainScene)
 		m_MainScene.reset();

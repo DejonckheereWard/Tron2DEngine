@@ -26,6 +26,8 @@ namespace Engine
 
 		void FixedUpdate();
 
+		void Cleanup();
+
 		bool IsPointInCollider(const glm::vec2& point, uint8_t collisionMask = UINT8_MAX) const;  // Numeric limits not working due to C4003 error
 
 		bool Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, HitInfo& outHit, uint8_t collisionMask = UINT8_MAX) const;  // Numeric limits not working due to C4003 error
