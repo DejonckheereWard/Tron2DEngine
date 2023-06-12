@@ -77,6 +77,12 @@ void NavmeshManager::GenerateNavMesh(const NavmeshSettings& navmeshSettings)
 
 	// Generate all points
 	size_t nrOfPoints = static_cast<size_t>(navmeshSettings.GridSize.x) * navmeshSettings.GridSize.y;
+
+	for (NavmeshNode* pNode : m_pNavMeshNodes)
+	{
+		delete pNode;
+	}
+
 	m_pNavMeshNodes.clear();
 	m_pNavMeshNodes.reserve(nrOfPoints);
 
