@@ -38,11 +38,13 @@ public:
 	Engine::GameObject* GetPlayerA() const { return m_pPlayerA; }
 	Engine::GameObject* GetPlayerB() const { return m_pPlayerB; }
 
+	bool IsGameOver() const { return m_GameOver; };
+
+	void AddLevelPath(const std::string& levelPath) { m_LevelPaths.push_back(levelPath); }
+	void SetCurrentLevel(size_t level) { m_CurrentLevel = level; }
+
 	// Inherited via Observer
 	virtual void OnNotify(Engine::GameObject* entity, const std::string& eventName) override;
-
-
-
 
 private:
 	GameModeType m_GameModeType{ GameModeType::SOLO };
@@ -50,6 +52,11 @@ private:
 	Engine::GameObject* m_pPlayerA{ nullptr };
 	Engine::GameObject* m_pPlayerB{ nullptr };
 
+
+	bool m_GameOver{ false };
+
+	std::vector<std::string> m_LevelPaths{};
+	size_t m_CurrentLevel{ 0 };
 
 };
 

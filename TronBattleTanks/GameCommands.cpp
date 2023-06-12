@@ -46,3 +46,11 @@ void DebugPrintPositionCommand::Execute(const glm::vec2& /*value*/)
 
 	std::cout << "(" << localPos.x << ", " << localPos.y << ")\n";
 }
+
+void CallbackCommand::Execute(const glm::vec2& /*value*/)
+{
+	if (m_Callback)
+	{
+		m_Callback();
+	}
+}

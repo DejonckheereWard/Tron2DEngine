@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.h"
 #include "ServiceLocator.h"
-
+#include <functional>
 
 #pragma warning(push)
 #pragma warning(disable: 4201)
@@ -53,6 +53,23 @@ public:
 	virtual void Execute(const glm::vec2& value) override;
 };
 
+
+// Special commands
+class CallbackCommand final : public Command
+{
+public:
+	CallbackCommand(Engine::GameObject* actor, std::function<void()> callback) :
+		Command(actor),
+		m_Callback{ callback }
+	{};
+
+	// Inherited via Command
+	virtual void Execute(const glm::vec2& value) override;
+
+private:
+	std::function<void()> m_Callback;
+
+};
 
 
 // Debug commands
