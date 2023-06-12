@@ -1,6 +1,16 @@
 #pragma once
 #include "State.h"
-#include "TextComponent.h"
+#include <climits>
+#include <glm/vec2.hpp>
+#include "CollisionComponent.h"
+
+namespace Engine
+{
+	class GameObject;
+	class Scene;
+	class TextComponent;
+	class Scene;
+}
 
 class GameMode;
 namespace States
@@ -34,7 +44,16 @@ namespace States
 
 	private:
 		GameMode* m_pGameMode{};
+		bool m_HasSurvived{};
+		Engine::Scene* m_pScene{};
 		State* m_pNextState{};
+
+		// Helper functions
+		void InitLevel();
+		Engine::GameObject* SpawnPlayerA(const glm::vec2& pos, unsigned int controllerIdx = UINT_MAX);
+		Engine::GameObject* SpawnPlayerB(const glm::vec2& pos, unsigned int controllerIdx = UINT_MAX);
+		Engine::GameObject* SpawnEnemyTank(const glm::vec2& pos);
+		Engine::GameObject* SpawnEnemyRecognizer(const glm::vec2& pos);
 	};
 
 	class GameOverState : public State
@@ -65,6 +84,8 @@ namespace States
 	private:
 		GameMode* m_pGameMode{};
 		State* m_pNextState{};
+
+		std::vector<std::string> GetHighScores();
 
 	};
 
