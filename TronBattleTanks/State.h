@@ -24,7 +24,7 @@ public:
 	Engine::GameObject* GetOwner() const { return m_pOwner; }
 
 private:
-	Engine::GameObject* m_pOwner;
+	Engine::GameObject* m_pOwner{};
 
 };
 
